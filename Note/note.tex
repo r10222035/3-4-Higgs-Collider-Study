@@ -1,0 +1,535 @@
+%!TEX program = xelatex
+%!TEX options=--shell-escape
+\documentclass[12pt]{article}
+
+%
+\usepackage[scheme=plain]{ctex}
+%
+\usepackage{fontspec}
+%
+\usepackage[margin = 1in]{geometry}
+
+%
+\usepackage[dvipsnames]{xcolor}
+\usepackage[many]{tcolorbox}
+
+%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%
+\usepackage{tensor}
+%
+\usepackage{slashed}
+\usepackage{physics}
+\usepackage{simpler-wick}
+
+%
+\usepackage[version=4]{mhchem}
+
+%
+\usepackage{mathtools}
+
+%
+\usepackage{bm}
+\newcommand{\dbar}{\dif\hspace*{-0.18em}\bar{}\hspace*{0.2em}}
+\DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n}
+%\usepackage{bbold}
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
+\newcommand*{\euler}{\mathrm{e}}
+\newcommand*{\imagi}{\mathrm{i}}
+
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+
+\usepackage{caption}
+
+\usepackage{enumitem}
+
+%
+\usepackage{mathrsfs}
+\usepackage{dsfont}
+
+%
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=violet,
+    filecolor=blue,      
+    urlcolor=blue,
+    citecolor=cyan,
+}
+
+%
+\usepackage{graphicx}
+%
+\graphicspath{{image/}}
+
+
+%
+\usepackage{indentfirst}
+%
+\setlength{\parindent}{2em}
+\linespread{1.25}
+
+% 
+% \setmainfont{Times New Roman}
+
+\title{Note}
+\author{Feng-Yang Hsieh}
+\date{}
+
+\begin{document}
+\maketitle
+\section{Signal and background}% (fold)
+\label{sec:signal_and_background}
+	Signal events are 3 Higgs events in BSM. I use MadGraph to generate by following commands:
+	\begin{verbatim}
+		import model cxSM_VLF_EFT
+		generate g g > h h h
+	\end{verbatim}
+	then pass the events through the Pythia and Delphes. In Pythia, I set the branching ratio of Higgs so that it only decays to b quarks.
+
+	Background events are 6b events in SM. I use MadGraph to generate by following commands:
+	\begin{verbatim}
+		generate p p > b b b b~ b~ b~
+	\end{verbatim}
+	then pass the events through the Pythia and Delphes.
+
+% section signal_and_background (end)
+\section{Transverse momentum and pseudorapidity distribution}% (fold)
+\label{sec:transverse_momentum_and_pseudorapidity_distribution}
+	In each event there are 6 b quarks. I order these b quarks by transverse momentum $p_\text{T}$, then plot $p_\text{T} $ and pseudorapidity $\eta$ distributions.
+
+	Figure \ref{fig:background_pt_eta_distribution_in_parton_level} is the  $p_\text{T}$ and  $\eta$ distributions of b quarks for background.	
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\textwidth]{ppbbbbbb_sm_PT_Eta_order_by_PT.png}
+		\caption{$p_\text{T}$ and $\eta$ distributions of b partons for background events. They are ordered by $p_\text{T}$.}
+		\label{fig:background_pt_eta_distribution_in_parton_level}
+	\end{figure}
+
+	Figure \ref{fig:signal_pt_eta_distribution_in_parton_level} is the $p_\text{T}$ and $\eta$ distributions of b quarks for signal.
+
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\textwidth]{gghhh_bsm_PT_Eta_order_by_PT.png}
+		\caption{$p_\text{T}$ and $\eta$ distributions of b partons for signal events. They are ordered by $p_\text{T}$.}
+		\label{fig:signal_pt_eta_distribution_in_parton_level}
+	\end{figure}
+% section transverse_momentum_and_pseudorapidity_distribution (end)
+\section{Delta R and transverse momentum distribution}% (fold)
+\label{sec:delta_r_and_transverse_momentum_distribution}
+	For signal, I plot the $\Delta R(\text{b,b})$ distribution of two b decays from the same Higgs. Then I plot $\Delta R(\text{b,b})$ against $p_\text{T}(\text{b,b})$. The result is in Figure \ref{fig:dR(b,b)_and_pT(b,b)}. As can be seen from the plot, $\Delta R$ get smaller at higher $p_\text{T}(\text{b,b})$. 
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=1\textwidth]{gghhh_bsm_bb_Delta_R.png}
+		\caption{$\Delta R(\text{b,b})$ distribution and $\Delta R(\text{b,b})$ against $p_\text{T}(\text{b,b})$ plot}
+		\label{fig:dR(b,b)_and_pT(b,b)}
+	\end{figure}
+% section delta_r_and_transverse_momentum_distribution (end)
+\section{Cutflow table}% (fold)
+\label{sec:cutflow_table}
+I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event can pass the cuts. The results are in Table \ref{tab:cutflow_table_background} and Table \ref{tab:cutflow_table_signal}.
+	\begin{table}[htpb]
+		\centering
+		\caption{1000 background events. Those background events is generated in $\sqrt{s} = 13 \text{ TeV}$ with the cut b $p_\text{T} > 10 \text{ GeV}$ in MadGraph.
+}
+		\label{tab:cutflow_table_background}
+		\begin{tabular}{cc}
+			Cut & number of events pass \\
+			\hline
+			6 b-partons $\abs{\eta}<2.5$ & 330 \\
+			6 b-partons $p_\text{T} < 25 \text{ GeV}$ & 11 \\
+			4 b-partons $p_\text{T} < 40 \text{ GeV}$ & 8                            
+		\end{tabular}	
+	\end{table}
+	
+	\begin{table}[htpb]
+		\centering
+		\caption{1000 signal events.}
+		\label{tab:cutflow_table_signal}
+		\begin{tabular}{cc}
+			Cut & number of events pass \\ 
+			\hline
+			6 b-partons $\abs{\eta}<2.5$ & 732 \\
+			6 b-partons $p_\text{T} < 25 \text{ GeV}$ & 534 \\
+			4 b-partons $p_\text{T} < 40 \text{ GeV}$ & 498                            
+		\end{tabular}	
+	\end{table}
+% section cutflow_table (end)
+
+\section{Construction of bb-pairs}% (fold)
+\label{sec:construction_of_bb_pairs}
+	To construct the bb-pairs from the same Higgs, the typical strategy is to try all combinatoric and find the minimal mass difference between all pairs, i.e. minimize this
+	\[
+		\chi^2 = [M(\text{b}_1\text{b}_2) - M(\text{b}_3 \text{b}_4)]^2 + [M(\text{b}_1\text{b}_2) - M(\text{b}_5 \text{b}_6)]^2 +[M(\text{b}_3\text{b}_4) - M(\text{b}_5 \text{b}_6)]^2
+	\] 
+	where $M(\text{b}_i \text{b}_j)$ means the invariant mass of b-parton $i$ and b-parton $j$.
+
+	The other strategy is to minimize mass difference to the SM Higgs mass
+	\[
+		\chi^2 = [M(\text{b}_1\text{b}_2) - M_\text{H}]^2 + [M(\text{b}_3\text{b}_4) - M_\text{H}]^2 +[M(\text{b}_5\text{b}_6) - M_\text{H}]^2
+	\] 
+
+	I implement these two methods to construct bb-pairs and test on the 10,000 signal events in parton level. The result is as follows:
+	\begin{itemize}
+		\item Method 1 (mass difference between all pairs): accuracy = 0.863
+		\item Method 2 (mass difference to the SM Higgs mass): accuracy = 0.875
+	\end{itemize}
+
+
+	Method 2 is better to identify the true Higgs pair.
+% section construction_of_bb_pairs (end)
+
+\section{Absolute cross section}% (fold)
+\label{sec:absolute_cross_section}
+	Absolute cross section is defined as follow
+	\[
+		\sigma_\text{abs} = \sigma \times \frac{\text{number of events pass the cut}}{\text{number of events}}
+	\] 
+
+	I have generated background events with different cuts in MadGraph, the detailed information of cuts is in Table \ref{tab:cut_of_different_run}. I calculate their absolute cross section and check if it is same or not. The result is in Table \ref{tab:absolute_cross_section}.
+
+	\begin{table}[htpb]
+		\centering
+		\caption{The cuts applied on the different run. Where $p_\text{T}$ means the minimum transverse momentum of b and $\abs{\eta}$ means the range of b (-1 means no restriction).}
+		\label{tab:cut_of_different_run}
+		\begin{tabular}{ccc}
+			No.& $p_\text{T}$ (GeV) & $\abs{\eta}$  \\
+			1 &      0       &           -1      \\
+			2 &      10       &     5          \\
+			3 &      10       &     3 \\
+			4 &      20       &     3 \\
+			5 &      0       &     -1 \\
+			6 &      10       &     -1 
+		\end{tabular}	
+	\end{table}
+
+
+	\begin{table}[htpb]
+		\centering
+		\caption{Absolute cross section. Where the selection cut is $p_\text{T}> \text{20 GeV}, \abs{\eta} < 3$.}
+		\label{tab:absolute_cross_section}
+		\begin{tabular}{llllll}
+			No.& total event & cross section & events pass selection   & absolute cross section \\
+			1& 339 & 2731.9362 & 0 & 0.0    \\
+			2& 4761 & 71.316651 & 190 & 2.846   \\
+			3& 9054 & 35.225852 & 694 & 2.700 \\
+			4& 4207 & 2.7698473 & 4183 & 2.754 \\
+			5& 1000 & 2531.9304 & 0 & 0.0 \\
+			6& 1000 & 70.158431 & 27 & 1.894
+		\end{tabular}	
+	\end{table}
+
+	From the Table \ref{tab:absolute_cross_section}, if the number of event is large enough the absolute cross section will be similar.
+% section absolute_cross_section (end)
+\section{The problem for generating \texorpdfstring{pp $\to$ 6b}{pp to 6b} events}% (fold)
+\label{sec:the_problem_for_generating_pp_6b_events}
+	\href{https://answers.launchpad.net/mg5amcnlo/+question/701314}{Failed to generate the requested number of events}
+% section the_problem_for_generating_pp_6b_events (end)	
+\section{\texorpdfstring{pp $\to $ 4b}{pp to 4b}}% (fold)
+\label{sec:pp_4b}
+	I use MadGraph to generate 4b events by following commands:
+	\begin{verbatim}
+		generate p p > b b b~ b~ 
+	\end{verbatim}
+	In MadGraph, I apply the cuts: $p_\text{T}>\text{25 GeV}, \abs{\eta}<2.5$ for b. Pass those events through Pythia, then check how many events there are 6 b-hadrons final state.
+
+	In 100,000 events, there are 6,916 events having greater than or equal to 6 b-hadrons. The distribution of number of b-hadrons is in Figure \ref{fig:number_of_b_hadron}.
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\textwidth]{number_of_b-hadrons.png}
+		\caption{Number of b-hadrons in Pythia final state.}
+		\label{fig:number_of_b_hadron}
+	\end{figure}
+
+	Pass events through Delphes. In Delphes the b-tagging efficiency is set to 1.
+
+	Figure \ref{fig:number_of_jet} is the number of jets and number of b-jets distributions. In 100,000 events, there are 173 events having greater than or equal to 6 b-jets.
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=1\textwidth]{number_of_b-jets.png}
+		\caption{Number of jets and number of b-jets.}
+		\label{fig:number_of_jet}
+	\end{figure}
+% section pp_4b (end)
+
+\section{Comparison for \texorpdfstring{pp $\to$ 4b}{pp to 4b} and \texorpdfstring{pp $\to$ 6b}{pp to 6b} event}% (fold)
+\label{sec:comparison_for_pp_4b_and_pp_6b_event}
+	To compare pp->4b and pp->6b events, I plot the $p_\text{T}$, $\eta$ and total invariant mass of 6 b-jets for both.  
+	
+	The number of events of 6 b-jets for pp->4b is 2051 and for pp->6b is 1408. I scaled the number of events for pp->4b to be the same as pp->6b.
+
+	Figure \ref{fig:pt_eta_distribution_of_b_jets} is $p_\text{T}$ and $\eta$ distributions. Figure \ref{fig:total_invariant_mass_of_b_jets} is total invariant mass of 6 b-jets distributions. Their distributions look similar.
+
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{6_b-jets_PT_Eta_order_by_PT.png}
+		\caption{$p_\text{T}$ and $\eta$ distributions of b-jets for pp->4b and pp->6b events. They are ordered by $p_\text{T}$.}
+		\label{fig:pt_eta_distribution_of_b_jets}
+	\end{figure}
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{6_b-jets_total_invariant_mass.png}
+		\caption{The distribution of total invariant mass of 6 b-jets for pp->4b and pp->6b events.}
+		\label{fig:total_invariant_mass_of_b_jets}
+	\end{figure}
+	
+% section comparison_for_pp_4b_and_pp_6b_event (end)	
+\section{Cutflow table for b-jets}% (fold)
+\label{sec:cutflow_table_for_b_jets}
+	I apply following cut sequentially and count how many events can pass these cuts. Table \ref{tab:cutflow_table_pp4b_bjet} is the result for pp->4b events. Table \ref{tab:cutflow_table_pp6b_bjet} is the result for pp->6b events. Table \ref{tab:cutflow_table_signal_bjet} is the result for signal events.
+
+	\begin{itemize}
+		\item Cut 1: There are greater than or equal to 6 b-jets.
+		\item Cut 2: There are greater than or equal to 6 b-jets satisfy $\abs{\eta}<2.5$.
+		\item Cut 3: There are greater than or equal to 6 b-jets satisfy $p_\text{T}>\text{25 GeV}$.
+		\item Cut 4: There are greater than or equal to 4 b-jets satisfy $p_\text{T}>\text{40 GeV}$.
+	\end{itemize}
+
+	\begin{table}[htpb]
+		\centering
+		\caption{1,000,000 pp->4b events. Those events are generated in $\sqrt{s} = 14 \text{ TeV}$ with the cuts: $p_\text{T} >\text{25 GeV}, \abs{\eta}<2.5$ for b in MadGraph.
+}
+		\label{tab:cutflow_table_pp4b_bjet}
+		\begin{tabular}{cc}
+			Cut & number of event pass \\
+			\hline
+			1 & 1783 \\
+			2 & 1565 \\
+			3 & 1059 \\
+			4 & 735 
+		\end{tabular}	
+	\end{table}
+
+	\begin{table}[htpb]
+		\centering
+		\caption{10,000 pp->6b events. Those events are generated in $\sqrt{s} = 14 \text{ TeV}$ with the cuts: $p_\text{T} >\text{25 GeV}, \abs{\eta}<2.5$ for b in MadGraph.
+}
+		\label{tab:cutflow_table_pp6b_bjet}
+		\begin{tabular}{cc}
+			Cut & number of event pass \\
+			\hline
+			1 & 1408 \\
+			2 & 1322 \\
+			3 & 1052 \\
+			4 & 822 
+		\end{tabular}	
+	\end{table}
+
+	\begin{table}[htpb]
+		\centering
+		\caption{100,000 signal events. Those events are generated in $\sqrt{s} = 14 \text{ TeV}$.}
+		\label{tab:cutflow_table_signal_bjet}
+		\begin{tabular}{cc}
+			Cut & number of event pass \\
+			\hline
+			1 & 21,814 \\
+			2 & 21,254 \\
+			3 & 17,130 \\
+			4 & 14,142 
+		\end{tabular}	
+	\end{table}
+% section cutflow_table_for_b_jets (end)
+
+\section{Signal}% (fold)
+\label{sec:signal}
+	Generate resonant channel gg->h3, h3->h2h, h2->hh in MadGraph by following commands:
+	\begin{verbatim}
+		import model cxSM_VLF_EFT
+		generate g g > h3, (h3 > h2 h, h2 > h h)
+	\end{verbatim}
+	then check this channel is dominated in signal (gg->3h) or not.
+
+	I generate this channel and signal in $\sqrt{s} = \text{14 TeV}$, the cross sections are 2.094 pb and 4.067 pb, respectively.
+
+	Figure \ref{fig:signal_invariant_mass_of_6bjet} is the total invariant mass of 6 b-jets for signal events. Figure \ref{fig:resonant_channel_invariant_mass_of_6bjet} is the total invariant mass of 6 b-jets for this resonant channel. From the results, there is a peak around $\text{400 GeV}$, because the mass of $h_3$ is $m_3 = \text{420 GeV}$.
+
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\textwidth]{signal_6_b-jets_total_invariant_mass.png}
+		\caption{Total invariant mass of 6 b-jets for signal events.}
+		\label{fig:signal_invariant_mass_of_6bjet}
+	\end{figure}
+
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\textwidth]{signal_resonant_6_b-jets_total_invariant_mass.png}
+		\caption{Total invariant mass of 6 b-jets for resonant channel.}
+		\label{fig:resonant_channel_invariant_mass_of_6bjet}
+	\end{figure}
+
+	A bump around $\text{600 GeV}$ in Figure \ref{fig:signal_invariant_mass_of_6bjet}? In run card, some parameters are not set correctly. After setting all parameters correctly and regenerating these event, the results are in Figure \ref{fig:invariant_mass_of_6bjet_correct}. There is no bump around $\text{600 GeV}$.
+
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.49\textwidth]{signal_6_b-jets_total_invariant_mass_correct.png}
+		\includegraphics[width=0.49\textwidth]{signal_resonant_6_b-jets_total_invariant_mass_correct.png}
+		\caption{Total invariant mass of 6 b-jets for signal events and resonant channel (correct parameters).}
+		\label{fig:invariant_mass_of_6bjet_correct}
+	\end{figure}
+
+
+
+% section signal (end)
+	
+\section{The cross section in MadGraph}% (fold)
+\label{sec:the_cross_section_in_madgraph}
+Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calculated by MadGraph and in paper. They are different because in MadGraph we only consider LO. But in the paper, the numbers are quoted from the LHC Higgs Cross Section Working Group, and they have considered up to NNLO. The ``k factor'' is around 2.5, which accounts for the values in gg>h3.
+	\begin{table}[htpb]
+		\centering
+		\caption{Cross section from MadGraph and paper}
+		\label{tab:Cross_section_from_MadGraph_and_paper}
+		\begin{tabular}{ccc}
+			Process & $\sigma$  MadGraph (fb)  & $\sigma$ in paper (fb)\\
+			\hline
+			g g > h3 & 21 & 55 \\
+			gg > h3 > h h h & 4.0 &  38.2 \\
+			\hline
+		\end{tabular}	
+	\end{table}
+
+	The problem of cross section: If we use the default run card to generate the decay process, the value of cross section will be problematic. 
+
+	Solution:
+	
+	In madevent, use command \verb+compute_widths+ to compute decay widths of $h_2,h_3$, then replace the \verb+run_card.dat+ by \verb+run_card_default.dat+.
+
+	Regenerate the signal and resonant event, the cross sections are $\text{11.1 fb}$ and $\text{10.39 fb}$, respectively. This channel is indeed dominated in the signal.
+% section the_cross_section_in_madgraph (end)	
+\section{SPANet}% (fold)
+\label{sec:spanet}
+	Code: \href{https://github.com/Alexanders101/SPANet}{Symmetry Preserving Attention Networks}
+
+	Symmetry Preserving Attention NETworks (Spa-Net) is used to do the jet assignment task. The jet assignment task is the identification of the original particle which leads to a reconstructed jet.
+
+	\subsection{Prepare training data}% (fold)
+	\label{sub:prepare_training_data}
+		\begin{enumerate}
+			\item Defining the event topology in \verb+.ini+ file. The structure of the \verb+.ini+ file follows this format:
+
+			\begin{verbatim}
+				[SOURCE]
+				FEATURE_1 = FEATURE_OPTION
+				FEATURE_2 = FEATURE_OPTION
+				FEATURE_3 = FEATURE_OPTION
+				...
+
+				[EVENT]
+				particles = (PARTICLE_1, PARTICLE_2, ...)
+				permutations = EVENT_SYMMETRY_GROUP
+
+				[PARTICLE_1]
+				jets = (JET_1, JET_2, ...)
+				permutations = JET_SYMMETRY_GROUP
+
+				[PARTICLE_2]
+				jets = (JET_1, JET_2, ...)
+				permutations = JET_SYMMETRY_GROUP
+
+				...
+			\end{verbatim}
+
+			Example: for diHiggs event (h > b b~)
+			\begin{verbatim}
+				[SOURCE]
+				mass = log_normalize
+				pt = log_normalize
+				eta = normalize
+				phi = normalize
+
+				[EVENT]
+				particles = (h1, h2)
+				permutations = [(h1, h2)]
+
+				[h1]
+				jets = (b1, b2)
+				permutations = [(b1, b2)]
+
+				[h2]
+				jets = (b1, b2)
+				permutations = [(b1, b2)]			
+			\end{verbatim}
+
+			\item Create training dataset in HDF5 format.
+
+		\end{enumerate}
+	% subsection prepare_training_data (end)
+	\subsection{Training}% (fold)
+	\label{sub:training}
+		
+	% subsection training (end)	
+	\subsection{Training result}% (fold)
+	\label{sub:training_result}
+		Take diHiggs event as example:
+		
+		Event purity:
+		\begin{equation}
+			\epsilon^{\text{event}} \equiv \frac{\text{both Higgs have all jets correctly assigned}}{\text{events with two identifiable Higgs}} 
+		\end{equation}
+
+		h purity:
+		\begin{equation}
+			\epsilon^{\text{h}} \equiv \frac{\text{Higgs have all jets correctly assigned}}{\text{number of identifiable Higgs}} 
+		\end{equation}
+
+		For 100k diHiggs event, $\epsilon^{\text{event}} = 0.851, \epsilon^{\text{h}} = 0.922$
+	% subsection training_result (end)	
+% section spanet (end)	
+\section{Comparision for \texorpdfstring{pp $\to $ hhh}{pp to hhh} and gg \texorpdfstring{$\to $}{to} hhh}% (fold)
+\label{sec:comparision_for_pp_to_hhh_and_gg_to_hhh}
+	Generate pp->hhh in MadGraph by following commands:
+	\begin{verbatim}
+		import model cxSM_VLF_EFT
+		define p = p b b~
+		generate p p > h h h QCD<=8	
+	\end{verbatim}
+
+	Generate gg->hhh in MadGraph by following commands:
+	\begin{verbatim}
+		import model cxSM_VLF_EFT
+		generate g g > h h h	
+	\end{verbatim}
+
+	These events are generated in $\text{14 TeV}$. The cross section for pp->hhh and gg->hhh are $\text{11.22 fb}$ and $\text{11.08 fb}$, respectively. They only differ by 1\%.
+% section comparision_for_pp_to_hhh_and_gg_to_hhh (end)		
+\section{Comparision for \texorpdfstring{gg $\to $ hhh}{gg to hhh} and resonant channel}% (fold)
+\label{sec:comparision_for_gg_hhh_and_resonant_channel}
+
+	To compare gg->3h and resonant channel, I plot the $p_\text{T}$, $\eta$ and total invariant mass of 6 b-jets for both.
+
+	The number of events of 6 b-jets for gg->3h is 21,814 and for resonant channel is 21,475. The numbers are very close. I scaled the number of events for gg->3h to be the same as resonant channel.
+
+	Figure \ref{fig:signal_resonant_pt_eta_distribution_of_b_jets} is $p_\text{T}$ and $\eta$ distributions. Figure \ref{fig:signal_resonant_total_invariant_mass_of_b_jets} is total invariant mass of 6 b-jets distributions. Their distributions look similar.
+
+
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{Signal_PT_Eta_order_by_PT.png}
+		\caption{$p_\text{T}$ and $\eta$ distributions of b-jets for gg->3h and resonant channel. They are ordered by $p_\text{T}$.}
+		\label{fig:signal_resonant_pt_eta_distribution_of_b_jets}
+	\end{figure}
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.7\textwidth]{Signal_and_resonant_total_invariant_mass.png}
+		\caption{The distribution of total invariant mass of 6 b-jets for gg->3h and resonant channel.}
+		\label{fig:signal_resonant_total_invariant_mass_of_b_jets}
+	\end{figure}
+
+	I apply the cuts same in Sec.\ref{sec:cutflow_table_for_b_jets} and count how many events can pass these cuts. Table \ref{tab:cutflow_table_signal_and_resonant_bjet} is the result. Those results for both events are similar.
+	\begin{table}[htpb]
+		\centering
+		\caption{Number of events pass the selection cuts. Total number of events for gg->hhh and resonant channel both are 100,000.}
+		\label{tab:cutflow_table_signal_and_resonant_bjet}
+		\begin{tabular}{ccc}
+			Cut &  gg->3h & resonant channel \\
+			\hline
+			1 & 21,814 & 21,475\\
+			2 & 21,254 & 20,898\\
+			3 & 17,130 & 16,828\\
+			4 & 14,142 & 13,730
+		\end{tabular}	
+	\end{table}
+
+% section comparision_for_gg_hhh_and_resonant_channel (end)		
+\end{document} 
