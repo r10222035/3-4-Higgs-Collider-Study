@@ -178,7 +178,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 	\end{itemize}
 
 
-	Method 2 is better to identify the true Higgs pair.
+	Method 2 is better for identifying the true Higgs pair.
 % section construction_of_bb_pairs (end)
 
 \section{Absolute cross section}% (fold)
@@ -188,7 +188,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 		\sigma_\text{abs} = \sigma \times \frac{\text{number of events pass the cut}}{\text{number of events}}
 	\] 
 
-	I have generated background events with different cuts in MadGraph, the detailed information of cuts is in Table \ref{tab:cut_of_different_run}. I calculate their absolute cross section and check if it is same or not. The result is in Table \ref{tab:absolute_cross_section}.
+	I have generated background events with different cuts in MadGraph, the detailed information of cuts is in Table \ref{tab:cut_of_different_run}. I calculate their absolute cross section and check if it is the same or not. The result is in Table \ref{tab:absolute_cross_section}.
 
 	\begin{table}[htpb]
 		\centering
@@ -453,27 +453,64 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 			\item Create training dataset in HDF5 format.
 
+			\item Write option-file in JSON format.
+
 		\end{enumerate}
 	% subsection prepare_training_data (end)
 	\subsection{Training}% (fold)
 	\label{sub:training}
-		
+		Training:
+		\begin{verbatim}
+			python train.py -of <OPTIONS_FILE> --log_dir <LOG_DIR>  --name <NAME> --gpus 1
+		\end{verbatim}
+		\verb+<OPTIONS_FILE>+: JSON file with option overloads. \verb+<LOG_DIR>+: output directory. \verb+<NAME>+: subdirectory for this run. 
+
+		Evaluation:
+		\begin{verbatim}
+			python test.py <log_directory> --gpu
+		\end{verbatim}
+		\verb+<log_directory>+: directory containing the checkpoint and options file.
 	% subsection training (end)	
 	\subsection{Training result}% (fold)
 	\label{sub:training_result}
-		Take diHiggs event as example:
+		Figure \ref{fig:full_ttbar_result} is the training results for full ttbar events. 
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{full_ttbar_training_result.png}
+			\caption{The training result for full ttbar events.}
+			\label{fig:full_ttbar_result}
+		\end{figure}
+		The results are the same as the numbers given in the SPANet paper.
+
+		Figure \ref{fig:100k_diHiggs_result} is the training results for 100k diHiggs events. There are three types of events, 0h, 1h, 2h. The number means how many identifiable Higgs in a event.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{100k_diHigss.png}
+			\caption{The training result for 100k diHiggs events.}
+			\label{fig:100k_diHiggs_result}
+		\end{figure}
+
+		Event proportion:
+		\begin{equation}
+			\text{Event proportion} \equiv \frac{\text{number of some type events with $i$ jets}}{\text{number of events with $i$ jets}}
+		\end{equation}
+
+		Jet proportion:
+		\begin{equation}
+			\text{Jet proportion} \equiv \frac{\text{number of events with $i$ jets}}{\text{total number of events}}
+		\end{equation}
 		
 		Event purity:
 		\begin{equation}
-			\epsilon^{\text{event}} \equiv \frac{\text{both Higgs have all jets correctly assigned}}{\text{events with two identifiable Higgs}} 
+			\epsilon^{\text{event}} \equiv \frac{\text{number of some type events with and all Higgs are correctly identified}}{\text{number of some type events}} 
 		\end{equation}
 
-		h purity:
+		H purity:
 		\begin{equation}
-			\epsilon^{\text{h}} \equiv \frac{\text{Higgs have all jets correctly assigned}}{\text{number of identifiable Higgs}} 
+			\epsilon^{\text{h}} \equiv \frac{\text{number of correctly identified Higgs in some type events}}{\text{number of identifiable Higgs in some type events}} 
 		\end{equation}
 
-		For 100k diHiggs event, $\epsilon^{\text{event}} = 0.851, \epsilon^{\text{h}} = 0.922$
+		For 2h events, $\epsilon^{\text{event}} = 0.871, \epsilon^{\text{h}} = 0.933$.
 	% subsection training_result (end)	
 % section spanet (end)	
 \section{Comparision for \texorpdfstring{pp $\to $ hhh}{pp to hhh} and gg \texorpdfstring{$\to $}{to} hhh}% (fold)
@@ -491,14 +528,14 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		generate g g > h h h	
 	\end{verbatim}
 
-	These events are generated in $\text{14 TeV}$. The cross section for pp->hhh and gg->hhh are $\text{11.22 fb}$ and $\text{11.08 fb}$, respectively. They only differ by 1\%.
+	These events are generated in $\text{14 TeV}$ and the sample size are 100k. The cross section for pp->hhh and gg->hhh are $\text{11.22 fb}$ and $\text{11.11 fb}$, respectively. They only differ by 1\%.
 % section comparision_for_pp_to_hhh_and_gg_to_hhh (end)		
 \section{Comparision for \texorpdfstring{gg $\to $ hhh}{gg to hhh} and resonant channel}% (fold)
 \label{sec:comparision_for_gg_hhh_and_resonant_channel}
 
-	To compare gg->3h and resonant channel, I plot the $p_\text{T}$, $\eta$ and total invariant mass of 6 b-jets for both.
+	To compare gg->3h and resonant channel, I plot the $p_\text{T}$, $\eta$, and total invariant mass of 6 b-jets for both.
 
-	The number of events of 6 b-jets for gg->3h is 21,814 and for resonant channel is 21,475. The numbers are very close. I scaled the number of events for gg->3h to be the same as resonant channel.
+	The number of events of 6 b-jets for gg->3h is 21,814 and for the resonant channel is 21,475. The numbers are very close. I scaled the number of events for gg->3h to be the same as the resonant channel.
 
 	Figure \ref{fig:signal_resonant_pt_eta_distribution_of_b_jets} is $p_\text{T}$ and $\eta$ distributions. Figure \ref{fig:signal_resonant_total_invariant_mass_of_b_jets} is total invariant mass of 6 b-jets distributions. Their distributions look similar.
 
@@ -532,4 +569,184 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\end{table}
 
 % section comparision_for_gg_hhh_and_resonant_channel (end)		
+\section{Branching ratios and decay widths}% (fold)
+\label{sec:branching_ratios_and_decay_widths}
+	The branching ratios and decay widths are calculated by MadGraph and Mathematica notebook. Mathematica notebook does not include uu dd ss ee decay modes. Since the contribution of these modes is very small. 
+
+	Table \ref{tab:MG_decay_widths_BR} is calculated by MadGraph. Table \ref{tab:MA_decay_widths_BR} is calculated by Mathematica notebook.
+	\begin{table}[htpb]
+		\centering
+		\caption{Decay widths and branching ratios calulated by MadGraph at BP1.}
+		\label{tab:MG_decay_widths_BR}
+		\begin{tabular}{lll}
+								  & BR        & Width (GeV) \\
+			$\text{h}_2\to\text{h}_1\text{h}_1$ & 0.7506    & 0.085616    \\
+			$\text{h}_2\to\text{WW}$   & 0.1734    & 0.019782    \\
+			$\text{h}_2\to\text{ZZ}$   & 0.07548   & 0.0086097   \\
+			$\text{h}_2\to\text{bb}$   & 0.0004724 & 5.3887e-05  \\
+			$\text{h}_2\to\text{cc}$   & 3.455e-05 & 3.9407e-06  \\
+			$\text{h}_2\to\tau\tau$   & 2.254e-05 & 2.5714e-06  \\
+			$\text{h}_2\to\text{ss}$   & 2.185e-07 & 2.4927e-08  \\
+			$\text{h}_2\to\text{gg}$   & 1.561e-07 & 1.7811e-08  \\
+			$\text{h}_2\to\mu\mu$   & 7.972e-08 & 9.0933e-09  \\
+			$\text{h}_2\to\gamma\gamma$   & 6.495e-09 & 7.409e-10   \\
+			$\text{h}_2\to\gamma\text{Z}$   & 9.447e-10 & 1.0776e-10  \\
+			$\text{h}_2\to\text{dd}$   & 5.441e-10 & 6.207e-11   \\
+			$\text{h}_2\to\text{uu}$   & 1.393e-10 & 1.5889e-11  \\
+			$\text{h}_2\to\text{ee}$   & 1.865e-12 & 2.1269e-13  \\
+			\\
+			\\
+		\end{tabular}	
+		\begin{tabular}{lll}
+								  & BR        & Width (GeV) \\
+			$\text{h}_3\to\text{h}_1\text{h}_2$ & 0.6795    & 0.8414      \\
+			$\text{h}_3\to\text{h}_1\text{h}_1$ & 0.1711    & 0.21183     \\
+			$\text{h}_3\to\text{WW}$   & 0.08756   & 0.10842     \\
+			$\text{h}_3\to\text{ZZ}$   & 0.04102   & 0.050792    \\
+			$\text{h}_3\to\text{tt}$   & 0.02065   & 0.025569    \\
+			$\text{h}_3\to\text{gg}$   & 8.662e-05 & 0.00010725  \\
+			$\text{h}_3\to\text{bb}$   & 8.158e-05 & 0.00010102  \\
+			$\text{h}_3\to\text{cc}$   & 5.961e-06 & 7.3813e-06  \\
+			$\text{h}_3\to\tau\tau$   & 3.89e-06  & 4.8167e-06  \\
+			$\text{h}_3\to\gamma\gamma$   & 3.852e-07 & 4.7697e-07  \\
+			$\text{h}_3\to\gamma\text{Z}$   & 4.937e-08 & 6.1131e-08  \\
+			$\text{h}_3\to\text{ss}$   & 3.77e-08  & 4.6686e-08  \\
+			$\text{h}_3\to\mu\mu$   & 1.375e-08 & 1.7031e-08  \\
+			$\text{h}_3\to\text{dd}$   & 9.389e-11 & 1.1625e-10  \\
+			$\text{h}_3\to\text{uu}$   & 2.403e-11 & 2.976e-11   \\
+			$\text{h}_3\to\text{ee}$   & 3.217e-13 & 3.9835e-13 
+		\end{tabular}
+	\end{table}
+
+	\begin{table}[htpb]
+		\centering
+		\caption{Decay widths and branching ratios calulated by Mathematica at BP1.}
+		\label{tab:MA_decay_widths_BR}
+		\begin{tabular}{lll}
+									  & BR        & Width (GeV) \\
+			$\text{h}_2\to\text{h}_1\text{h}_1$     & 0.8321    & 0.1407      \\
+			$\text{h}_2\to\text{WW}$       & 0.1166    & 0.019721    \\
+			$\text{h}_2\to\text{ZZ}$       & 0.05108   & 0.0086386   \\
+			$\text{h}_2\to\text{gg}$       & 0.0001204 & 2.0359e-05  \\
+			$\text{h}_2\to\text{bb}$       & 9.91e-05  & 1.6758e-05  \\
+			$\text{h}_2\to\tau\tau$       & 1.526e-05 & 2.5802e-06  \\
+			$\text{h}_2\to\text{cc}$       & 4.59e-06  & 7.7613e-07  \\
+			$\text{h}_2\to\gamma\gamma$       & 3.161e-06 & 5.346e-07   \\
+			$\text{h}_2\to\gamma\text{Z}$       & 4.822e-07 & 8.154e-08   \\
+			$\text{h}_2\to\mu\mu$μμ       & 5.43e-08  & 9.1826e-09  \\
+			$\text{h}_2\to\text{tt}$       & 4.355e-19 & 7.3649e-20  \\
+			$\text{h}_2\to\text{h}_2\text{h}_2$     & 0.0       & 0.0            \\
+			$\text{h}_2\to\text{h}_1\text{h}_2$     & 0.0       & 0.0            \\
+			$\text{h}_2\to\chi\chi$       & 0.0       & 0.0        
+		\end{tabular}		
+		\begin{tabular}{lll}
+								  & BR        & Width (GeV) \\
+			$\text{h}_3\to\text{h}_1\text{h}_2$ & 0.8219    & 2.158       \\
+			$\text{h}_3\to\text{h}_1\text{h}_1$ & 0.1049    & 0.27543     \\
+			$\text{h}_3\to\text{WW}$   & 0.04131   & 0.10846     \\
+			$\text{h}_3\to\text{ZZ}$   & 0.01941   & 0.050962    \\
+			$\text{h}_3\to\text{tt}$   & 0.01242   & 0.032613    \\
+			$\text{h}_3\to\text{gg}$   & 6.364e-05 & 0.00016711  \\
+			$\text{h}_3\to\text{bb}$   & 1.195e-05 & 3.1386e-05  \\
+			$\text{h}_3\to\tau\tau$   & 1.841e-06 & 4.8326e-06  \\
+			$\text{h}_3\to\text{cc}$   & 5.536e-07 & 1.4536e-06  \\
+			$\text{h}_3\to\gamma\gamma$   & 1.823e-07 & 4.7857e-07  \\
+			$\text{h}_3\to\gamma\text{Z}$   & 2.334e-08 & 6.1277e-08  \\
+			$\text{h}_3\to\mu\mu$   & 6.55e-09  & 1.7198e-08  \\
+			$\text{h}_3\to\text{h}_2\text{h}_2$ & 0.0       & 0.0         \\
+			$\text{h}_3\to\chi\chi$   & 0.0       & 0.0        
+		\end{tabular}
+	\end{table}
+
+
+	The exact values from both are slightly different because MG can not correctly expand the parameter $\epsilon$ in the model.
+
+	Set the $\epsilon$ to $0.001$ and calculate again. The results are in Table \ref{tab:MG_decay_widths_BR_0001} and Table \ref{tab:MA_decay_widths_BR_0001}.
+
+	\begin{table}[htpb]
+		\centering
+		\caption{Decay widths and branching ratios calulated by MadGraph at BP1 with $\epsilon=0.001$.}
+		\label{tab:MG_decay_widths_BR_0001}
+		\begin{tabular}{lll}
+								  & BR        & Width (GeV) \\
+			$\text{h}_2\to\text{h}_1\text{h}_1$ & 0.8311    & 1.4041e-05  \\
+			$\text{h}_2\to\text{WW}$   & 0.1174    & 1.9835e-06  \\
+			$\text{h}_2\to\text{ZZ}$   & 0.0511    & 8.6329e-07  \\
+			$\text{h}_2\to\text{bb}$   & 0.0003198 & 5.4032e-09  \\
+			$\text{h}_2\to\text{cc}$   & 2.339e-05 & 3.9513e-10  \\
+			$\text{h}_2\to\tau\tau$   & 1.526e-05 & 2.5783e-10  \\
+			$\text{h}_2\to\text{ss}$   & 1.479e-07 & 2.4994e-12  \\
+			$\text{h}_2\to\mu\mu$μμ   & 5.397e-08 & 9.1178e-13  \\
+			$\text{h}_2\to\text{dd}$   & 3.684e-10 & 6.2237e-15  \\
+			$\text{h}_2\to\text{uu}$   & 9.431e-11 & 1.5932e-15  \\
+			$\text{h}_2\to\text{gg}$   & 1.056e-11 & 1.7841e-16  \\
+			$\text{h}_2\to\text{ee}$   & 1.262e-12 & 2.1326e-17  \\
+			$\text{h}_2\to\gamma\gamma$   & 4.393e-13 & 7.4213e-18  \\
+			$\text{h}_2\to\gamma\text{Z}$   & 6.389e-14 & 1.0794e-18 \\
+			\\
+			\\
+		\end{tabular}
+		\begin{tabular}{lll}
+								  & BR        & Width (GeV) \\
+			$\text{h}_3\to\text{h}_1\text{h}_2$ & 1.0       & 2.1493      \\
+			$\text{h}_3\to\text{h}_1\text{h}_1$ & 1.279e-05 & 2.748e-05   \\
+			$\text{h}_3\to\text{WW}$   & 5.058e-06 & 1.0871e-05  \\
+			$\text{h}_3\to\text{ZZ}$   & 2.369e-06 & 5.0929e-06  \\
+			$\text{h}_3\to\text{tt}$   & 1.193e-06 & 2.5638e-06  \\
+			$\text{h}_3\to\text{gg}$   & 5.007e-09 & 1.0761e-08  \\
+			$\text{h}_3\to\text{bb}$   & 4.713e-09 & 1.0129e-08  \\
+			$\text{h}_3\to\text{cc}$   & 3.443e-10 & 7.4011e-10  \\
+			$\text{h}_3\to\tau\tau$   & 2.247e-10 & 4.8297e-10  \\
+			$\text{h}_3\to\gamma\gamma$   & 2.227e-11 & 4.7857e-11  \\
+			$\text{h}_3\to\gamma\text{Z}$   & 2.854e-12 & 6.1335e-12  \\
+			$\text{h}_3\to\text{ss}$   & 2.178e-12 & 4.6812e-12  \\
+			$\text{h}_3\to\mu\mu$μμ   & 7.945e-13 & 1.7077e-12  \\
+			$\text{h}_3\to\text{dd}$   & 5.423e-15 & 1.1657e-14  \\
+			$\text{h}_3\to\text{uu}$   & 1.388e-15 & 2.984e-15   \\
+			$\text{h}_3\to\text{ee}$   & 1.858e-17 & 3.9942e-17 
+		\end{tabular}	
+	\end{table}
+
+	\begin{table}[htpb]
+		\centering
+		\caption{Decay widths and branching ratios calulated by Mathematica at BP1 with $\epsilon=0.001$.}
+		\label{tab:MA_decay_widths_BR_0001}
+		\begin{tabular}{lll}
+								  & BR        & Width (GeV) \\
+			$\text{h}_2\to\text{h}_1\text{h}_1$ & 0.8321    & 1.407e-05   \\
+			$\text{h}_2\to\text{WW}$   & 0.1166    & 1.9721e-06  \\
+			$\text{h}_2\to\text{ZZ}$   & 0.05108   & 8.6386e-07  \\
+			$\text{h}_2\to\text{gg}$   & 0.0001204 & 2.0359e-09  \\
+			$\text{h}_2\to\text{bb}$   & 9.91e-05  & 1.6758e-09  \\
+			$\text{h}_2\to\tau\tau$   & 1.526e-05 & 2.5802e-10  \\
+			$\text{h}_2\to\text{cc}$   & 4.59e-06  & 7.7613e-11  \\
+			$\text{h}_2\to\gamma\gamma$   & 3.161e-06 & 5.346e-11   \\
+			$\text{h}_2\to\gamma\text{Z}$  & 4.822e-07 & 8.154e-12   \\
+			$\text{h}_2\to\mu\mu$   & 5.43e-08  & 9.1826e-13  \\
+			$\text{h}_2\to\text{tt}$   & 4.355e-15 & 7.3649e-20  \\
+			$\text{h}_2\to\text{h}_2\text{h}_2$ & 0.0       & 0.0         \\
+			$\text{h}_2\to\text{h}_1\text{h}_2$ & 0.0       & 0.0         \\
+			$\text{h}_2\to\chi\chi$   & 0.0       & 0.0        
+		\end{tabular}
+		\begin{tabular}{lll}
+								  & BR        & Width (GeV) \\
+			$\text{h}_3\to\text{h}_1\text{h}_2$ & 1.0       & 2.158       \\
+			$\text{h}_3\to\text{h}_1\text{h}_1$ & 1.276e-05 & 2.7543e-05  \\
+			$\text{h}_3\to\text{WW}$   & 5.026e-06 & 1.0846e-05  \\
+			$\text{h}_3\to\text{ZZ}$   & 2.361e-06 & 5.0962e-06  \\
+			$\text{h}_3\to\text{tt}$   & 1.511e-06 & 3.2613e-06  \\
+			$\text{h}_3\to\text{gg}$   & 7.743e-09 & 1.6711e-08  \\
+			$\text{h}_3\to\text{bb}$   & 1.454e-09 & 3.1386e-09  \\
+			$\text{h}_3\to\tau\tau$   & 2.239e-10 & 4.8326e-10  \\
+			$\text{h}_3\to\text{cc}$   & 6.736e-11 & 1.4536e-10  \\
+			$\text{h}_3\to\gamma\gamma$   & 2.218e-11 & 4.7857e-11  \\
+			$\text{h}_3\to\gamma\text{Z}$   & 2.839e-12 & 6.1277e-12  \\
+			$\text{h}_3\to\mu\mu$   & 7.969e-13 & 1.7198e-12  \\
+			$\text{h}_3\to\text{h}_2\text{h}_2$ & 0.0       & 0.0         \\
+			$\text{h}_3\to\chi\chi$   & 0.0       & 0.0        
+		\end{tabular}
+	\end{table}
+	This time, the decay widths and branching ratios calculated by MG and Mathematica notebook become close.
+
+% section branching_ratios_and_decay_widths (end)	
 \end{document} 

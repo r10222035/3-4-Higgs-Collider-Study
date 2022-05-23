@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2020.11.22)  21 MAY 2022 13:05
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2020.11.22)  23 MAY 2022 22:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1222,31 +1222,48 @@ File: image/signal_resonant_6_b-jets_total_invariant_mass_correct.png Graphic f
 ile (type bmp)
 <image/signal_resonant_6_b-jets_total_invariant_mass_correct.png>
  [11] [12] [13] [14]
+Overfull \hbox (12.28485pt too wide) in paragraph at lines 464--464
+[]\TU/lmtt/m/n/12 python train.py -of <OPTIONS_FILE> --log_dir <LOG_DIR>  --nam
+e <NAME> --gpus 1 
+ []
+
+File: image/full_ttbar_training_result.png Graphic file (type bmp)
+<image/full_ttbar_training_result.png>
+File: image/100k_diHigss.png Graphic file (type bmp)
+<image/100k_diHigss.png>
+[15] [16] [17]
 File: image/Signal_PT_Eta_order_by_PT.png Graphic file (type bmp)
 <image/Signal_PT_Eta_order_by_PT.png>
 
 
-LaTeX Warning: Float too large for page by 38.40973pt on input line 511.
+LaTeX Warning: Float too large for page by 38.40973pt on input line 548.
 
 File: image/Signal_and_resonant_total_invariant_mass.png Graphic file (type bmp
 )
 <image/Signal_and_resonant_total_invariant_mass.png>
-[15] [16] [17]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 535.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 535.
+[18] [19]
+Missing character: There is no μ in font [lmroman12-regular]:mapping=tex-text;!
+Missing character: There is no μ in font [lmroman12-regular]:mapping=tex-text;!
+Missing character: There is no μ in font [lmroman12-regular]:mapping=tex-text;!
+Missing character: There is no μ in font [lmroman12-regular]:mapping=tex-text;!
+Missing character: There is no μ in font [lmroman12-regular]:mapping=tex-text;!
+Missing character: There is no μ in font [lmroman12-regular]:mapping=tex-text;!
+ [20] [21] [22] [23]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 752.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 752.
  (./note.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 535.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 535.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 752.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 752.
 Package rerunfilecheck Info: File `note.out' has not changed.
-(rerunfilecheck)             Checksum: 507A6409AA00829CD82DDEAA19BB713A;3319.
+(rerunfilecheck)             Checksum: 005ADEFB102D6A477B47105FAE7107C3;3541.
  ) 
 Here is how much of TeX's memory you used:
- 33936 strings out of 479418
- 725471 string characters out of 5884584
- 1070295 words of memory out of 5000000
- 50862 multiletter control sequences out of 15000+600000
- 549362 words of font info for 110 fonts, out of 8000000 for 9000
+ 33970 strings out of 479418
+ 726213 string characters out of 5884584
+ 1094170 words of memory out of 5000000
+ 50887 multiletter control sequences out of 15000+600000
+ 551095 words of font info for 118 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  59i,13n,95p,807b,999s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on note.pdf (17 pages).
+Output written on note.pdf (23 pages).
