@@ -397,122 +397,6 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 	Regenerate the signal and resonant event, the cross sections are $\text{11.1 fb}$ and $\text{10.39 fb}$, respectively. This channel is indeed dominated in the signal.
 % section the_cross_section_in_madgraph (end)	
-\section{SPANet}% (fold)
-\label{sec:spanet}
-	Code: \href{https://github.com/Alexanders101/SPANet}{Symmetry Preserving Attention Networks}
-
-	Symmetry Preserving Attention NETworks (Spa-Net) is used to do the jet assignment task. The jet assignment task is the identification of the original particle which leads to a reconstructed jet.
-
-	\subsection{Prepare training data}% (fold)
-	\label{sub:prepare_training_data}
-		\begin{enumerate}
-			\item Defining the event topology in \verb+.ini+ file. The structure of the \verb+.ini+ file follows this format:
-
-			\begin{verbatim}
-				[SOURCE]
-				FEATURE_1 = FEATURE_OPTION
-				FEATURE_2 = FEATURE_OPTION
-				FEATURE_3 = FEATURE_OPTION
-				...
-
-				[EVENT]
-				particles = (PARTICLE_1, PARTICLE_2, ...)
-				permutations = EVENT_SYMMETRY_GROUP
-
-				[PARTICLE_1]
-				jets = (JET_1, JET_2, ...)
-				permutations = JET_SYMMETRY_GROUP
-
-				[PARTICLE_2]
-				jets = (JET_1, JET_2, ...)
-				permutations = JET_SYMMETRY_GROUP
-
-				...
-			\end{verbatim}
-
-			Example: for diHiggs event (h > b b~)
-			\begin{verbatim}
-				[SOURCE]
-				mass = log_normalize
-				pt = log_normalize
-				eta = normalize
-				phi = normalize
-
-				[EVENT]
-				particles = (h1, h2)
-				permutations = [(h1, h2)]
-
-				[h1]
-				jets = (b1, b2)
-				permutations = [(b1, b2)]
-
-				[h2]
-				jets = (b1, b2)
-				permutations = [(b1, b2)]			
-			\end{verbatim}
-
-			\item Create training dataset in HDF5 format.
-
-			\item Write option-file in JSON format.
-
-		\end{enumerate}
-	% subsection prepare_training_data (end)
-	\subsection{Training}% (fold)
-	\label{sub:training}
-		Training:
-		\begin{verbatim}
-			python train.py -of <OPTIONS_FILE> --log_dir <LOG_DIR>  --name <NAME> --gpus 1
-		\end{verbatim}
-		\verb+<OPTIONS_FILE>+: JSON file with option overloads. \verb+<LOG_DIR>+: output directory. \verb+<NAME>+: subdirectory for this run. 
-
-		Evaluation:
-		\begin{verbatim}
-			python test.py <log_directory> --gpu
-		\end{verbatim}
-		\verb+<log_directory>+: directory containing the checkpoint and options file.
-	% subsection training (end)	
-	\subsection{Training result}% (fold)
-	\label{sub:training_result}
-		Figure \ref{fig:full_ttbar_result} is the training results for full ttbar events. 
-		\begin{figure}[htpb]
-			\centering
-			\includegraphics[width=0.8\textwidth]{full_ttbar_training_result.png}
-			\caption{The training result for full ttbar events.}
-			\label{fig:full_ttbar_result}
-		\end{figure}
-		The results are the same as the numbers given in the SPANet paper.
-
-		Figure \ref{fig:100k_diHiggs_result} is the training results for 100k diHiggs events. There are three types of events, 0h, 1h, 2h. The number means how many identifiable Higgs in a event.
-		\begin{figure}[htpb]
-			\centering
-			\includegraphics[width=0.8\textwidth]{100k_diHigss.png}
-			\caption{The training result for 100k diHiggs events.}
-			\label{fig:100k_diHiggs_result}
-		\end{figure}
-
-		Event proportion:
-		\begin{equation}
-			\text{Event proportion} \equiv \frac{\text{number of some type events with $i$ jets}}{\text{number of events with $i$ jets}}
-		\end{equation}
-
-		Jet proportion:
-		\begin{equation}
-			\text{Jet proportion} \equiv \frac{\text{number of events with $i$ jets}}{\text{total number of events}}
-		\end{equation}
-		
-		Event purity:
-		\begin{equation}
-			\epsilon^{\text{event}} \equiv \frac{\text{number of some type events with and all Higgs are correctly identified}}{\text{number of some type events}} 
-		\end{equation}
-
-		H purity:
-		\begin{equation}
-			\epsilon^{\text{h}} \equiv \frac{\text{number of correctly identified Higgs in some type events}}{\text{number of identifiable Higgs in some type events}} 
-		\end{equation}
-
-		For 2h events, $\epsilon^{\text{event}} = 0.871, \epsilon^{\text{h}} = 0.933$.
-	% subsection training_result (end)	
-% section spanet (end)	
 \section{Comparision for \texorpdfstring{pp $\to $ hhh}{pp to hhh} and gg \texorpdfstring{$\to $}{to} hhh}% (fold)
 \label{sec:comparision_for_pp_to_hhh_and_gg_to_hhh}
 	Generate pp->hhh in MadGraph by following commands:
@@ -532,10 +416,11 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 % section comparision_for_pp_to_hhh_and_gg_to_hhh (end)		
 \section{Comparision for \texorpdfstring{gg $\to $ hhh}{gg to hhh} and resonant channel}% (fold)
 \label{sec:comparision_for_gg_hhh_and_resonant_channel}
+	To compare $\text{gg $\to $ hhh}$ and resonant channel, I plot the $p_\text{T}$, $\eta$, and total invariant mass of 6 b-jets for both.
 
-	To compare gg->3h and resonant channel, I plot the $p_\text{T}$, $\eta$, and total invariant mass of 6 b-jets for both.
+	These events are generated in $\text{14 TeV}$ and the sample size are 100k. The cross section for gg->hhh and resonant channel are $\text{11.11 fb}$ and $\text{10.38 fb}$, respectively.
 
-	The number of events of 6 b-jets for gg->3h is 21,814 and for the resonant channel is 21,475. The numbers are very close. I scaled the number of events for gg->3h to be the same as the resonant channel.
+	The number of events of 6 b-jets for gg->hhh is 21,814 and for the resonant channel is 21,475. The numbers are very close. I scaled the number of events for gg->3h to be the same as the resonant channel.
 
 	Figure \ref{fig:signal_resonant_pt_eta_distribution_of_b_jets} is $p_\text{T}$ and $\eta$ distributions. Figure \ref{fig:signal_resonant_total_invariant_mass_of_b_jets} is total invariant mass of 6 b-jets distributions. Their distributions look similar.
 
@@ -617,7 +502,6 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			$\text{h}_3\to\text{ee}$   & 3.217e-13 & 3.9835e-13 
 		\end{tabular}
 	\end{table}
-
 	\begin{table}[htpb]
 		\centering
 		\caption{Decay widths and branching ratios calulated by Mathematica at BP1.}
@@ -635,9 +519,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			$\text{h}_2\to\gamma\text{Z}$       & 4.822e-07 & 8.154e-08   \\
 			$\text{h}_2\to\mu\mu$μμ       & 5.43e-08  & 9.1826e-09  \\
 			$\text{h}_2\to\text{tt}$       & 4.355e-19 & 7.3649e-20  \\
-			$\text{h}_2\to\text{h}_2\text{h}_2$     & 0.0       & 0.0            \\
 			$\text{h}_2\to\text{h}_1\text{h}_2$     & 0.0       & 0.0            \\
-			$\text{h}_2\to\chi\chi$       & 0.0       & 0.0        
 		\end{tabular}		
 		\begin{tabular}{lll}
 								  & BR        & Width (GeV) \\
@@ -653,11 +535,8 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			$\text{h}_3\to\gamma\gamma$   & 1.823e-07 & 4.7857e-07  \\
 			$\text{h}_3\to\gamma\text{Z}$   & 2.334e-08 & 6.1277e-08  \\
 			$\text{h}_3\to\mu\mu$   & 6.55e-09  & 1.7198e-08  \\
-			$\text{h}_3\to\text{h}_2\text{h}_2$ & 0.0       & 0.0         \\
-			$\text{h}_3\to\chi\chi$   & 0.0       & 0.0        
 		\end{tabular}
 	\end{table}
-
 
 	The exact values from both are slightly different because MG can not correctly expand the parameter $\epsilon$ in the model.
 
@@ -724,9 +603,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			$\text{h}_2\to\gamma\text{Z}$  & 4.822e-07 & 8.154e-12   \\
 			$\text{h}_2\to\mu\mu$   & 5.43e-08  & 9.1826e-13  \\
 			$\text{h}_2\to\text{tt}$   & 4.355e-15 & 7.3649e-20  \\
-			$\text{h}_2\to\text{h}_2\text{h}_2$ & 0.0       & 0.0         \\
 			$\text{h}_2\to\text{h}_1\text{h}_2$ & 0.0       & 0.0         \\
-			$\text{h}_2\to\chi\chi$   & 0.0       & 0.0        
 		\end{tabular}
 		\begin{tabular}{lll}
 								  & BR        & Width (GeV) \\
@@ -742,11 +619,187 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			$\text{h}_3\to\gamma\gamma$   & 2.218e-11 & 4.7857e-11  \\
 			$\text{h}_3\to\gamma\text{Z}$   & 2.839e-12 & 6.1277e-12  \\
 			$\text{h}_3\to\mu\mu$   & 7.969e-13 & 1.7198e-12  \\
-			$\text{h}_3\to\text{h}_2\text{h}_2$ & 0.0       & 0.0         \\
-			$\text{h}_3\to\chi\chi$   & 0.0       & 0.0        
 		\end{tabular}
 	\end{table}
 	This time, the decay widths and branching ratios calculated by MG and Mathematica notebook become close.
 
+	For color channels, they are still not so close, because in MadGraph it only calculate to LO, but the numbers in Mathematica notebook are calculated to NLO.
 % section branching_ratios_and_decay_widths (end)	
+\section{SPANet}% (fold)
+\label{sec:spanet}
+	Code: \href{https://github.com/Alexanders101/SPANet}{Symmetry Preserving Attention Networks}
+
+	Symmetry Preserving Attention NETworks (Spa-Net) is used to do the jet assignment task. The jet assignment task is the identification of the original particle which leads to a reconstructed jet.
+
+	\subsection{Prepare training data}% (fold)
+	\label{sub:prepare_training_data}
+		\begin{enumerate}
+			\item Defining the event topology in \verb+.ini+ file. The structure of the \verb+.ini+ file follows this format:
+
+			\begin{verbatim}
+				[SOURCE]
+				FEATURE_1 = FEATURE_OPTION
+				FEATURE_2 = FEATURE_OPTION
+				FEATURE_3 = FEATURE_OPTION
+				...
+
+				[EVENT]
+				particles = (PARTICLE_1, PARTICLE_2, ...)
+				permutations = EVENT_SYMMETRY_GROUP
+
+				[PARTICLE_1]
+				jets = (JET_1, JET_2, ...)
+				permutations = JET_SYMMETRY_GROUP
+
+				[PARTICLE_2]
+				jets = (JET_1, JET_2, ...)
+				permutations = JET_SYMMETRY_GROUP
+
+				...
+			\end{verbatim}
+
+			\item Create training dataset in HDF5 format.
+
+			\item Write option-file in JSON format.
+
+		\end{enumerate}
+	% subsection prepare_training_data (end)
+	\subsection{Training}% (fold)
+	\label{sub:training}
+		Training:
+		\begin{verbatim}
+			python train.py -of <OPTIONS_FILE> --log_dir <LOG_DIR>  --name <NAME> --gpus 1
+		\end{verbatim}
+		\verb+<OPTIONS_FILE>+: JSON file with option overloads. \verb+<LOG_DIR>+: output directory. \verb+<NAME>+: subdirectory for this run. 
+
+		Evaluation:
+		\begin{verbatim}
+			python test.py <log_directory> --gpu
+		\end{verbatim}
+		\verb+<log_directory>+: directory containing the checkpoint and options file.
+	% subsection training (end)	
+% section spanet (end)	
+\section{SPANet for ttbar event}% (fold)
+\label{sec:spanet_for_ttbar_event}
+	The training and testing datasets from here: \href{http://mlphysics.ics.uci.edu/data/2021_ttbar/}{Link}
+
+	For full ttbar event:
+	\begin{itemize}
+		\item Training sample:
+		\begin{itemize}
+			\item total sample size: 10,009,520
+			\item 2t sample size: 2,967,955
+		\end{itemize}
+		\item Testing sample size: 
+			\begin{itemize}
+				\item total sample size: 358,946
+				\item 2t sample size: 116,342
+			\end{itemize}
+	\end{itemize}
+
+	Figure \ref{fig:full_ttbar_result} is the training results for full ttbar events. 
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\textwidth]{full_ttbar_training_result.png}
+		\caption{The training result for full ttbar events.}
+		\label{fig:full_ttbar_result}
+	\end{figure}
+	The results are the same as the numbers given in the SPANet paper.
+
+% section spanet_for_ttbar_event (end)
+\section{SPANet for diHiggs event}% (fold)
+\label{sec:spanet_for_dihiggs_event}
+	\verb+.ini+ file for diHiggs event (h > b $\overline{\text{b}}$)
+	\begin{verbatim}
+		[SOURCE]
+		mass = log_normalize
+		pt = log_normalize
+		eta = normalize
+		phi = normalize
+
+		[EVENT]
+		particles = (h1, h2)
+		permutations = [(h1, h2)]
+
+		[h1]
+		jets = (b1, b2)
+		permutations = [(b1, b2)]
+
+		[h2]
+		jets = (b1, b2)
+		permutations = [(b1, b2)]			
+	\end{verbatim}
+
+	There are three types of events, 0h, 1h, 2h. The number means how many identifiable Higgs in a event.
+	
+	Event proportion:
+	\begin{equation}
+		\text{Event proportion} \equiv \frac{\text{number of some type events with $i$ jets}}{\text{number of events with $i$ jets}}
+	\end{equation}
+
+	Jet proportion:
+	\begin{equation}
+		\text{Jet proportion} \equiv \frac{\text{number of events with $i$ jets}}{\text{total number of events}}
+	\end{equation}
+	
+	Event purity:
+	\begin{equation}
+		\epsilon^{\text{event}} \equiv \frac{\text{number of some type events with and all Higgs are correctly identified}}{\text{number of some type events}} 
+	\end{equation}
+
+	H purity:
+	\begin{equation}
+		\epsilon^{\text{h}} \equiv \frac{\text{number of correctly identified Higgs in some type events}}{\text{number of identifiable Higgs in some type events}} 
+	\end{equation}
+
+	\subsection{100k diHiggs}% (fold)
+	\label{sub:100k_dihiggs}
+		For 100k diHiggs event:
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 78,785
+				\item 2h sample size: 36,765
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 8,753
+					\item 2h sample size: 4,130
+				\end{itemize}
+		\end{itemize}
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{100k_diHiggs.png}
+			\caption{The training result for 100k diHiggs events.}
+			\label{fig:100k_diHiggs_result}
+		\end{figure}
+		Figure \ref{fig:100k_diHiggs_result} is the training results for 100k diHiggs events. For 2h events, $\epsilon^{\text{event}} = 0.871, \epsilon^{\text{h}} = 0.933$.
+	
+	% subsection 100k_dihiggs (end)	
+
+	\subsection{1M diHiggs}% (fold)
+	\label{sub:1m_dihiggs}
+		For 1M diHiggs event:
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item total sample size: 788,160
+				\item 2h sample size: 364,773
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item total sample size: 87,702
+					\item 2h sample size: 40,695
+				\end{itemize}
+		\end{itemize}
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{1M_diHiggs.png}
+			\caption{The training result for 1M diHiggs events.}
+			\label{fig:1M_diHiggs_result}
+		\end{figure}
+
+		Figure \ref{fig:1M_diHiggs_result} is the training results for 1M diHiggs events. For 2h events, $\epsilon^{\text{event}} = 0.914, \epsilon^{\text{h}} = 0.955$.
+	% subsection 1m_dihiggs (end)
+% section spanet_for_dihiggs_event (end)
 \end{document} 
