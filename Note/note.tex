@@ -519,7 +519,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			$\text{h}_2\to\gamma\text{Z}$       & 4.822e-07 & 8.154e-08   \\
 			$\text{h}_2\to\mu\mu$μμ       & 5.43e-08  & 9.1826e-09  \\
 			$\text{h}_2\to\text{tt}$       & 4.355e-19 & 7.3649e-20  \\
-			$\text{h}_2\to\text{h}_1\text{h}_2$     & 0.0       & 0.0            \\
+			\\
 		\end{tabular}		
 		\begin{tabular}{lll}
 								  & BR        & Width (GeV) \\
@@ -534,7 +534,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			$\text{h}_3\to\text{cc}$   & 5.536e-07 & 1.4536e-06  \\
 			$\text{h}_3\to\gamma\gamma$   & 1.823e-07 & 4.7857e-07  \\
 			$\text{h}_3\to\gamma\text{Z}$   & 2.334e-08 & 6.1277e-08  \\
-			$\text{h}_3\to\mu\mu$   & 6.55e-09  & 1.7198e-08  \\
+			$\text{h}_3\to\mu\mu$   & 6.55e-09  & 1.7198e-08  
 		\end{tabular}
 	\end{table}
 
@@ -603,7 +603,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			$\text{h}_2\to\gamma\text{Z}$  & 4.822e-07 & 8.154e-12   \\
 			$\text{h}_2\to\mu\mu$   & 5.43e-08  & 9.1826e-13  \\
 			$\text{h}_2\to\text{tt}$   & 4.355e-15 & 7.3649e-20  \\
-			$\text{h}_2\to\text{h}_1\text{h}_2$ & 0.0       & 0.0         \\
+			\\
 		\end{tabular}
 		\begin{tabular}{lll}
 								  & BR        & Width (GeV) \\
@@ -618,12 +618,12 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			$\text{h}_3\to\text{cc}$   & 6.736e-11 & 1.4536e-10  \\
 			$\text{h}_3\to\gamma\gamma$   & 2.218e-11 & 4.7857e-11  \\
 			$\text{h}_3\to\gamma\text{Z}$   & 2.839e-12 & 6.1277e-12  \\
-			$\text{h}_3\to\mu\mu$   & 7.969e-13 & 1.7198e-12  \\
+			$\text{h}_3\to\mu\mu$   & 7.969e-13 & 1.7198e-12  
 		\end{tabular}
 	\end{table}
 	This time, the decay widths and branching ratios calculated by MG and Mathematica notebook become close.
 
-	For color channels, they are still not so close, because in MadGraph it only calculate to LO, but the numbers in Mathematica notebook are calculated to NLO.
+	For color channels, they are still doesn't look the same. The reason is that in MadGraph it only calculates to LO, but the numbers in Mathematica notebook are calculated to NLO.
 % section branching_ratios_and_decay_widths (end)	
 \section{SPANet}% (fold)
 \label{sec:spanet}
@@ -677,6 +677,11 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			python test.py <log_directory> --gpu
 		\end{verbatim}
 		\verb+<log_directory>+: directory containing the checkpoint and options file.
+		\begin{verbatim}
+			python test.py <log_directory> -tf <TEST_FILE> --gpu
+		\end{verbatim}
+		\verb+<TEST_FILE>+ will replace the test file in option file.
+
 	% subsection training (end)	
 % section spanet (end)	
 \section{SPANet for ttbar event}% (fold)
@@ -687,12 +692,12 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\begin{itemize}
 		\item Training sample:
 		\begin{itemize}
-			\item total sample size: 10,009,520
+			\item Total sample size: 10,009,520
 			\item 2t sample size: 2,967,955
 		\end{itemize}
 		\item Testing sample size: 
 			\begin{itemize}
-				\item total sample size: 358,946
+				\item Total sample size: 358,946
 				\item 2t sample size: 116,342
 			\end{itemize}
 	\end{itemize}
@@ -707,9 +712,16 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	The results are the same as the numbers given in the SPANet paper.
 
 % section spanet_for_ttbar_event (end)
-\section{SPANet for diHiggs event}% (fold)
+\section{SPANet for di-Higgs event}% (fold)
 \label{sec:spanet_for_dihiggs_event}
-	\verb+.ini+ file for diHiggs event (h > b $\overline{\text{b}}$)
+	Generate di-Higgs events in MadGraph by following commands:
+	\begin{verbatim}
+		import model 2HDMtII_NLO
+		generate p p > h2 [QCD] QED<=99 QCD<=99	
+	\end{verbatim}
+	then use the MadSpin let h2 decay to h1h1 and h1 decay to b$\overline{\text{b}}$. The mass of h2 is $\text{1000 GeV}$.
+
+	The \verb+.ini+ file for di-Higgs event (h > b $\overline{\text{b}}$)
 	\begin{verbatim}
 		[SOURCE]
 		mass = log_normalize
@@ -731,35 +743,50 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\end{verbatim}
 
 	There are three types of events, 0h, 1h, 2h. The number means how many identifiable Higgs in a event.
+
+	Definition of some parameters:
+	\begin{itemize}
+		\item 	Event proportion:
+		\begin{equation}
+			\text{Event proportion} \equiv \frac{\text{number of some type events with $i$ jets}}{\text{number of events with $i$ jets}}
+		\end{equation}
+
+		\item Jet proportion:
+		\begin{equation}
+			\text{Jet proportion} \equiv \frac{\text{number of events with $i$ jets}}{\text{total number of events}}
+		\end{equation}
+		
+		\item Event purity:
+		\begin{equation}
+			\epsilon^{\text{event}} \equiv \frac{\text{number of some type events with and all Higgs are correctly identified}}{\text{number of some type events}} 
+		\end{equation}
+
+		\item H purity:
+		\begin{equation}
+			\epsilon^{\text{h}} \equiv \frac{\text{number of correctly identified Higgs in some type events}}{\text{number of identifiable Higgs in some type events}} 
+		\end{equation}
+	\end{itemize}
+
+	\subsection{Training sample for di-Higgs events}% (fold)
+	\label{sub:training_sample_for_dihiggs_events}
+		Di-Higgs events pp->h2, h2->hh, h->bb was generated at $\sqrt{s}= \text{14 TeV}$ using MadGraph. Then pass these events to Pythia8 for showering and hadronization. Then pass to Delphes for detector simulation.
 	
-	Event proportion:
-	\begin{equation}
-		\text{Event proportion} \equiv \frac{\text{number of some type events with $i$ jets}}{\text{number of events with $i$ jets}}
-	\end{equation}
+		Jets are reconstructed by the anti-kT algorithm with radius $R=0.5$ and are required to have $p_\text{T}\ge \text{20 GeV}$.
 
-	Jet proportion:
-	\begin{equation}
-		\text{Jet proportion} \equiv \frac{\text{number of events with $i$ jets}}{\text{total number of events}}
-	\end{equation}
-	
-	Event purity:
-	\begin{equation}
-		\epsilon^{\text{event}} \equiv \frac{\text{number of some type events with and all Higgs are correctly identified}}{\text{number of some type events}} 
-	\end{equation}
+		Preselection requirements: $\ge 4$ jets in  $\abs{\eta}<2.5$.
 
-	H purity:
-	\begin{equation}
-		\epsilon^{\text{h}} \equiv \frac{\text{number of correctly identified Higgs in some type events}}{\text{number of identifiable Higgs in some type events}} 
-	\end{equation}
+		Define the correct jet assignments by matching them to the simulated truth quarks within an angular distance of $\Delta R = \sqrt{\Delta\eta^2 + \Delta\phi^2}<0.4$.
+	% subsection training_sample_for_dihiggs_events (end)
 
-	\subsection{100k diHiggs}% (fold)
-	\label{sub:100k_dihiggs}
-		For 100k diHiggs event:
+	\subsection{Training result for di-Higgs event}% (fold)
+	\label{sub:training_result_for_dihiggs_event}
+		For 100k di-Higgs event with $m_{\text{h}_2} = \text{1000 GeV}$:
 		\begin{itemize}
 			\item Training sample:
 			\begin{itemize}
 				\item Total sample size: 78,785
 				\item 2h sample size: 36,765
+				\item 5\% used on validation
 			\end{itemize}
 			\item Testing sample: 
 				\begin{itemize}
@@ -770,36 +797,123 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.8\textwidth]{100k_diHiggs.png}
-			\caption{The training result for 100k diHiggs events.}
+			\caption{The training result for 100k di-Higgs events.}
 			\label{fig:100k_diHiggs_result}
 		\end{figure}
-		Figure \ref{fig:100k_diHiggs_result} is the training results for 100k diHiggs events. For 2h events, $\epsilon^{\text{event}} = 0.871, \epsilon^{\text{h}} = 0.933$.
-	
-	% subsection 100k_dihiggs (end)	
+		Figure \ref{fig:100k_diHiggs_result} is the training results for 100k di-Higgs events. For 2h events, $\epsilon^{\text{event}} = 0.871, \epsilon^{\text{h}} = 0.933$.
 
-	\subsection{1M diHiggs}% (fold)
-	\label{sub:1m_dihiggs}
-		For 1M diHiggs event:
+		For 1M di-Higgs event with $m_{\text{h}_2} = \text{1000 GeV}$:
 		\begin{itemize}
 			\item Training sample:
 			\begin{itemize}
-				\item total sample size: 788,160
+				\item Total sample size: 788,160
 				\item 2h sample size: 364,773
+				\item 5\% used on validation
 			\end{itemize}
 			\item Testing sample: 
 				\begin{itemize}
-					\item total sample size: 87,702
+					\item Total sample size: 87,702
 					\item 2h sample size: 40,695
 				\end{itemize}
 		\end{itemize}
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.8\textwidth]{1M_diHiggs.png}
-			\caption{The training result for 1M diHiggs events.}
+			\caption{The training result for 1M di-Higgs events.}
 			\label{fig:1M_diHiggs_result}
 		\end{figure}
 
-		Figure \ref{fig:1M_diHiggs_result} is the training results for 1M diHiggs events. For 2h events, $\epsilon^{\text{event}} = 0.914, \epsilon^{\text{h}} = 0.955$.
-	% subsection 1m_dihiggs (end)
+		Figure \ref{fig:1M_diHiggs_result} is the training results for 1M di-Higgs events. For 2h events, $\epsilon^{\text{event}} = 0.914, \epsilon^{\text{h}} = 0.955$.
+
+		For di-Higgs event with $m_{\text{h}_2} = \text{500 GeV}$:
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 764,676
+				\item 2h sample size: 396,588
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 84,687
+					\item 2h sample size: 43,818
+				\end{itemize}
+		\end{itemize}
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{1M_diHiggs_500_GeV.png}
+			\caption{The training result for di-Higgs events with $m_{\text{h}_2} = \text{500 GeV}$.}
+			\label{fig:1M_500_GeV_diHiggs_result}
+		\end{figure}
+
+		Figure \ref{fig:1M_500_GeV_diHiggs_result} is the training results for $\text{500 GeV}$ di-Higgs events. For 2h events, $\epsilon^{\text{event}} = 0.779, \epsilon^{\text{h}} = 0.871$.
+
+	% subsection training_result_for_dihiggs_event (end)
+
+	\subsection{Apply the pre-trained model on different \texorpdfstring{$m_{\text{h}_2}$}{mh2} sample}% (fold)
+	\label{sub:apply_the_pre_trained_model_on_different_mh2_sample}
+		The SPANet models in Sec.\ref{sub:training_result_for_dihiggs_event} are trained on $m_{\text{h}_2} = \text{500 GeV}$ and $m_{\text{h}_2} = \text{1000 GeV}$. Test these models on samples with $m_{\text{h}_2} = \text{500 GeV}$, $ \text{750 GeV}$, $\text{1000 GeV}$.
+
+		The results are summarized in Table \ref{tab:SPANet_test_on_different_h2_mass}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPANet models test on different $m_{\text{h}_2}$ samples.}
+			\label{tab:SPANet_test_on_different_h2_mass}
+			\begin{tabular}{cccc}
+				Training $m_{\text{h}_2}$ (GeV) & Testing $m_{\text{h}_2}$ (GeV) & Event purity & H purity \\
+				\hline 
+				500      & 500     & 0.779        & 0.871    \\
+				500      & 750     & 0.408        & 0.672    \\
+				500      & 1000    &  0.390      &  0.665    \\
+				1000     & 500    & 0.383        & 0.638   \\
+				1000     & 750    & 0.731        & 0.860   \\
+				1000     & 1000    & 0.914        & 0.955   
+			\end{tabular}
+		\end{table}
+	% subsection apply_the_pre_trained_model_on_different_mh2_sample (end)
+
 % section spanet_for_dihiggs_event (end)
+\section{SPANet for tri-Higgs event}% (fold)
+\label{sec:spanet_for_trihiggs_event}
+	The tri-Higgs events are signal events (gg->hhh) generated in previous.
+
+	\subsection{Training sample for tri-Higgs event}% (fold)
+	\label{sub:training_sample_for_trihiggs_event}
+		TriHiggs events gg->hhh was generated at $\sqrt{s} = \text{14 TeV}$ using MadGraph. Then pass these events to Pythia8 for showering and hadronization. In Pythia8, the Higgs are forced to decay to b$\overline{\text{b}}$. Then pass to Delphes for detector simulation.
+	
+		Jets are reconstructed by the anti-kT algorithm with radius $R=0.5$ and are required to have $p_\text{T}\ge \text{20 GeV}$.
+
+		Preselection requirements: $\ge 6$ jets in  $\abs{\eta}<2.5$.
+
+		Define the correct jet assignments by matching them to the simulated truth quarks within an angular distance of $\Delta R = \sqrt{\Delta\eta^2 + \Delta\phi^2}<0.4$.
+	% subsection training_sample_for_dihiggs_event (end)
+
+	\subsection{Training result for tri-Higgs event}% (fold)
+	\label{sub:training_result_for_trihiggs_event}
+		For 1M tri-Higgs event:
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 542,681
+				\item 3h sample size: 104,467
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 60,173
+					\item 3h sample size: 11,598
+				\end{itemize}
+		\end{itemize}
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{1M_triHiggs.png}
+			\caption{The training result for 1M tri-Higgs events.}
+			\label{fig:1M_triHiggs_result}
+		\end{figure}
+
+		Figure \ref{fig:1M_triHiggs_result} is the training results for 1M tri-Higgs events. For 3h events, $\epsilon^{\text{event}} = 0.344, \epsilon^{\text{h}} = 0.538$.
+
+	% subsection training_result_for_trihiggs_event (end)	
+
+% section spanet_for_trihiggs_event (end)		
 \end{document} 
