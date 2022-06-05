@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-# python to_Training_data_diHiggs.py <root file path> <output file name>
+# python to_Training_data_diHiggs_b.py <root file path> <output file name> <minimum b-jet>
 
 import uproot
 import numpy as np
@@ -71,12 +71,14 @@ def DeltaR(eta1,phi1, eta2,phi2):
     dR = (dPhi**2 + dEta**2)**0.5
     return dR
     
-def create_diHiggs_dataset(f, nevent, MAX_JETS):
+def create_diHiggs_dataset_b(f, nevent, MAX_JETS):
+    # with b-tagging information
     f.create_dataset('source/mask', (nevent, MAX_JETS), maxshape=(None, MAX_JETS), dtype='|b1')
     f.create_dataset('source/pt', (nevent, MAX_JETS), maxshape=(None, MAX_JETS), dtype='<f4')
     f.create_dataset('source/eta', (nevent, MAX_JETS), maxshape=(None, MAX_JETS), dtype='<f4')
     f.create_dataset('source/phi', (nevent, MAX_JETS), maxshape=(None, MAX_JETS), dtype='<f4')
     f.create_dataset('source/mass', (nevent, MAX_JETS), maxshape=(None, MAX_JETS), dtype='<f4')
+    f.create_dataset('source/btag', (nevent, MAX_JETS), maxshape=(None, MAX_JETS), dtype='|b1')
 
     f.create_dataset('h1/mask', (nevent,), maxshape=(None,), dtype='|b1')
     f.create_dataset('h1/b1', (nevent,), maxshape=(None,), dtype='<i8')
@@ -113,16 +115,20 @@ def resize_h5(file_path, nevent):
                 f[group][dataset].resize(shape)
     print(f"{file_path} resize to {nevent}")
     
-def main(file_path, output_name, nevent_max=1000000):
+def main(file_path, output_name, nbj_min=2, nevent_max=1000000):
+    # with b-tagging information
+    nbj_min = int(nbj_min)
 
     root_file = uproot.open(file_path)["Delphes;1"]
     GenParticle = BranchGenParticles(root_file)
+    
     MAX_JETS = 10
 
     jet_PT = root_file["Jet.PT"].array()
     jet_Eta = root_file["Jet.Eta"].array()
     jet_Phi = root_file["Jet.Phi"].array()
     jet_Mass = root_file["Jet.Mass"].array()
+    jet_BTag = root_file["Jet.BTag"].array()
 
     nevent = min(len(jet_PT), nevent_max)
 
@@ -138,8 +144,8 @@ def main(file_path, output_name, nevent_max=1000000):
 
     with h5py.File(train_file_path, "w") as f_train, h5py.File(test_file_path, "w") as f_test:
 
-        create_diHiggs_dataset(f_train, n_train, MAX_JETS)
-        create_diHiggs_dataset(f_test, n_test, MAX_JETS)
+        create_diHiggs_dataset_b(f_train, n_train, MAX_JETS)
+        create_diHiggs_dataset_b(f_test, n_test, MAX_JETS)
 
         for event in tqdm(range(nevent)):
 
@@ -178,13 +184,19 @@ def main(file_path, output_name, nevent_max=1000000):
             eta_cut_index = np.array(np.abs(jet_Eta[event])<2.5)
 
             nj = eta_cut_index.astype("int").sum()
+            nbj = np.array(jet_BTag[event][eta_cut_index]).sum()
+            
             # 至少要 4 jet
             if nj<4: continue
-
+                
+            # 至少要 2 b-jet
+            if nbj<nbj_min: continue
+                
             PT = np.array(jet_PT[event][eta_cut_index])
             Eta = np.array(jet_Eta[event][eta_cut_index])
             Phi = np.array(jet_Phi[event][eta_cut_index])
             Mass = np.array(jet_Mass[event][eta_cut_index])
+            BTag = np.array(jet_BTag[event][eta_cut_index])
 
             # 找出每個夸克配對的 jet
             for quark in range(len(quarks_Jet)):
@@ -200,6 +212,7 @@ def main(file_path, output_name, nevent_max=1000000):
                 "source/eta": Eta[:MAX_JETS] if nj>MAX_JETS else np.pad(Eta, (0,MAX_JETS-nj)),
                 "source/phi": Phi[:MAX_JETS] if nj>MAX_JETS else np.pad(Phi, (0,MAX_JETS-nj)),
                 "source/mass": Mass[:MAX_JETS] if nj>MAX_JETS else np.pad(Mass, (0,MAX_JETS-nj)),
+                "source/btag": BTag[:MAX_JETS] if nj>MAX_JETS else np.pad(BTag, (0,MAX_JETS-nj)),
 
                 "h1/mask": get_particle_mask(quarks_Jet, quarks_index=(0,1)),
                 "h2/mask": get_particle_mask(quarks_Jet, quarks_index=(2,3)),
@@ -224,4 +237,4 @@ def main(file_path, output_name, nevent_max=1000000):
 if __name__ == '__main__':
     if len(sys.argv)<2: print("No input file.")
         
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], sys.argv[3])
