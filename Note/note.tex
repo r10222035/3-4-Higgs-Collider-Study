@@ -916,4 +916,35 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	% subsection training_result_for_trihiggs_event (end)	
 
 % section spanet_for_trihiggs_event (end)		
+
+\section{\texorpdfstring{$\chi^2$}{chi square} method}% (fold)
+\label{sec:chi_2_method}
+	\subsection{Di-Higgs}% (fold)
+	\label{sub:di_higgs}
+		Try all possible combination of final jets and find the minimal mass difference between SM Higgs mass, i.e. minimize this
+		\begin{equation}
+			\chi^2 = [M(j_1j_2)-M_\text{H}]^2 + [M(j_3j_4)-M_\text{H}]^2
+		\end{equation}
+		where $M(j_ij_j)$ means the invariant mass of jet $i$ and jet $j$.
+
+		The results is presented in Table \ref{tab:comparison_SPANet_and_chi2}.
+
+		\begin{table}[htpb]
+			\centering
+			\caption{Performance comparison for di-Higgs events.}
+			\label{tab:comparison_SPANet_and_chi2}
+			\begin{tabular}{c|c|cc|cc}
+					  & Event    & \multicolumn{2}{|c|}{SPANet Efficiency} & \multicolumn{2}{|c}{ $\chi^2$ Efficiency} \\
+				$N_\text{Jet}$ & Fraction & Event             & Higgs             & Event            & Higgs           \\
+				\hline
+				$=4$	  &   0.224       &     1.000       &   1.000       &   1.000           &    1.000             \\
+				$=5$	  &   0.334       &     0.950       &   0.975       &   0.675           &    0.737            \\
+				$\ge 6$	  &   0.442       &     0.844       &   0.918		&   0.313           &    0.441            \\
+				Total	  &   1.000       &     0.914       &   0.955       &   0.582           &    0.665            
+			\end{tabular}
+		\end{table}
+
+	% subsection di_higgs (end)
+		
+% section chi_2_method (end)
 \end{document} 
