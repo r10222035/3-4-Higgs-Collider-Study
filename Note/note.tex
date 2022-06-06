@@ -623,7 +623,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\end{table}
 	This time, the decay widths and branching ratios calculated by MG and Mathematica notebook become close.
 
-	For color channels, they are still doesn't look the same. The reason is that in MadGraph it only calculates to LO, but the numbers in Mathematica notebook are calculated to NLO.
+	For color channels, they still don't look the same. The reason is that in MadGraph only calculates to LO, but the numbers in the Mathematica notebook are calculated to NLO.
 % section branching_ratios_and_decay_widths (end)	
 \section{SPANet}% (fold)
 \label{sec:spanet}
@@ -742,7 +742,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		permutations = [(b1, b2)]			
 	\end{verbatim}
 
-	There are three types of events, 0h, 1h, 2h. The number means how many identifiable Higgs in a event.
+	There are three types of events, 0h, 1h, and 2h. The number means how many identifiable Higgs is in an event.
 
 	Definition of some parameters:
 	\begin{itemize}
@@ -875,11 +875,11 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 % section spanet_for_dihiggs_event (end)
 \section{SPANet for tri-Higgs event}% (fold)
 \label{sec:spanet_for_trihiggs_event}
-	The tri-Higgs events are signal events (gg->hhh) generated in previous.
+	The tri-Higgs events are signal events (gg->hhh) generated in the previous.
 
 	\subsection{Training sample for tri-Higgs event}% (fold)
 	\label{sub:training_sample_for_trihiggs_event}
-		TriHiggs events gg->hhh was generated at $\sqrt{s} = \text{14 TeV}$ using MadGraph. Then pass these events to Pythia8 for showering and hadronization. In Pythia8, the Higgs are forced to decay to b$\overline{\text{b}}$. Then pass to Delphes for detector simulation.
+		Tri-Higgs events gg->hhh was generated at $\sqrt{s} = \text{14 TeV}$ using MadGraph. Then pass these events to Pythia8 for showering and hadronization. In Pythia8, the Higgs is forced to decay to b$\overline{\text{b}}$. Then pass to Delphes for detector simulation.
 	
 		Jets are reconstructed by the anti-kT algorithm with radius $R=0.5$ and are required to have $p_\text{T}\ge \text{20 GeV}$.
 
@@ -945,6 +945,236 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\end{table}
 
 	% subsection di_higgs (end)
-		
 % section chi_2_method (end)
+
+\section{SPANet for di-Higgs events with b-tag}% (fold)
+\label{sec:spanet_for_di_higgs_events_with_b_tag}
+	In this section, SPANet will take the b-tagging information.
+
+	The \verb+.ini+ file for di-Higgs event
+	\begin{verbatim}
+		[SOURCE]
+		mass = log_normalize
+		pt = log_normalize
+		eta = normalize
+		phi = normalize
+		btag = none
+
+		[EVENT]
+		particles = (h1, h2)
+		permutations = [(h1, h2)]
+
+		[h1]
+		jets = (b1, b2)
+		permutations = [(b1, b2)]
+
+		[h2]
+		jets = (b1, b2)
+		permutations = [(b1, b2)]			
+	\end{verbatim}
+
+	For training data preparation is almost same in Sec.\ref{sub:training_sample_for_dihiggs_events}. 2 b-tagged jets or 4 b-tagged jets will be required in the following training data. The default b-tagging efficiency in Delphes is 
+	\begin{equation}
+		\text{eff.} = 0.85 \tanh(0.0025p_\text{T}) \frac{25.0}{1+0.063p_\text{T}}		
+	\end{equation}
+
+	\subsection{Training result for di-Higgs event}% (fold)
+	\label{sub:training_result_for_di_higgs_event_b}
+
+		\paragraph{Case 1:} $\ge 0$ b-tagged jets, b-tagging efficiency: 100\% 
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 788,108
+				\item 2h sample size: 364,717
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 87,748
+					\item 2h sample size: 40,635
+				\end{itemize}
+		\end{itemize}
+		The training results for Case 1 is presented in Table \ref{tab:SPANet_0btag_100}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on di-Higgs with at least 0 b-tagged jets (b-tagging efficiency: 100\%).}
+			\label{tab:SPANet_0btag_100}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.224             &    1.000              &    1.000             \\
+				$=5$	  &   0.333             &    0.981              &    0.990             \\
+				$\ge 6$	  &   0.443             &    0.948              &    0.973             \\
+				Total	  &   1.000             &    0.970              &    0.985             \\
+			\end{tabular}
+		\end{table}
+
+		\paragraph{Case 2:} $\ge 2$ b-tagged jets, b-tagging efficiency: 100\% 
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 787,097
+				\item 2h sample size: 364,717
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 87,641
+					\item 2h sample size: 40,635
+				\end{itemize}
+		\end{itemize}
+		The training results for Case 2 is presented in Table \ref{tab:SPANet_2btag_100}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on di-Higgs with at least 2 b-tagged jets (b-tagging efficiency: 100\%).}
+			\label{tab:SPANet_2btag_100}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.224             &    1.000              &    1.000             \\
+				$=5$	  &   0.333             &    0.984              &    0.992             \\
+				$\ge 6$	  &   0.443             &    0.953              &    0.976             \\
+				Total	  &   1.000             &    0.974              &    0.987             \\
+			\end{tabular}
+		\end{table}
+
+		\paragraph{Case 3:}$\ge 4$ b-tagged jets, b-tagging efficiency: 100\%
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 454,768
+				\item 2h sample size: 363,904
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 50,735
+					\item 2h sample size: 40,541
+				\end{itemize}
+		\end{itemize}
+		The training results for Case 3 is presented in Table \ref{tab:SPANet_4btag_100}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on di-Higgs with at least 4 b-tagged jets (b-tagging efficiency: 100\%).}
+			\label{tab:SPANet_4btag_100}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.224             &    1.000              &  1.000               \\
+				$=5$	  &   0.333             &    0.980              &  0.990               \\
+				$\ge 6$	  &   0.443             &    0.946              &  0.972               \\
+				Total	  &   1.000             &    0.969              &  0.984               \\
+			\end{tabular}
+		\end{table}
+
+		\paragraph{Case 4:}$\ge 0$ b-tagged jets, b-tagging efficiency: default 
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 788,160
+				\item 2h sample size: 364,773
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 87,702
+					\item 2h sample size: 40,695
+				\end{itemize}
+		\end{itemize}
+		The training results for Case 4 is presented in Table \ref{tab:SPANet_0btag_default}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on di-Higgs with at least 0 b-tagged jets (b-tagging efficiency: default)}
+			\label{tab:SPANet_0btag_default}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.224             &     1.000             &  1.000        \\
+				$=5$	  &   0.334             &     0.961             &  0.981        \\
+				$\ge 6$	  &   0.442             &     0.887             &  0.941        \\
+				Total	  &   1.000             &     0.937             &  0.968        \\
+			\end{tabular}
+		\end{table}
+
+		\paragraph{Case 5:}$\ge 2$ b-tagged jets, b-tagging efficiency: default 
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 633,726
+				\item 2h sample size: 328,427
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 70,436
+					\item 2h sample size: 36,742
+				\end{itemize}
+		\end{itemize}
+		The training results for Case 5 is presented in Table \ref{tab:SPANet_2btag_default}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on di-Higgs with at least 2 b-tagged jets (b-tagging efficiency: default)}
+			\label{tab:SPANet_2btag_default}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.223             &     1.000             &  1.000        \\
+				$=5$	  &   0.332             &     0.964             &  0.982        \\
+				$\ge 6$	  &   0.445             &     0.891             &  0.943        \\
+				Total	  &   1.000             &     0.939             &  0.969        \\
+			\end{tabular}
+		\end{table}
+
+		\paragraph{Case 6:}$\ge 4$ b-tagged jets, b-tagging efficiency: default 
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 108,266
+				\item 2h sample size: 87,196
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 11,992
+					\item 2h sample size: 9,643
+				\end{itemize}
+		\end{itemize}
+
+		The training results for Case 6 is presented in Table \ref{tab:SPANet_4btag_default}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on di-Higgs with at least 4 b-tagged jets (b-tagging efficiency: default)}
+			\label{tab:SPANet_4btag_default}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.200      &    1.000    &   1.000  \\
+				$=5$	  &   0.318      &    0.950    &   0.975  \\
+				$\ge 6$	  &   0.482      &    0.865    &   0.930  \\
+				Total	  &   1.000      &    0.919    &   0.958  \\
+			\end{tabular}
+		\end{table}
+
+		Table \ref{tab:comparision_btag_results} is the summary for b-tag training results.
+		\begin{table}[htpb]
+			\centering
+			\caption{Summary for b-tag training results. 2b means at least 2 b-tagged jets. 100\% and default are the b-tagging efficiency in Delphes.}
+			\label{tab:comparision_btag_results}
+			\begin{tabular}{c|cc}
+				Case & Event Efficiency & Higgs Efficiency \\
+				\hline
+				no b-tag	 &     0.914     &    0.955    \\
+				0b 100\%	 &     0.970     &    0.985    \\
+				2b 100\%	 &     0.974     &    0.987    \\
+				4b 100\%	 &     0.969     &    0.984    \\
+				0b default	 &     0.937     &    0.968    \\
+				2b default	 &     0.939     &    0.969    \\
+				4b default	 &     0.919     &    0.958    \\
+			\end{tabular}
+		\end{table}
+
+	% subsection training_result_for_di_higgs_event_b (end)
+
+% section spanet_for_di_higgs_events_with_b_tag (end)		
 \end{document} 
