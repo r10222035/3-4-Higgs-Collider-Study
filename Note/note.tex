@@ -922,12 +922,12 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\subsection{Di-Higgs}% (fold)
 	\label{sub:di_higgs}
 		Try all possible combination of final jets and find the minimal mass difference between SM Higgs mass, i.e. minimize this
-		\begin{equation}
+		\begin{equation}\label{eq:diHiggs_chisq}
 			\chi^2 = [M(j_1j_2)-M_\text{H}]^2 + [M(j_3j_4)-M_\text{H}]^2
 		\end{equation}
 		where $M(j_ij_j)$ means the invariant mass of jet $i$ and jet $j$.
 
-		The results is presented in Table \ref{tab:comparison_SPANet_and_chi2}.
+		The results are presented in Table \ref{tab:comparison_SPANet_and_chi2}.
 
 		\begin{table}[htpb]
 			\centering
@@ -945,6 +945,44 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\end{table}
 
 	% subsection di_higgs (end)
+	\subsection{Di-Higgs with b-tag}% (fold)
+	\label{sub:di_higgs_with_b_tag}
+		Similarly, try to minimize (\ref{eq:diHiggs_chisq}), but only try all possible permutation of b-tagged jets. Here, we only consider the events with $\ge 4$ b-jets.
+
+		The results are presented in Table \ref{tab:comparison_SPANet_and_chi2_diHiggs_with_btag_100} and Table \ref{tab:comparison_SPANet_and_chi2_diHiggs_with_btag_default}.
+
+		\begin{table}[htpb]
+			\centering
+			\caption{Performance comparison for di-Higgs events with $\ge 4$ b-jets (b-tagging efficiency = 100\%).}
+			\label{tab:comparison_SPANet_and_chi2_diHiggs_with_btag_100}
+			\begin{tabular}{c|c|cc|cc}
+					  & Event    & \multicolumn{2}{|c|}{SPANet Efficiency} & \multicolumn{2}{|c}{ $\chi^2$ Efficiency} \\
+				$N_\text{Jet}$ & Fraction & Event             & Higgs             & Event            & Higgs           \\
+				\hline
+				$=4$	  &   0.224       &     1.000       &   1.000       &   1.000           &    1.000          \\
+				$=5$	  &   0.334       &     0.980       &   0.990       &   0.974           &    0.979          \\
+				$\ge 6$	  &   0.442       &     0.946       &   0.972		&   0.916           &    0.933          \\
+				Total	  &   1.000       &     0.969       &   0.984       &   0.954           &    0.963            
+			\end{tabular}
+		\end{table}
+
+		\begin{table}[htpb]
+			\centering
+			\caption{Performance comparison for di-Higgs events with $\ge 4$ b-jets (b-tagging efficiency = default).}
+			\label{tab:comparison_SPANet_and_chi2_diHiggs_with_btag_default}
+			\begin{tabular}{c|c|cc|cc}
+					  & Event    & \multicolumn{2}{|c|}{SPANet Efficiency} & \multicolumn{2}{|c}{ $\chi^2$ Efficiency} \\
+				$N_\text{Jet}$ & Fraction & Event             & Higgs             & Event            & Higgs           \\
+				\hline
+				$=4$	  &   0.200       &     1.000       &   1.000       &   1.000           &    1.000          \\
+				$=5$	  &   0.318       &     0.950       &   0.975       &   0.892           &    0.914          \\
+				$\ge 6$	  &   0.482       &     0.865       &   0.930		&   0.725           &    0.776          \\
+				Total	  &   1.000       &     0.919       &   0.958       &   0.833           &    0.865            
+			\end{tabular}
+		\end{table}
+
+
+	% subsection di_higgs_with_b_tag (end)	
 % section chi_2_method (end)
 
 \section{SPANet for di-Higgs events with b-tag}% (fold)
@@ -986,12 +1024,14 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\item Training sample:
 			\begin{itemize}
 				\item Total sample size: 788,108
+				\item 1h sample size: 357,082
 				\item 2h sample size: 364,717
 				\item 5\% used on validation
 			\end{itemize}
 			\item Testing sample: 
 				\begin{itemize}
 					\item Total sample size: 87,748
+					\item 1h sample size: 39,816
 					\item 2h sample size: 40,635
 				\end{itemize}
 		\end{itemize}
@@ -1015,12 +1055,14 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\item Training sample:
 			\begin{itemize}
 				\item Total sample size: 787,097
+				\item 1h sample size: 357,078
 				\item 2h sample size: 364,717
 				\item 5\% used on validation
 			\end{itemize}
 			\item Testing sample: 
 				\begin{itemize}
 					\item Total sample size: 87,641
+					\item 1h sample size: 39,816
 					\item 2h sample size: 40,635
 				\end{itemize}
 		\end{itemize}
@@ -1044,12 +1086,14 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\item Training sample:
 			\begin{itemize}
 				\item Total sample size: 454,768
+				\item 1h sample size: 85,074
 				\item 2h sample size: 363,904
 				\item 5\% used on validation
 			\end{itemize}
 			\item Testing sample: 
 				\begin{itemize}
 					\item Total sample size: 50,735
+					\item 1h sample size: 9,547
 					\item 2h sample size: 40,541
 				\end{itemize}
 		\end{itemize}
@@ -1073,12 +1117,14 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\item Training sample:
 			\begin{itemize}
 				\item Total sample size: 788,160
+				\item 1h sample size: 357,137
 				\item 2h sample size: 364,773
 				\item 5\% used on validation
 			\end{itemize}
 			\item Testing sample: 
 				\begin{itemize}
 					\item Total sample size: 87,702
+					\item 1h sample size: 39,659
 					\item 2h sample size: 40,695
 				\end{itemize}
 		\end{itemize}
@@ -1102,12 +1148,14 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\item Training sample:
 			\begin{itemize}
 				\item Total sample size: 633,726
+				\item 1h sample size: 270,325
 				\item 2h sample size: 328,427
 				\item 5\% used on validation
 			\end{itemize}
 			\item Testing sample: 
 				\begin{itemize}
 					\item Total sample size: 70,436
+					\item 1h sample size: 29,847
 					\item 2h sample size: 36,742
 				\end{itemize}
 		\end{itemize}
@@ -1131,12 +1179,14 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\item Training sample:
 			\begin{itemize}
 				\item Total sample size: 108,266
+				\item 1h sample size: 19,808
 				\item 2h sample size: 87,196
 				\item 5\% used on validation
 			\end{itemize}
 			\item Testing sample: 
 				\begin{itemize}
 					\item Total sample size: 11,992
+					\item 1h sample size: 2,205
 					\item 2h sample size: 9,643
 				\end{itemize}
 		\end{itemize}
@@ -1161,16 +1211,16 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\centering
 			\caption{Summary for b-tag training results. 2b means at least 2 b-tagged jets. 100\% and default are the b-tagging efficiency in Delphes.}
 			\label{tab:comparision_btag_results}
-			\begin{tabular}{c|cc}
-				Case & Event Efficiency & Higgs Efficiency \\
+			\begin{tabular}{c|cc|c}
+				Case & Event Efficiency & Higgs Efficiency & Training sample \\
 				\hline
-				no b-tag	 &     0.914     &    0.955    \\
-				0b 100\%	 &     0.970     &    0.985    \\
-				2b 100\%	 &     0.974     &    0.987    \\
-				4b 100\%	 &     0.969     &    0.984    \\
-				0b default	 &     0.937     &    0.968    \\
-				2b default	 &     0.939     &    0.969    \\
-				4b default	 &     0.919     &    0.958    \\
+				no b-tag	         &  $0.914 \pm 0.0005$   &  $0.955 \pm 0.0002$  &  364,773	\\
+				$\ge 0$ b 100\%	     &  $0.970 \pm 0.0003$   &  $0.985 \pm 0.0001$  &  364,717	\\
+				$\ge 2$ b 100\%	     &  $0.974 \pm 0.0003$   &  $0.987 \pm 0.0001$  &  364,717	\\
+				$\ge 4$ b 100\%	     &  $0.969 \pm 0.0003$   &  $0.984 \pm 0.0001$  &  363,904	\\
+				$\ge 0$ b default	 &  $0.937 \pm 0.0004$   &  $0.968 \pm 0.0002$  &  357,137	\\
+				$\ge 2$ b default	 &  $0.939 \pm 0.0004$   &  $0.969 \pm 0.0002$  &  328,427	\\
+				$\ge 4$ b default	 &  $0.919 \pm 0.0009$   &  $0.958 \pm 0.0005$  &  87,196	\\
 			\end{tabular}
 		\end{table}
 
