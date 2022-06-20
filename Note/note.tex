@@ -1593,6 +1593,73 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\end{tabular}
 		\end{table}
 
+		\paragraph{Case 9:} Without b-tagging information.
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 519,404
+				\item 1h sample size: 168,781
+				\item 2h sample size: 175,235
+				\item 3h sample size: 112,740
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 57,744
+					\item 1h sample size: 18,447
+					\item 2h sample size: 19,572
+					\item 3h sample size: 12,655
+				\end{itemize}
+		\end{itemize}
+		The training results for Case 9 is presented in Table \ref{tab:SPANet_triHiggs_no_btag}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on tri-Higgs without b-tagging information.}
+			\label{tab:SPANet_triHiggs_no_btag}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=6$	  &   0.062             &    0.600              &    0.703             \\
+				$=7$	  &   0.076             &    0.343              &    0.557             \\
+				$\ge 8$	  &   0.081             &    0.172              &    0.415             \\
+				Total	  &   0.219             &    0.351              &    0.545             \\
+			\end{tabular}
+		\end{table}
+
+		\paragraph{Case 10:} $\ge 6$ b-tagged jets, b-tagging efficiency: default
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 200,020
+				\item 1h sample size: 32,269
+				\item 2h sample size: 55,500
+				\item 3h sample size: 106,820
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 22,351
+					\item 1h sample size: 3,639
+					\item 2h sample size: 6,161
+					\item 3h sample size: 11,908
+				\end{itemize}
+		\end{itemize}
+		The training results for Case 10 is presented in Table \ref{tab:SPANet_triHiggs_6btag_default_10M}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on tri-Higgs with at least 6 b-tagged jets (b-tagging efficiency: default).}
+			\label{tab:SPANet_triHiggs_6btag_default_10M}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=6$	  &   0.099             &    0.631              &    0.729             \\
+				$=7$	  &   0.164             &    0.435              &    0.604             \\
+				$\ge 8$	  &   0.269             &    0.272              &    0.481             \\
+				Total	  &   0.533             &    0.389              &    0.565             \\
+			\end{tabular}
+		\end{table}
+
+
 		Table \ref{tab:comparision_triHiggs_results} is the summary for tri-Higgs training results.
 		\begin{table}[htpb]
 			\centering
@@ -1608,11 +1675,38 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 				$\ge 0$ b default	 &  $0.384 \pm 0.0043$   &  $0.564 \pm 0.0025$  &  12,655	\\
 				$\ge 2$ b default	 &  $0.383 \pm 0.0044$   &  $0.562 \pm 0.0026$  &  12,321	\\
 				$\ge 4$ b default	 &  $0.367 \pm 0.0053$   &  $0.549 \pm 0.0032$  &  8,124	\\
-				$\ge 6$ b default	 &  $0.290 \pm 0.0034$   &  $0.417 \pm 0.0084$  &  1,153	\\
+				$\ge 6$ b default	 &  $0.290 \pm 0.0134$   &  $0.417 \pm 0.0084$  &  1,153	\\
+				$\ge 6$ b default	 &  $0.389 \pm 0.0045$   &  $0.565 \pm 0.0026$  &  11,908	\\
+				no b-tag			 &  $0.351 \pm 0.0042$   &  $0.545 \pm 0.0026$  &  12,655	\\
 			\end{tabular}
 		\end{table}
 
 
 	% subsection trainging_result_for_tri_higgs_events (end)	
+	\subsection{Training curve}% (fold)
+	\label{sub:training_curve}
+		Figure \ref{fig:loss_and_accuracy_curve_no_btag_50_ep} and \ref{fig:loss_and_accuracy_curve_no_btag_100_ep} are the traning curves for Case 9. After 50 epoch, the validation accuracy has not improved much.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.9\textwidth]{loss_and_accuracy_curve_no_btag.png}
+			\caption{The 50 epoch training curves for Case 9.}
+			\label{fig:loss_and_accuracy_curve_no_btag_50_ep}
+		\end{figure}
+
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.9\textwidth]{loss_and_accuracy_curve_no_btag_100_ep.png}
+			\caption{The 100 epoch training curves for Case 9.}
+			\label{fig:loss_and_accuracy_curve_no_btag_100_ep}
+		\end{figure}
+
+		Figure \ref{fig:loss_and_accuracy_curve_6b_default} is the traning curves for Case 10. 
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.9\textwidth]{loss_and_accuracy_curve_6b_default.png}
+			\caption{The training curves for Case 10 (6b default).}
+			\label{fig:loss_and_accuracy_curve_6b_default}
+		\end{figure}
+	% subsection training_curve (end)	
 % section spanet_for_tri_higgs_events_with_b_tag (end)		
 \end{document} 
