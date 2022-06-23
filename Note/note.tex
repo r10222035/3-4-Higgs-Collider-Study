@@ -1659,6 +1659,38 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\end{tabular}
 		\end{table}
 
+		\paragraph{Case 11:} $\ge 0$ b-tagged jets, b-tagging efficiency: default
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 2,597,986
+				\item 1h sample size: 842,297
+				\item 2h sample size: 877,590
+				\item 3h sample size: 564,989
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 289,131
+					\item 1h sample size: 93,303
+					\item 2h sample size: 98,004
+					\item 3h sample size: 62,944
+				\end{itemize}
+		\end{itemize}
+		The training results for Case 11 is presented in Table \ref{tab:SPANet_triHiggs_0btag_default_5M}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on tri-Higgs with at least 0 b-tagged jets (b-tagging efficiency: default).}
+			\label{tab:SPANet_triHiggs_0btag_default_5M}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=6$	  &   0.060             &    0.642              &    0.735             \\
+				$=7$	  &   0.075             &    0.445              &    0.619             \\
+				$\ge 8$	  &   0.081             &    0.293              &    0.511             \\
+				Total	  &   0.218             &    0.443              &    0.611             \\
+			\end{tabular}
+		\end{table}
 
 		Table \ref{tab:comparision_triHiggs_results} is the summary for tri-Higgs training results.
 		\begin{table}[htpb]
@@ -1676,8 +1708,9 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 				$\ge 2$ b default	 &  $0.383 \pm 0.0044$   &  $0.562 \pm 0.0026$  &  12,321	\\
 				$\ge 4$ b default	 &  $0.367 \pm 0.0053$   &  $0.549 \pm 0.0032$  &  8,124	\\
 				$\ge 6$ b default	 &  $0.290 \pm 0.0134$   &  $0.417 \pm 0.0084$  &  1,153	\\
-				$\ge 6$ b default	 &  $0.389 \pm 0.0045$   &  $0.565 \pm 0.0026$  &  11,908	\\
 				no b-tag			 &  $0.351 \pm 0.0042$   &  $0.545 \pm 0.0026$  &  12,655	\\
+				$\ge 6$ b default	 &  $0.389 \pm 0.0045$   &  $0.565 \pm 0.0026$  &  11,908	\\
+				$\ge 0$ b default	 &  $0.443 \pm 0.0020$   &  $0.611 \pm 0.0011$  &  62,944	\\
 			\end{tabular}
 		\end{table}
 
@@ -1707,6 +1740,83 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\caption{The training curves for Case 10 (6b default).}
 			\label{fig:loss_and_accuracy_curve_6b_default}
 		\end{figure}
-	% subsection training_curve (end)	
+	% subsection training_curve (end)
+	\subsection{Test on different dataset}% (fold)
+	\label{sub:test_on_different_dataset}
+		For example, use Case 11 samples for training and test on Case 9 samples. The results are presented in Table \ref{tab:SPANet_test_on_different_triHiggs_data}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPANet test on different samples.}
+			\label{tab:SPANet_test_on_different_triHiggs_data}
+			\begin{tabular}{cccc}
+				Training samples & Testing samples & Event efficiency & Higgs efficiency \\
+				\hline 
+				0b default      & 0b default     & 0.443        & 0.611    \\
+				0b default      & 2b default     & 0.445        & 0.612    \\
+				0b default      & 4b default     & 0.450        & 0.616    \\
+				0b default      & 6b default     & 0.428        & 0.599    \\
+			\end{tabular}
+		\end{table}	
+	% subsection test_on_different_dataset (end)	
 % section spanet_for_tri_higgs_events_with_b_tag (end)		
+\section{Hyperparameters}% (fold)
+\label{sec:hyperparameters}
+	Some hyperparameters of SPANet:
+	\begin{itemize}
+		\item Learning rate: 0.0004
+		\item Central encoder count: 6
+		\item Branch encoder count: 3
+		\item Dropout percentage: 0.0
+		\item L2 weight normalization: 0.0002
+		\item L2 gradient clipping: 0.0
+	\end{itemize}
+	the above values are used in Sec.\ref{sec:spanet_for_tri_higgs_events_with_b_tag}.
+	\subsection{Scan hyperparameters}% (fold)
+	\label{sub:scan_hyperparameters}
+		In below, use the 0b default samples (Sec.\ref{sub:trainging_result_for_tri_higgs_events}, Case 5) for hyperparameter scan.
+
+		\paragraph{Learning rate} Range: $[0.0003,  0.0030]$. Step size: $0.0003$. Figure \ref{fig:SPANet_scan_lr} is the scanning results. When learning rate greater than 0.0006 the model can not be trained.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.6\textwidth]{accuracy_curve_hp_scan_lr.png}
+			\caption{SPANet training results for different learning rate.}
+			\label{fig:SPANet_scan_lr}
+		\end{figure}
+
+		\paragraph{Central encoder count} Range: $[2,6]$. Step size: $1$. Figure \ref{fig:SPANet_scan_n_cen} is the scanning results. When central encoder layers equal to 2 or 4, the model  will get the best performance at the first 10 epochs.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.6\textwidth]{accuracy_curve_hp_scan_n_cen.png}
+			\caption{SPANet training results for different central encoder layers.}
+			\label{fig:SPANet_scan_n_cen}
+		\end{figure}
+
+		\paragraph{Branch encoder count} Range: $[2,7]$. Step size: $1$. Figure \ref{fig:SPANet_scan_n_bren} is the scanning results. When branch encoder layers equal to 2 or 4, the model  will get the best performance at the first 10 epochs.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.6\textwidth]{accuracy_curve_hp_scan_n_bren.png}
+			\caption{SPANet training results for different branch encoder layers.}
+			\label{fig:SPANet_scan_n_bren}
+		\end{figure}
+
+	% subsection scan_hyperparameters (end)
+	\subsection{Training results for different hyperparamers}% (fold)
+	\label{sub:training_results_for_different_hyperparamers}
+		In this section, use the 0b default samples (Sec.\ref{sub:trainging_result_for_tri_higgs_events}, Case 5) for training. Train 50 epochs. Table \ref{tab:SPANet_hp_50ep} is the training results for different hyperparameters.
+		
+		\begin{table}[htpb]
+			\centering
+			\caption{SPANet training results for different hyperparameters.}
+			\label{tab:SPANet_hp_50ep}
+			\begin{tabular}{cccc|cc}
+			 & Central encoder & Branch encoder & learning rate & Event efficiency & Higgs efficiency \\
+			 \hline
+			 &    6             &     3           &  0.0004             &   0.386               &    0.567              \\
+			 &    2             &     2           &  0.0006             &   0.395               &    0.571              \\
+			 &    4             &     4           &  0.0006             &   0.362               &    0.547             \\
+			 &    4             &     2           &  0.0006             &   0.386               &    0.567             
+			\end{tabular}
+		\end{table}
+	% subsection training_results_for_different_hyperparamers (end)	
+% section hyperparameters (end)		
 \end{document} 
