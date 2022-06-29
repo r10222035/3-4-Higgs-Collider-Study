@@ -1692,25 +1692,59 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\end{tabular}
 		\end{table}
 
+		\paragraph{Case 12:} $\ge 0$ b-tagged jets, b-tagging efficiency: default
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 5,194,850
+				\item 1h sample size: 1,681,832
+				\item 2h sample size: 1,754,176
+				\item 3h sample size: 1,132,044
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 578,248
+					\item 1h sample size: 186,731
+					\item 2h sample size: 195,461
+					\item 3h sample size: 126,154
+				\end{itemize}
+		\end{itemize}
+		The training results for Case 12 is presented in Table \ref{tab:SPANet_triHiggs_0btag_default_10M}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET results on tri-Higgs with at least 0 b-tagged jets (b-tagging efficiency: default).}
+			\label{tab:SPANet_triHiggs_0btag_default_10M}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=6$	  &   0.061             &    0.669              &    0.755             \\
+				$=7$	  &   0.075             &    0.478              &    0.643             \\
+				$\ge 8$	  &   0.082             &    0.322              &    0.531             \\
+				Total	  &   0.218             &    0.473              &    0.632             \\
+			\end{tabular}
+		\end{table}
+
 		Table \ref{tab:comparision_triHiggs_results} is the summary for tri-Higgs training results.
 		\begin{table}[htpb]
 			\centering
-			\caption{Summary for tri-Higgs training results. 100\% and default are the b-tagging efficiency in Delphes.}
+			\caption{Summary for tri-Higgs training results. Tagging eff. is the b-tagging efficiency in Delphes.}
 			\label{tab:comparision_triHiggs_results}
-			\begin{tabular}{c|cc|c}
-				Case & Event Efficiency & Higgs Efficiency & Testing sample \\
+			\begin{tabular}{c|cc|cc|c}
+				Case & $N_{\text{bjet}}$& Tagging eff. & Event Efficiency & Higgs Efficiency & Testing sample \\
 				\hline
-				$\ge 0$ b 100\%	     &  $0.510 \pm 0.0044$   &  $0.644 \pm 0.0025$  &  12,679	\\
-				$\ge 2$ b 100\%	     &  $0.537 \pm 0.0044$   &  $0.665 \pm 0.0024$  &  12,679	\\
-				$\ge 4$ b 100\%	     &  $0.539 \pm 0.0044$   &  $0.668 \pm 0.0024$  &  12,679	\\
-				$\ge 6$ b 100\%	     &  $0.534 \pm 0.0044$   &  $0.662 \pm 0.0024$  &  12,639	\\
-				$\ge 0$ b default	 &  $0.384 \pm 0.0043$   &  $0.564 \pm 0.0025$  &  12,655	\\
-				$\ge 2$ b default	 &  $0.383 \pm 0.0044$   &  $0.562 \pm 0.0026$  &  12,321	\\
-				$\ge 4$ b default	 &  $0.367 \pm 0.0053$   &  $0.549 \pm 0.0032$  &  8,124	\\
-				$\ge 6$ b default	 &  $0.290 \pm 0.0134$   &  $0.417 \pm 0.0084$  &  1,153	\\
-				no b-tag			 &  $0.351 \pm 0.0042$   &  $0.545 \pm 0.0026$  &  12,655	\\
-				$\ge 6$ b default	 &  $0.389 \pm 0.0045$   &  $0.565 \pm 0.0026$  &  11,908	\\
-				$\ge 0$ b default	 &  $0.443 \pm 0.0020$   &  $0.611 \pm 0.0011$  &  62,944	\\
+				1&$\ge 0$ & 100\%	     &  $0.510 \pm 0.0044$   &  $0.644 \pm 0.0025$  &  12,679	\\
+				2&$\ge 2$ & 100\%	     &  $0.537 \pm 0.0044$   &  $0.665 \pm 0.0024$  &  12,679	\\
+				3&$\ge 4$ & 100\%	     &  $0.539 \pm 0.0044$   &  $0.668 \pm 0.0024$  &  12,679	\\
+				4&$\ge 6$ & 100\%	     &  $0.534 \pm 0.0044$   &  $0.662 \pm 0.0024$  &  12,639	\\
+				5&$\ge 0$ & default	     &  $0.384 \pm 0.0043$   &  $0.564 \pm 0.0025$  &  12,655	\\
+				6&$\ge 2$ & default	     &  $0.383 \pm 0.0044$   &  $0.562 \pm 0.0026$  &  12,321	\\
+				7&$\ge 4$ & default	     &  $0.367 \pm 0.0053$   &  $0.549 \pm 0.0032$  &  8,124	\\
+				8&$\ge 6$ & default	     &  $0.290 \pm 0.0134$   &  $0.417 \pm 0.0084$  &  1,153	\\
+				9& \multicolumn{2}{|c|}{No b-tag}			     &  $0.351 \pm 0.0042$   &  $0.545 \pm 0.0026$  &  12,655	\\
+				10&$\ge 6$ & default	 &  $0.389 \pm 0.0045$   &  $0.565 \pm 0.0026$  &  11,908	\\
+				11&$\ge 0$ & default	 &  $0.443 \pm 0.0020$   &  $0.611 \pm 0.0011$  &  62,944	\\
+				12&$\ge 0$ & default	 &  $0.473 \pm 0.0014$   &  $0.632 \pm 0.0008$  &  126,154	\\
 			\end{tabular}
 		\end{table}
 
@@ -1743,20 +1777,95 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	% subsection training_curve (end)
 	\subsection{Test on different dataset}% (fold)
 	\label{sub:test_on_different_dataset}
-		For example, use Case 11 samples for training and test on Case 9 samples. The results are presented in Table \ref{tab:SPANet_test_on_different_triHiggs_data}.
+		For example, use Case 5 samples for training and test on Case 5, 6, 7, 8 samples. The results are presented in Table \ref{tab:SPANet_1M_0b_default_test_on_different_triHiggs_data}.
 		\begin{table}[htpb]
 			\centering
-			\caption{SPANet test on different samples.}
-			\label{tab:SPANet_test_on_different_triHiggs_data}
-			\begin{tabular}{cccc}
+			\caption{0b SPANet test on different samples.}
+			\label{tab:SPANet_1M_0b_default_test_on_different_triHiggs_data}
+			\begin{tabular}{cc|cc}
 				Training samples & Testing samples & Event efficiency & Higgs efficiency \\
 				\hline 
-				0b default      & 0b default     & 0.443        & 0.611    \\
-				0b default      & 2b default     & 0.445        & 0.612    \\
-				0b default      & 4b default     & 0.450        & 0.616    \\
-				0b default      & 6b default     & 0.428        & 0.599    \\
+				0b default      & 0b default     & 0.386        & 0.567    \\
+				0b default      & 2b default     & 0.387        & 0.568    \\
+				0b default      & 4b default     & 0.391        & 0.571    \\
+				0b default      & 6b default     & 0.366        & 0.550    \\
 			\end{tabular}
 		\end{table}	
+
+		Use Case 6 samples for training and test on Case 5, 6, 7, 8 samples. The results are presented in Table \ref{tab:SPANet_1M_2b_default_test_on_different_triHiggs_data}.
+		\begin{table}[htpb]
+			\centering
+			\caption{2b SPANet test on different samples.}
+			\label{tab:SPANet_1M_2b_default_test_on_different_triHiggs_data}
+			\begin{tabular}{cc|cc}
+				Training samples & Testing samples & Event efficiency & Higgs efficiency \\
+				\hline 
+				2b default      & 0b default     & 0.383        & 0.562    \\
+				2b default      & 2b default     & 0.383        & 0.562    \\
+				2b default      & 4b default     & 0.388        & 0.565    \\
+				2b default      & 6b default     & 0.363        & 0.548    \\
+			\end{tabular}
+		\end{table}	
+
+		Use Case 7 samples for training and test on Case 5, 6, 7, 8 samples. The results are presented in Table \ref{tab:SPANet_1M_4b_default_test_on_different_triHiggs_data}.
+		\begin{table}[htpb]
+			\centering
+			\caption{4b SPANet test on different samples.}
+			\label{tab:SPANet_1M_4b_default_test_on_different_triHiggs_data}
+			\begin{tabular}{cc|cc}
+				Training samples & Testing samples & Event efficiency & Higgs efficiency \\
+				\hline 
+				4b default      & 0b default     & 0.356        & 0.540    \\
+				4b default      & 2b default     & 0.358        & 0.542    \\
+				4b default      & 4b default     & 0.367        & 0.549    \\
+				4b default      & 6b default     & 0.355        & 0.536    \\
+			\end{tabular}
+		\end{table}	
+
+		Use Case 10 samples for training and test on Case 5, 6, 7, 8 samples. The results are presented in Table \ref{tab:SPANet_10M_6b_default_test_on_different_triHiggs_data}.
+		\begin{table}[htpb]
+			\centering
+			\caption{6b SPANet test on different samples.}
+			\label{tab:SPANet_10M_6b_default_test_on_different_triHiggs_data}
+			\begin{tabular}{cc|cc}
+				Training samples & Testing samples & Event efficiency & Higgs efficiency \\
+				\hline 
+				6b default      & 0b default     & 0.230        & 0.412    \\
+				6b default      & 2b default     & 0.234        & 0.417    \\
+				6b default      & 4b default     & 0.290        & 0.476    \\
+				6b default      & 6b default     & 0.385        & 0.559    \\
+			\end{tabular}
+		\end{table}	
+
+		Use Case 12 samples for training and test on Case 6, 7, 10, 12 samples. The results are presented in Table \ref{tab:SPANet_10M_0b_default_test_on_different_triHiggs_data}. 
+		\begin{table}[htpb]
+			\centering
+			\caption{0b SPANet test on different samples.}
+			\label{tab:SPANet_10M_0b_default_test_on_different_triHiggs_data}
+			\begin{tabular}{cc|cc}
+				Training samples & Testing samples & Event efficiency & Higgs efficiency \\
+				\hline 
+				0b default      & 0b default     & 0.473        & 0.632    \\
+				0b default      & 2b default     & 0.475        & 0.634    \\
+				0b default      & 4b default     & 0.479        & 0.636    \\
+				0b default      & 6b default     & 0.457        & 0.623    \\
+			\end{tabular}
+		\end{table}	
+
+		\begin{table}[htpb]
+			\centering
+			\caption{SPANet trained on 0b test on 6b.}
+			\label{tab:SPANet_test_on_different_triHiggs_data}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=6$	  &   0.099             &    0.713              &    0.788             \\
+				$=7$	  &   0.164             &    0.508              &    0.663             \\
+				$\ge 8$	  &   0.269             &    0.331              &    0.538             \\
+				Total	  &   0.533             &    0.457              &    0.623             \\
+			\end{tabular}
+		\end{table}
+
 	% subsection test_on_different_dataset (end)	
 % section spanet_for_tri_higgs_events_with_b_tag (end)		
 \section{Hyperparameters}% (fold)
