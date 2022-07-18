@@ -1881,6 +1881,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 				14&$\ge 0$ & default	 &  $0.464 \pm 0.0017$   &  $0.627 \pm 0.0009$  &  88,466	\\
 				15&$\ge 0$ & default	 &  $0.497 \pm 0.0012$   &  $0.652 \pm 0.0006$  &  188,956	\\
 				16&$\ge 0$ & default	 &  $0.505 \pm 0.0010$   &  $0.656 \pm 0.0005$  &  251,870	\\
+				17&$\ge 0$ & default	 &  $0.508 \pm 0.0008$   &  $0.660 \pm 0.0004$  &  377,960	\\
 			\end{tabular}
 		\end{table}
 
@@ -2071,4 +2072,33 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\end{table}
 	% subsection training_results_for_different_hyperparamers (end)	
 % section hyperparameters (end)		
+
+\section{Signal and background}% (fold)
+\label{sec:signal_and_background}
+	To separate the signal and background events, defined the cuts as follows:
+	\begin{itemize}
+		\item Eta cut: In $\abs{\eta} < 2.5$ there are $\ge 6$ jets.
+		\item bTag cut: There $\ge 6$ b-jets.
+		\item inv mass cut: The total invariant mass of 6 b-jets $\le 500 \text{ GeV}$.
+	\end{itemize}
+
+	The result is in Table \ref{tab:signal_background_analysis}.
+
+	\begin{table}[htpb]
+		\centering
+		\caption{The cross sections for the signal and background processes at different cuts. $\mathcal{L} = 139 \text{ fb}^{-1}$ is provided.}
+		\label{tab:signal_background_analysis}
+		\begin{tabular}{l|ll|ll}
+						 & \multicolumn{2}{|c|}{Cross section (pb)} &            &             \\
+						 & Signal          & Background      & $S / B$        & $S / \sqrt{B}$ \\
+			\hline 	
+			No cut       & 0.0118         & 7.18e+02         & 1.64e-05 & 0.164       \\
+			Eta cut      & 0.00705        & 43.4             & 0.000162 & 0.399       \\
+			bTag cut     & 0.00248        & 1.12             & 0.00221  & 0.874       \\
+			inv mass cut & 0.00207        & 0.467            & 0.00444  & 1.13       
+			\end{tabular}
+	\end{table}
+
+
+% section signal_and_background (end)		
 \end{document} 
