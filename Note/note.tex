@@ -98,7 +98,7 @@
 % section signal_and_background (end)
 \section{Transverse momentum and pseudorapidity distribution}% (fold)
 \label{sec:transverse_momentum_and_pseudorapidity_distribution}
-	In each event there are 6 b quarks. I order these b quarks by transverse momentum $p_\text{T}$, then plot $p_\text{T} $ and pseudorapidity $\eta$ distributions.
+	In each event, there are 6 b quarks. I order these b quarks by transverse momentum $p_\text{T}$, then plot $p_\text{T} $ and pseudorapidity $\eta$ distributions.
 
 	Figure \ref{fig:background_pt_eta_distribution_in_parton_level} is the  $p_\text{T}$ and  $\eta$ distributions of b quarks for background.	
 	\begin{figure}[htpb]
@@ -129,7 +129,7 @@
 % section delta_r_and_transverse_momentum_distribution (end)
 \section{Cutflow table}% (fold)
 \label{sec:cutflow_table}
-I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event can pass the cuts. The results are in Table \ref{tab:cutflow_table_background} and Table \ref{tab:cutflow_table_signal}.
+I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many events can pass the cuts. The results are in Table \ref{tab:cutflow_table_background} and Table \ref{tab:cutflow_table_signal}.
 	\begin{table}[htpb]
 		\centering
 		\caption{1000 background events. Those background events is generated in $\sqrt{s} = 13 \text{ TeV}$ with the cut b $p_\text{T} > 10 \text{ GeV}$ in MadGraph.
@@ -171,7 +171,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 		\chi^2 = [M(\text{b}_1\text{b}_2) - M_\text{H}]^2 + [M(\text{b}_3\text{b}_4) - M_\text{H}]^2 +[M(\text{b}_5\text{b}_6) - M_\text{H}]^2
 	\] 
 
-	I implement these two methods to construct bb-pairs and test on the 10,000 signal events in parton level. The result is as follows:
+	I implement these two methods to construct bb-pairs and test on the 10,000 signal events at the parton level. The result is as follows:
 	\begin{itemize}
 		\item Method 1 (mass difference between all pairs): accuracy = 0.863
 		\item Method 2 (mass difference to the SM Higgs mass): accuracy = 0.875
@@ -183,7 +183,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 
 \section{Absolute cross section}% (fold)
 \label{sec:absolute_cross_section}
-	Absolute cross section is defined as follow
+	The absolute cross section is defined as follows
 	\[
 		\sigma_\text{abs} = \sigma \times \frac{\text{number of events pass the cut}}{\text{number of events}}
 	\] 
@@ -192,7 +192,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 
 	\begin{table}[htpb]
 		\centering
-		\caption{The cuts applied on the different run. Where $p_\text{T}$ means the minimum transverse momentum of b and $\abs{\eta}$ means the range of b (-1 means no restriction).}
+		\caption{The cuts applied on the different runs. Where $p_\text{T}$ means the minimum transverse momentum of b and $\abs{\eta}$ means the range of b (-1 means no restriction).}
 		\label{tab:cut_of_different_run}
 		\begin{tabular}{ccc}
 			No.& $p_\text{T}$ (GeV) & $\abs{\eta}$  \\
@@ -221,7 +221,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 		\end{tabular}	
 	\end{table}
 
-	From the Table \ref{tab:absolute_cross_section}, if the number of event is large enough the absolute cross section will be similar.
+	From Table \ref{tab:absolute_cross_section}, if the number of events is large enough the absolute cross section will be similar.
 % section absolute_cross_section (end)
 \section{The problem for generating \texorpdfstring{pp $\to$ 6b}{pp to 6b} events}% (fold)
 \label{sec:the_problem_for_generating_pp_6b_events}
@@ -235,7 +235,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 	\end{verbatim}
 	In MadGraph, I apply the cuts: $p_\text{T}>\text{25 GeV}, \abs{\eta}<2.5$ for b. Pass those events through Pythia, then check how many events there are 6 b-hadrons final state.
 
-	In 100,000 events, there are 6,916 events having greater than or equal to 6 b-hadrons. The distribution of number of b-hadrons is in Figure \ref{fig:number_of_b_hadron}.
+	In 100,000 events, 6,916 events are having greater than or equal to 6 b-hadrons. The distribution of number of b-hadrons is in Figure \ref{fig:number_of_b_hadron}.
 	\begin{figure}[htpb]
 		\centering
 		\includegraphics[width=0.8\textwidth]{number_of_b-hadrons.png}
@@ -245,7 +245,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 
 	Pass events through Delphes. In Delphes the b-tagging efficiency is set to 1.
 
-	Figure \ref{fig:number_of_jet} is the number of jets and number of b-jets distributions. In 100,000 events, there are 173 events having greater than or equal to 6 b-jets.
+	Figure \ref{fig:number_of_jet} is the number of jets and number of b-jets distributions. In 100,000 events, 173 events are having greater than or equal to 6 b-jets.
 	\begin{figure}[htpb]
 		\centering
 		\includegraphics[width=1\textwidth]{number_of_b-jets.png}
@@ -278,7 +278,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 % section comparison_for_pp_4b_and_pp_6b_event (end)	
 \section{Cutflow table for b-jets}% (fold)
 \label{sec:cutflow_table_for_b_jets}
-	I apply following cut sequentially and count how many events can pass these cuts. Table \ref{tab:cutflow_table_pp4b_bjet} is the result for pp->4b events. Table \ref{tab:cutflow_table_pp6b_bjet} is the result for pp->6b events. Table \ref{tab:cutflow_table_signal_bjet} is the result for signal events.
+	I apply the following cut sequentially and count how many events can pass these cuts. Table \ref{tab:cutflow_table_pp4b_bjet} is the result for pp->4b events. Table \ref{tab:cutflow_table_pp6b_bjet} is the result for pp->6b events. Table \ref{tab:cutflow_table_signal_bjet} is the result for signal events.
 
 	\begin{itemize}
 		\item Cut 1: There are greater than or equal to 6 b-jets.
@@ -339,7 +339,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 		import model cxSM_VLF_EFT
 		generate g g > h3, (h3 > h2 h, h2 > h h)
 	\end{verbatim}
-	then check this channel is dominated in signal (gg->3h) or not.
+	then check whether this channel is dominated in signal (gg->3h) or not.
 
 	I generate this channel and signal in $\sqrt{s} = \text{14 TeV}$, the cross sections are 2.094 pb and 4.067 pb, respectively.
 
@@ -355,11 +355,11 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many event c
 	\begin{figure}[htpb]
 		\centering
 		\includegraphics[width=0.8\textwidth]{signal_resonant_6_b-jets_total_invariant_mass.png}
-		\caption{Total invariant mass of 6 b-jets for resonant channel.}
+		\caption{Total invariant mass of 6 b-jets for the resonant channel.}
 		\label{fig:resonant_channel_invariant_mass_of_6bjet}
 	\end{figure}
 
-	A bump around $\text{600 GeV}$ in Figure \ref{fig:signal_invariant_mass_of_6bjet}? In run card, some parameters are not set correctly. After setting all parameters correctly and regenerating these event, the results are in Figure \ref{fig:invariant_mass_of_6bjet_correct}. There is no bump around $\text{600 GeV}$.
+	A bump around $\text{600 GeV}$ in Figure \ref{fig:signal_invariant_mass_of_6bjet}? In the run card, some parameters are not set correctly. After setting all parameters correctly and regenerating these event, the results are in Figure \ref{fig:invariant_mass_of_6bjet_correct}. There is no bump around $\text{600 GeV}$.
 
 	\begin{figure}[htpb]
 		\centering
@@ -389,7 +389,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\end{tabular}	
 	\end{table}
 
-	The problem of cross section: If we use the default run card to generate the decay process, the value of cross section will be problematic. 
+	The problem of cross section: If we use the default run card to generate the decay process, the value of the cross section will be problematic. 
 
 	Solution:
 	
@@ -412,13 +412,13 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		generate g g > h h h	
 	\end{verbatim}
 
-	These events are generated in $\text{14 TeV}$ and the sample size are 100k. The cross section for pp->hhh and gg->hhh are $\text{11.22 fb}$ and $\text{11.11 fb}$, respectively. They only differ by 1\%.
+	These events are generated in $\text{14 TeV}$ and the sample size is 100k. The cross section for pp->hhh and gg->hhh are $\text{11.22 fb}$ and $\text{11.11 fb}$, respectively. They only differ by 1\%.
 % section comparision_for_pp_to_hhh_and_gg_to_hhh (end)		
 \section{Comparision for \texorpdfstring{gg $\to $ hhh}{gg to hhh} and resonant channel}% (fold)
 \label{sec:comparision_for_gg_hhh_and_resonant_channel}
 	To compare $\text{gg $\to $ hhh}$ and resonant channel, I plot the $p_\text{T}$, $\eta$, and total invariant mass of 6 b-jets for both.
 
-	These events are generated in $\text{14 TeV}$ and the sample size are 100k. The cross section for gg->hhh and resonant channel are $\text{11.11 fb}$ and $\text{10.38 fb}$, respectively.
+	These events are generated in $\text{14 TeV}$ and the sample size is 100k. The cross section for gg->hhh and resonant channel are $\text{11.11 fb}$ and $\text{10.38 fb}$, respectively.
 
 	The number of events of 6 b-jets for gg->hhh is 21,814 and for the resonant channel is 21,475. The numbers are very close. I scaled the number of events for gg->3h to be the same as the resonant channel.
 
@@ -438,10 +438,10 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\label{fig:signal_resonant_total_invariant_mass_of_b_jets}
 	\end{figure}
 
-	I apply the cuts same in Sec.\ref{sec:cutflow_table_for_b_jets} and count how many events can pass these cuts. Table \ref{tab:cutflow_table_signal_and_resonant_bjet} is the result. Those results for both events are similar.
+	I apply the cuts same in Sec.\ref{sec:cutflow_table_for_b_jets} and count how many events can pass these cuts. Table \ref{tab:cutflow_table_signal_and_resonant_bjet} is the result. The results for both events are similar.
 	\begin{table}[htpb]
 		\centering
-		\caption{Number of events pass the selection cuts. Total number of events for gg->hhh and resonant channel both are 100,000.}
+		\caption{Number of events pass the selection cuts. The total number of events for gg->hhh and resonant channel are 100,000.}
 		\label{tab:cutflow_table_signal_and_resonant_bjet}
 		\begin{tabular}{ccc}
 			Cut &  gg->3h & resonant channel \\
@@ -461,7 +461,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	Table \ref{tab:MG_decay_widths_BR} is calculated by MadGraph. Table \ref{tab:MA_decay_widths_BR} is calculated by Mathematica notebook.
 	\begin{table}[htpb]
 		\centering
-		\caption{Decay widths and branching ratios calulated by MadGraph at BP1.}
+		\caption{Decay widths and branching ratios calculated by MadGraph at BP1.}
 		\label{tab:MG_decay_widths_BR}
 		\begin{tabular}{lll}
 								  & BR        & Width (GeV) \\
@@ -504,7 +504,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\end{table}
 	\begin{table}[htpb]
 		\centering
-		\caption{Decay widths and branching ratios calulated by Mathematica at BP1.}
+		\caption{Decay widths and branching ratios calculated by Mathematica at BP1.}
 		\label{tab:MA_decay_widths_BR}
 		\begin{tabular}{lll}
 									  & BR        & Width (GeV) \\
@@ -544,7 +544,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 	\begin{table}[htpb]
 		\centering
-		\caption{Decay widths and branching ratios calulated by MadGraph at BP1 with $\epsilon=0.001$.}
+		\caption{Decay widths and branching ratios calculated by MadGraph at BP1 with $\epsilon=0.001$.}
 		\label{tab:MG_decay_widths_BR_0001}
 		\begin{tabular}{lll}
 								  & BR        & Width (GeV) \\
@@ -588,7 +588,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 	\begin{table}[htpb]
 		\centering
-		\caption{Decay widths and branching ratios calulated by Mathematica at BP1 with $\epsilon=0.001$.}
+		\caption{Decay widths and branching ratios calculated by Mathematica at BP1 with $\epsilon=0.001$.}
 		\label{tab:MA_decay_widths_BR_0001}
 		\begin{tabular}{lll}
 								  & BR        & Width (GeV) \\
@@ -623,7 +623,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\end{table}
 	This time, the decay widths and branching ratios calculated by MG and Mathematica notebook become close.
 
-	For color channels, they still don't look the same. The reason is that in MadGraph only calculates to LO, but the numbers in the Mathematica notebook are calculated to NLO.
+	For color channels, still don't look the same. The reason is that in MadGraph only calculates to LO, but the numbers in the Mathematica notebook are calculated to NLO.
 % section branching_ratios_and_decay_widths (end)	
 \section{SPANet}% (fold)
 \label{sec:spanet}
@@ -921,7 +921,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 \label{sec:chi_2_method}
 	\subsection{Di-Higgs}% (fold)
 	\label{sub:di_higgs}
-		Try all possible combination of final jets and find the minimal mass difference between SM Higgs mass, i.e. minimize this
+		Try all possible combinations of final jets and find the minimal mass difference between SM Higgs mass, i.e. minimize this
 		\begin{equation}\label{eq:diHiggs_chisq}
 			\chi^2 = [M(j_1j_2)-M_\text{H}]^2 + [M(j_3j_4)-M_\text{H}]^2
 		\end{equation}
@@ -985,13 +985,13 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	% subsection di_higgs_with_b_tag (end)	
 	\subsection{Tri-Higgs}% (fold)
 	\label{sub:tri_higgs}
-		Try all possible combination of final jets and find the minimal mass difference between SM Higgs mass, i.e. minimize this
+		Try all possible combinations of final jets and find the minimal mass difference between SM Higgs mass, i.e. minimize this
 		\begin{equation}\label{eq:triHiggs_chisq}
 			\chi^2 = [M(j_1j_2)-M_\text{H}]^2 + [M(j_3j_4)-M_\text{H}]^2  + [M(j_5j_6)-M_\text{H}]^2
 		\end{equation}
 		where $M(j_ij_j)$ means the invariant mass of jet $i$ and jet $j$.
 
-		Testing sample are required with $\ge 0$ b-jets and b-tagging efficiency: default. The results are presented in Table \ref{tab:comparison_triHiggs_SPANet_and_chi2}.
+		Testing samples are required with $\ge 0$ b-jets and b-tagging efficiency: default. The results are presented in Table \ref{tab:comparison_triHiggs_SPANet_and_chi2}.
 
 		\begin{table}[htpb]
 			\centering
@@ -1048,7 +1048,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 \label{sec:spanet_for_di_higgs_events_with_b_tag}
 	In this section, SPANet will take the b-tagging information.
 
-	The \verb+.ini+ file for di-Higgs event
+	The \verb+.ini+ file for the di-Higgs event
 	\begin{verbatim}
 		[SOURCE]
 		mass = log_normalize
@@ -1070,7 +1070,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		permutations = [(b1, b2)]			
 	\end{verbatim}
 
-	For training data preparation is almost same in Sec.\ref{sub:training_sample_for_dihiggs_events}. 2 b-tagged jets or 4 b-tagged jets will be required in the following training data. The default b-tagging efficiency in Delphes is 
+	For training data preparation is almost the same in Sec.\ref{sub:training_sample_for_dihiggs_events}. 2 b-tagged jets or 4 b-tagged jets will be required in the following training data. The default b-tagging efficiency in Delphes is 
 	\begin{equation}
 		\text{eff.} = 0.85 \tanh(0.0025p_\text{T}) \frac{25.0}{1+0.063p_\text{T}}		
 	\end{equation}
@@ -1289,7 +1289,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 \section{SPANet for tri-Higgs events with b-tag}% (fold)
 \label{sec:spanet_for_tri_higgs_events_with_b_tag}
-	The \verb+.ini+ file for tri-Higgs event
+	The \verb+.ini+ file for the tri-Higgs event
 	\begin{verbatim}
 		[SOURCE]
 		mass = log_normalize
@@ -1327,7 +1327,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	% subsection training_sample_preparation_for_tri_higgs_events (end)	
 	\subsection{Trainging result for tri-Higgs events}% (fold)
 	\label{sub:trainging_result_for_tri_higgs_events}
-		All cases partial event training are set true.
+		In all cases, partial event training is set to true.
 
 		\paragraph{Case 1:} $\ge 0$ b-tagged jets, b-tagging efficiency: 100\% 
 		\begin{itemize}
@@ -1889,14 +1889,14 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.8\textwidth]{accuracy_training_sample_size.png}
-			\caption{The accracy against 3h training sample size.}
+			\caption{The accuracy against 3h training sample size.}
 			\label{fig:accuracy_training_sample_size}
 		\end{figure}
 
 	% subsection trainging_result_for_tri_higgs_events (end)	
 	\subsection{Training curve}% (fold)
 	\label{sub:training_curve}
-		Figure \ref{fig:loss_and_accuracy_curve_no_btag_50_ep} and \ref{fig:loss_and_accuracy_curve_no_btag_100_ep} are the traning curves for Case 9. After 50 epoch, the validation accuracy has not improved much.
+		Figure \ref{fig:loss_and_accuracy_curve_no_btag_50_ep} and \ref{fig:loss_and_accuracy_curve_no_btag_100_ep} are the training curves for Case 9. After 50 epochs, the validation accuracy has not improved much.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.9\textwidth]{loss_and_accuracy_curve_no_btag.png}
@@ -1911,7 +1911,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\label{fig:loss_and_accuracy_curve_no_btag_100_ep}
 		\end{figure}
 
-		Figure \ref{fig:loss_and_accuracy_curve_6b_default} is the traning curves for Case 10. 
+		Figure \ref{fig:loss_and_accuracy_curve_6b_default} is the training curves for Case 10. 
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.9\textwidth]{loss_and_accuracy_curve_6b_default.png}
@@ -1921,7 +1921,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	% subsection training_curve (end)
 	\subsection{Test on different dataset}% (fold)
 	\label{sub:test_on_different_dataset}
-		For example, use Case 5 samples for training and test on Case 5, 6, 7, 8 samples. The results are presented in Table \ref{tab:SPANet_1M_0b_default_test_on_different_triHiggs_data}.
+		For example, use Case 5 samples for training and test on Case 5, 6, 7, and 8 samples. The results are presented in Table \ref{tab:SPANet_1M_0b_default_test_on_different_triHiggs_data}.
 		\begin{table}[htpb]
 			\centering
 			\caption{0b SPANet test on different samples.}
@@ -1936,7 +1936,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\end{tabular}
 		\end{table}	
 
-		Use Case 6 samples for training and test on Case 5, 6, 7, 8 samples. The results are presented in Table \ref{tab:SPANet_1M_2b_default_test_on_different_triHiggs_data}.
+		Use Case 6 samples for training and test on Case 5, 6, 7, and 8 samples. The results are presented in Table \ref{tab:SPANet_1M_2b_default_test_on_different_triHiggs_data}.
 		\begin{table}[htpb]
 			\centering
 			\caption{2b SPANet test on different samples.}
@@ -1951,7 +1951,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\end{tabular}
 		\end{table}	
 
-		Use Case 7 samples for training and test on Case 5, 6, 7, 8 samples. The results are presented in Table \ref{tab:SPANet_1M_4b_default_test_on_different_triHiggs_data}.
+		Use Case 7 samples for training and test on Case 5, 6, 7, and 8 samples. The results are presented in Table \ref{tab:SPANet_1M_4b_default_test_on_different_triHiggs_data}.
 		\begin{table}[htpb]
 			\centering
 			\caption{4b SPANet test on different samples.}
@@ -1966,7 +1966,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\end{tabular}
 		\end{table}	
 
-		Use Case 10 samples for training and test on Case 5, 6, 7, 8 samples. The results are presented in Table \ref{tab:SPANet_10M_6b_default_test_on_different_triHiggs_data}.
+		Use Case 10 samples for training and test on Case 5, 6, 7, and 8 samples. The results are presented in Table \ref{tab:SPANet_10M_6b_default_test_on_different_triHiggs_data}.
 		\begin{table}[htpb]
 			\centering
 			\caption{6b SPANet test on different samples.}
@@ -1981,7 +1981,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\end{tabular}
 		\end{table}	
 
-		Use Case 12 samples for training and test on Case 6, 7, 10, 12 samples. The results are presented in Table \ref{tab:SPANet_10M_0b_default_test_on_different_triHiggs_data}. 
+		Use Case 12 samples for training and test on Case 6, 7, 10, and 12 samples. The results are presented in Table \ref{tab:SPANet_10M_0b_default_test_on_different_triHiggs_data}. 
 		\begin{table}[htpb]
 			\centering
 			\caption{0b SPANet test on different samples.}
@@ -2028,15 +2028,15 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\label{sub:scan_hyperparameters}
 		In below, use the 0b default samples (Sec.\ref{sub:trainging_result_for_tri_higgs_events}, Case 5) for hyperparameter scan.
 
-		\paragraph{Learning rate} Range: $[0.0003,  0.0030]$. Step size: $0.0003$. Figure \ref{fig:SPANet_scan_lr} is the scanning results. When learning rate greater than 0.0006 the model can not be trained.
+		\paragraph{Learning rate} Range: $[0.0003,  0.0030]$. Step size: $0.0003$. Figure \ref{fig:SPANet_scan_lr} is the scanning results. When the learning rate is greater than 0.0006 the model can not be trained.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.6\textwidth]{accuracy_curve_hp_scan_lr.png}
-			\caption{SPANet training results for different learning rate.}
+			\caption{SPANet training results for different learning rates.}
 			\label{fig:SPANet_scan_lr}
 		\end{figure}
 
-		\paragraph{Central encoder count} Range: $[2,6]$. Step size: $1$. Figure \ref{fig:SPANet_scan_n_cen} is the scanning results. When central encoder layers equal to 2 or 4, the model  will get the best performance at the first 10 epochs.
+		\paragraph{Central encoder count} Range: $[2,6]$. Step size: $1$. Figure \ref{fig:SPANet_scan_n_cen} is the scanning results. When central encoder layers are equal to 2 or 4, the model will get the best performance at the first 10 epochs.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.6\textwidth]{accuracy_curve_hp_scan_n_cen.png}
@@ -2044,7 +2044,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\label{fig:SPANet_scan_n_cen}
 		\end{figure}
 
-		\paragraph{Branch encoder count} Range: $[2,7]$. Step size: $1$. Figure \ref{fig:SPANet_scan_n_bren} is the scanning results. When branch encoder layers equal to 2 or 4, the model  will get the best performance at the first 10 epochs.
+		\paragraph{Branch encoder count} Range: $[2,7]$. Step size: $1$. Figure \ref{fig:SPANet_scan_n_bren} is the scanning results. When branch encoder layers equal 2 or 4, the model will get the best performance at the first 10 epochs.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.6\textwidth]{accuracy_curve_hp_scan_n_bren.png}
@@ -2077,8 +2077,9 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 \label{sec:signal_and_background}
 	To separate the signal and background events, defined the cuts as follows:
 	\begin{itemize}
-		\item Eta PT cut: In $\abs{\eta} < 2.5$ there are $\ge 6$ jets. The $p_\text{T}$ of jets need to greater than $25 \text{ GeV}$.
+		\item Eta PT cut: In $\abs{\eta} < 2.5$ there are $\ge 6$ jets. The $p_\text{T}$ of jets are required over $25 \text{ GeV}$.
 		\item bTag cut: $\ge 6$ b-jets.
+		\item PT cut: Require 4 jets over $40 \text{ GeV}$.
 		\item inv mass cut: The total invariant mass of 6 b-jets $\le 500 \text{ GeV}$.
 	\end{itemize}
 
@@ -2095,7 +2096,8 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			No cut       & 0.0118         & 7.18e+02         & 1.64e-05 & 0.164       \\
 			Eta PT cut   & 0.00619        & 29.6             & 0.000209 & 0.424       \\
 			bTag cut     & 0.00199        & 0.711            & 0.0028   & 0.881       \\
-			inv mass cut & 0.00163        & 0.244            & 0.00669  & 1.23
+			PT cut       & 0.00164        & 0.503            & 0.00326  & 0.86        \\
+			inv mass cut & 0.0013         & 0.129            & 0.01     & 1.34       
 			\end{tabular}
 	\end{table}
 
