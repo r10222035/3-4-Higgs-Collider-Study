@@ -2079,7 +2079,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\begin{itemize}
 		\item Eta PT cut: In $\abs{\eta} < 2.5$ there are $\ge 6$ jets. The $p_\text{T}$ of jets are required over $25 \text{ GeV}$.
 		\item bTag cut: $\ge 6$ b-jets.
-		\item PT cut: Require 4 jets over $40 \text{ GeV}$.
+		\item PT cut: Require 4 b-jets over $40 \text{ GeV}$.
 		\item inv mass cut: The total invariant mass of 6 b-jets $\le 500 \text{ GeV}$.
 	\end{itemize}
 
@@ -2098,9 +2098,75 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			bTag cut     & 0.00199        & 0.711            & 0.0028   & 0.881       \\
 			PT cut       & 0.00164        & 0.503            & 0.00326  & 0.86        \\
 			inv mass cut & 0.0013         & 0.129            & 0.01     & 1.34       
-			\end{tabular}
+		\end{tabular}
 	\end{table}
 
 
+	\subsection{With SPANet}% (fold)
+	\label{sub:with_spanet}
+		Define the cuts as follows:
+		\begin{itemize}
+			\item Eta PT cut: In $\abs{\eta} < 2.5$ there are $\ge 6$ jets. The $p_\text{T}$ of jets are required over $25 \text{ GeV}$.
+			\item PT cut: Require 4 jets over $40 \text{ GeV}$.
+			\item Higgs mass cut: Use the SPANet to pair the jets and calculate the invariant mass of Higgs. Require the mass difference of SM Higgs $\chi^2$ is smaller than $4000  \text{ GeV}^2$. The mass difference of SM Higgs $\chi^2$ is calculated as follows
+			\[
+				\chi^2 = [M(\text{b}_1\text{b}_2) - M_\text{H}]^2 + [M(\text{b}_3\text{b}_4) - M_\text{H}]^2 +[M(\text{b}_5\text{b}_6) - M_\text{H}]^2
+			\] 
+		\end{itemize}
+
+		The result is in Table \ref{tab:signal_background_analysis_with_spanet}.
+
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross sections for the signal and background processes at different cuts.}
+			\label{tab:signal_background_analysis_with_spanet}
+			\begin{tabular}{l|ll|c|c|c|c}
+							& \multicolumn{2}{|c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+						       & Signal           & Background          & $S / B$  & $S/\sqrt{B}$& $S/\sqrt{B}$& $S/\sqrt{B}$\\
+				\hline		  
+				No cut         & 11.8             & 7.18e+05            & 1.64e-05 & 0.164       & 0.241       & 0.761       \\
+				Eta PT cut     & 6.19             & 2.96e+04            & 0.000209 & 0.424       & 0.623       & 1.97        \\
+				PT cut         & 5.43             & 1.99e+04            & 0.000273 & 0.454       & 0.667       & 2.11        \\
+				Higgs mass cut & 3.06             & 5.59e+03            & 0.000548 & 0.483       & 0.709       & 2.24       
+			\end{tabular}
+		\end{table}
+
+		\subsubsection{Training SPANet}% (fold)
+		\label{subs:training_spanet}
+			The training samples are required to pass the ``Eta PT cut'' and ``PT cut'', $\ge 0$ b-tagged jets, b-tagging efficiency is default.
+			\begin{itemize}
+				\item Training sample:
+				\begin{itemize}
+					\item Total sample size: 2,351,246
+					\item 1h sample size: 782,136
+					\item 2h sample size: 783,976
+					\item 3h sample size: 477,070
+					\item 5\% used on validation
+				\end{itemize}
+				\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 261,717
+					\item 1h sample size: 86,638
+					\item 2h sample size: 87,394
+					\item 3h sample size: 53,226
+				\end{itemize}
+			\end{itemize}
+			The training results is presented in Table \ref{tab:SPANet_triHiggs_0btag_default_pt_cut}.
+			\begin{table}[htpb]
+				\centering
+				\caption{SPA-NET training results on the ``PT cut'' samples.}
+				\label{tab:SPANet_triHiggs_0btag_default_pt_cut}
+				\begin{tabular}{c|c|cc}
+					$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+					\hline
+					$=6$	  &   0.059             &    0.668              &    0.752             \\
+					$=7$	  &   0.072             &    0.463              &    0.630             \\
+					$\ge 8$	  &   0.072             &    0.297              &    0.509             \\
+					Total	  &   0.203             &    0.464              &    0.623             \\
+				\end{tabular}
+			\end{table}
+		% subsubsection training_spanet (end)	
+
+	% subsection with_spanet (end)
 % section signal_and_background (end)		
 \end{document} 
