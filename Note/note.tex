@@ -233,7 +233,7 @@ I apply the $\eta$ and $p_\text{T}$ cuts sequentially and count how many events 
 	\begin{verbatim}
 		generate p p > b b b~ b~ 
 	\end{verbatim}
-	In MadGraph, I apply the cuts: $p_\text{T}>\text{25 GeV}, \abs{\eta}<2.5$ for b. Pass those events through Pythia, then check how many events there are 6 b-hadrons final state.
+	In MadGraph, I apply the cuts: $p_\text{T}>\text{25 GeV}, \abs{\eta}<2.5$ for b. Pass those events through Pythia, then check how many events there are 6 b-hadrons in the final state.
 
 	In 100,000 events, 6,916 events are having greater than or equal to 6 b-hadrons. The distribution of number of b-hadrons is in Figure \ref{fig:number_of_b_hadron}.
 	\begin{figure}[htpb]
@@ -441,7 +441,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	I apply the cuts same in Sec.\ref{sec:cutflow_table_for_b_jets} and count how many events can pass these cuts. Table \ref{tab:cutflow_table_signal_and_resonant_bjet} is the result. The results for both events are similar.
 	\begin{table}[htpb]
 		\centering
-		\caption{Number of events pass the selection cuts. The total number of events for gg->hhh and resonant channel are 100,000.}
+		\caption{Number of events pass the selection cuts. The total number of events for gg->hhh and the resonant channel is 100,000.}
 		\label{tab:cutflow_table_signal_and_resonant_bjet}
 		\begin{tabular}{ccc}
 			Cut &  gg->3h & resonant channel \\
@@ -680,7 +680,12 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\begin{verbatim}
 			python test.py <log_directory> -tf <TEST_FILE> --gpu
 		\end{verbatim}
-		\verb+<TEST_FILE>+ will replace the test file in option file.
+		\verb+<TEST_FILE>+ will replace the test file in the option file.
+
+		Prediction:
+		\begin{verbatim}
+			python predict.py <log_directory> <output name> -tf <TEST_FILE> --gpu
+		\end{verbatim}
 
 	% subsection training (end)	
 % section spanet (end)	
@@ -1268,7 +1273,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		Table \ref{tab:comparision_btag_results} is the summary for b-tag training results.
 		\begin{table}[htpb]
 			\centering
-			\caption{Summary for b-tag training results. 2b means at least 2 b-tagged jets. 100\% and default are the b-tagging efficiency in Delphes.}
+			\caption{Summary for b-tag training results. 2b means at least 2 b-tagged jets. 100\% and default are the b-tagging efficiencies in Delphes.}
 			\label{tab:comparision_btag_results}
 			\begin{tabular}{c|cc|c}
 				Case & Event Efficiency & Higgs Efficiency & Testing sample \\
@@ -2028,7 +2033,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\label{sub:scan_hyperparameters}
 		In below, use the 0b default samples (Sec.\ref{sub:trainging_result_for_tri_higgs_events}, Case 5) for hyperparameter scan.
 
-		\paragraph{Learning rate} Range: $[0.0003,  0.0030]$. Step size: $0.0003$. Figure \ref{fig:SPANet_scan_lr} is the scanning results. When the learning rate is greater than 0.0006 the model can not be trained.
+		\paragraph{Learning rate} Range: $[0.0003,  0.0030]$. Step size: $0.0003$. Figure \ref{fig:SPANet_scan_lr} is the scanning results. The model cannot be trained when the learning rate is greater than 0.0006.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.6\textwidth]{accuracy_curve_hp_scan_lr.png}
@@ -2133,7 +2138,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 		\subsubsection{Training SPANet}% (fold)
 		\label{subs:training_spanet}
-			The training samples are required to pass the ``Eta PT cut'' and ``PT cut'', $\ge 0$ b-tagged jets, b-tagging efficiency is default.
+			The training samples are required to pass the ``Eta PT cut'' and ``PT cut'', $\ge 0$ b-tagged jets, b-tagging efficiency is the default.
 			\begin{itemize}
 				\item Training sample:
 				\begin{itemize}
@@ -2169,4 +2174,94 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 	% subsection with_spanet (end)
 % section signal_and_background (end)		
+\section{Di-Higgs signal background analysis}% (fold)
+\label{sec:di_higgs_signal_background_analysis}
+	\subsection{Signal and background event}% (fold)
+	\label{sub:signal_and_background_event}
+		Signal: same as the di-Higgs events in Sec.\ref{sec:spanet_for_dihiggs_event}.
+
+		Background: Generate background events in MadGraph by following commands:
+		\begin{verbatim}
+			define p = p b b~
+			define j = j b b~
+			generate p p > j j j j
+		\end{verbatim}
+	% subsection signal_and_background_event (end)
+	
+
+	\subsection{Cut}% (fold)
+	\label{sub:cut}
+		
+		To separate the signal and background events, defined the cuts as follows:
+		\begin{itemize}
+			\item Eta PT cut: In $\abs{\eta} < 2.5$ there are $\ge 4$ jets. The $p_\text{T}$ of jets are required over $25 \text{ GeV}$.
+			\item bTag cut: $\ge 2$ b-jets.
+			% \item PT cut: Require 2 jets over $40 \text{ GeV}$.
+			\item Higgs cut: Pair the jets and calculate the invariant mass of Higgs. Require the mass difference of SM Higgs $\chi^2$ is smaller than $1500 \text{ GeV}^2$. The mass difference of SM Higgs $\chi^2$ is calculated as follows
+			\[
+				\chi^2 = [M(\text{b}_1\text{b}_2) - M_\text{H}]^2 + [M(\text{b}_3\text{b}_4) - M_\text{H}]^2
+			\] 
+			The pairing methods are described below.
+		\end{itemize}
+		
+		Pairing method 1: Minimize the mass difference of 2 Higgs candidates.
+
+		Pairing method 2: Use the SPANet trained in Sec.\ref{sub:spanet_for_di_higgs_jet_pairing}.
+
+		The result is in Table \ref{tab:diHiggs_signal_background_analysis}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. Higgs cut 1 is for method 1. Higgs cut 2 is for method 2.}
+			\label{tab:diHiggs_signal_background_analysis}
+			\begin{tabular}{l|ll|c|c|c|c}
+						   & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+						   & Signal           & Background           & $S / B$  & $S/\sqrt{B}$& $S/\sqrt{B}$& $S/\sqrt{B}$\\ \hline
+				No cut     & 0.836            & 1.67e+07             & 5.02e-08 & 0.00242     & 0.00355     & 0.0112      \\
+				Eta PT cut & 0.714            & 1.39e+07             & 5.15e-08 & 0.00226     & 0.00332     & 0.0105      \\
+				bTag cut   & 0.575            & 8.78e+05             & 6.55e-07 & 0.00723     & 0.01060     & 0.0336      \\
+				Higgs cut 1& 0.246            & 1.66e+05             & 1.48e-06 & 0.00711     & 0.01040     & 0.0330      \\
+				Higgs cut 2& 0.302            & 1.09e+05             & 2.77e-06 & 0.01080     & 0.01580     & 0.0501     			
+			\end{tabular}		
+		\end{table}
+	% subsection cut (end)
+
+	\subsection{SPANet for di-Higgs jet pairing}% (fold)
+	\label{sub:spanet_for_di_higgs_jet_pairing}
+		The training samples are required to pass the ``Eta PT cut'', $\ge 2$ b-tagged jets. The b-tagging efficiency is the default.
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 617,340
+				\item 1h sample size: 266,790
+				\item 2h sample size: 315,219
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+			\begin{itemize}
+				\item Total sample size: 68,626
+				\item 1h sample size: 29,506
+				\item 2h sample size: 35,265
+			\end{itemize}
+		\end{itemize}
+		The training results is presented in Table \ref{tab:SPANet_diHiggs_2btag_default_pt_cut}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET training results on the di-Higgs samples with ``Eta PT cut'' and ``bTag cut''.}
+			\label{tab:SPANet_diHiggs_2btag_default_pt_cut}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.129             &    1.000              &    1.000             \\
+				$=5$	  &   0.178             &    0.968              &    0.984             \\
+				$\ge 6$	  &   0.207             &    0.895              &    0.946             \\
+				Total	  &   0.514             &    0.947              &    0.973             \\
+			\end{tabular}
+		\end{table}
+
+	% subsection spanet_for_di_higgs_jet_pairing (end)
+		
+
+
+
+% section di_higgs_signal_background_analysis (end)			
 \end{document} 
