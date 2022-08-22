@@ -2259,6 +2259,77 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\end{table}
 
 	% subsection spanet_for_di_higgs_jet_pairing (end)
+	
+	\subsection{ATLAS}% (fold)
+	\label{sub:atlas}
+		The selection steps:
+		\begin{itemize}
+			\item Four tag: The event contains at least 4 b-tagged anti-kt small-$R$ ($R = 0.4$) jets with $p_\text{T} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The four jets with the highest b-tagging score are paired to construct two Higgs boson candidates.
+			\item Delta R: Pairing jets to Higgs boson candidate need to satisfy the following requirements:
+			\[
+				\left.
+				\begin{array}{c}
+					\dfrac{\text{360 GeV}}{m_\text{4j}} - 0.5 < \Delta R_{jj,\text{lead}} < \dfrac{\text{653 GeV}}{m_{\text{4j}}} + 0.475 \\
+					\dfrac{\text{235 GeV}}{m_\text{4j}}  < \Delta R_{jj,\text{subl}} < \dfrac{\text{875 GeV}}{m_{\text{4j}}} + 0.35 
+				\end{array} 
+				\right\} \text{ if } m_{\text{4j}} <  \text{1250 GeV}
+			\] 
+			\[
+				\left.
+				\begin{array}{c}
+					0 < \Delta R_{jj,\text{lead}} < 1 \\
+					0 < \Delta R_{jj,\text{subl}} < 1 
+				\end{array} 
+				\right\} \text{ if } m_{\text{4j}} >  \text{1250 GeV}
+			\] 
+			\item If there are more than 2 pairing satisfy the Delta R requirement. Calculate $D_{HH}$
+			\[
+				D_{HH} = \frac{\abs{m_{\text{2j}}^{\text{lead}} - \frac{120}{110} m_{\text{2j}}^{\text{subl}}}}{\sqrt{1 + \left( \frac{120}{110} \right)^2}}
+			\] 
+			the pairing with the smallest value of $D_{HH}$ is chosen.
+			\item Higgs PT: 
+			\begin{align*}
+				p_{\text{T}}^{\text{lead}} &> 0.5 m_{\text{4j}} - \text{103 GeV} \\
+				p_{\text{T}}^{\text{subl}} &> 0.33 m_{\text{4j}} - \text{73 GeV} \\
+			\end{align*}
+			\item Higgs Eta: 
+			\[
+				\abs{\Delta\eta_{HH}} < 1.5
+			\] 
+			\item Signal region:
+			\[
+				X_{HH} = \sqrt{\left( \frac{m_{\text{2j}}^{\text{lead}} - \text{120 GeV}}{0.1 m_{\text{2j}}^{\text{lead}}} \right)^2 + \left(\frac{m_{\text{2j}}^{\text{subl}} - \text{110 GeV}}{0.1 m_{\text{2j}}^{\text{subl}}} \right)^2} < 1.6
+			\]
+			\item Top veto: Every possible pair of jets with $p_\text{T} > \text{40 GeV}$ and $\abs{\eta} < 2.5$, including those that were not selected for the $H$ candidates, to form ``$W$ candidates''. ``Top quark candidates'' are built by pairing $W$ candidates with each remaining jet that was selected for $H$ candidates
+			\[
+				X_{Wt} = \sqrt{\left( \frac{m_{W} - \text{80 GeV}}{0.1 m_{W}} \right)^2 + \left(\frac{m_{t} - \text{173 GeV}}{0.1 m_{t}} \right)^2} 
+			\] 
+			Events with the smallest $X_{Wt} < 1.5$ are vetoed.
+
+		\end{itemize}
+
+		Test the above selection steps on the $\text{13 TeV}$ samples with $m_{H_2} = \text{1000 GeV}$ and compare the results with ATLAS paper (Figure \ref{fig:ATLAS_signal_selection}). The result is in Table .
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{ATLAS_signal_selection.png}
+			\caption{The selection acceptance times efficiency at each stage of the event selection for scalar.}
+			\label{fig:ATLAS_signal_selection}
+		\end{figure}
+		\begin{table}[htpb]
+			\centering
+			\caption{The selection efficiency at each stage. The resonant mass is $\text{1000 GeV}$. My sample 2 is normalized the Delta R efficiency to 0.09.}
+			\label{tab:label}
+			\begin{tabular}{l|ccc}
+							  & ATLAS  & My sample 1 & My sample 2 \\ \hline
+				Four tag      & 0.1000 & 0.1386      & 0.1261      \\
+				Delta R       & 0.0900 & 0.0990      & 0.0900      \\
+				Higgs PT      & 0.0683 & 0.0768      & 0.0698      \\
+				Higgs Eta     & 0.0647 & 0.0719      & 0.0654      \\
+				Signal region & 0.0390 & 0.0431      & 0.0392      \\
+				Top veto      & 0.0375 & 0.0427      & 0.0388     
+			\end{tabular}
+		\end{table}
+	% subsection atlas (end)	
 		
 
 
