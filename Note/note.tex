@@ -2265,6 +2265,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		The selection steps:
 		\begin{itemize}
 			\item Four tag: The event contains at least 4 b-tagged anti-kt small-$R$ ($R = 0.4$) jets with $p_\text{T} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The four jets with the highest b-tagging score are paired to construct two Higgs boson candidates.
+			\item The four jets with the highest $p_\text{T}$ are paired to construct two Higgs boson candidates in my samples.
 			\item Delta R: Pairing jets to Higgs boson candidate need to satisfy the following requirements:
 			\[
 				\left.
@@ -2282,15 +2283,15 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 				\end{array} 
 				\right\} \text{ if } m_{\text{4j}} >  \text{1250 GeV}
 			\] 
-			\item If there are more than 2 pairing satisfy the Delta R requirement. Calculate $D_{HH}$
+			\item If there are more than 2 pairings satisfy the Delta R requirement. Calculate $D_{HH}$
 			\[
 				D_{HH} = \frac{\abs{m_{\text{2j}}^{\text{lead}} - \frac{120}{110} m_{\text{2j}}^{\text{subl}}}}{\sqrt{1 + \left( \frac{120}{110} \right)^2}}
 			\] 
 			the pairing with the smallest value of $D_{HH}$ is chosen.
 			\item Higgs PT: 
 			\begin{align*}
-				p_{\text{T}}^{\text{lead}} &> 0.5 m_{\text{4j}} - \text{103 GeV} \\
-				p_{\text{T}}^{\text{subl}} &> 0.33 m_{\text{4j}} - \text{73 GeV} \\
+				p_{\text{T}}^{\text{lead}} &> m_{\text{4j}} \times 0.5 - \text{103 GeV} \\
+				p_{\text{T}}^{\text{subl}} &> m_{\text{4j}} \times 0.33 - \text{73 GeV} \\
 			\end{align*}
 			\item Higgs Eta: 
 			\[
@@ -2308,27 +2309,87 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 		\end{itemize}
 
-		Test the above selection steps on the $\text{13 TeV}$ samples with $m_{H_2} = \text{1000 GeV}$ and compare the results with ATLAS paper (Figure \ref{fig:ATLAS_signal_selection}). The result is in Table .
+		Test the above selection steps on the $\text{13 TeV}$ samples with $m_{H_2} = \text{1000 GeV}$ and compare the results with ATLAS paper (Figure \ref{fig:ATLAS_signal_selection}). The result is in Table \ref{tab:signal_selection_efficiency_1000GeV}. The biggest difference is at Delta R cut. 
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.8\textwidth]{ATLAS_signal_selection.png}
-			\caption{The selection acceptance times efficiency at each stage of the event selection for scalar.}
+			\caption{The selection acceptance times efficiency at each stage for scalar.}
 			\label{fig:ATLAS_signal_selection}
 		\end{figure}
 		\begin{table}[htpb]
 			\centering
-			\caption{The selection efficiency at each stage. The resonant mass is $\text{1000 GeV}$. My sample 2 is normalized the Delta R efficiency to 0.09.}
-			\label{tab:label}
-			\begin{tabular}{l|ccc}
-							  & ATLAS  & My sample 1 & My sample 2 \\ \hline
-				Four tag      & 0.1000 & 0.1386      & 0.1261      \\
-				Delta R       & 0.0900 & 0.0990      & 0.0900      \\
-				Higgs PT      & 0.0683 & 0.0768      & 0.0698      \\
-				Higgs Eta     & 0.0647 & 0.0719      & 0.0654      \\
-				Signal region & 0.0390 & 0.0431      & 0.0392      \\
-				Top veto      & 0.0375 & 0.0427      & 0.0388     
+			\caption{The selection passing rate and efficiency at each stage. The resonant mass is $\text{1000 GeV}$.}
+			\label{tab:signal_selection_efficiency_1000GeV}
+			\begin{tabular}{l|cc|cc}
+							  & \multicolumn{2}{|c|}{ATLAS 1000 GeV} & \multicolumn{2}{|c}{My sample 1000 GeV} \\
+				Cut           & pass rate       & efficiency       & pass rate         & efficiency         \\ \hline
+				Four tag      & 0.1000          & 0.1000           & 0.1386            & 0.1386             \\
+				Delta R       & 0.0900          & 0.9003           & 0.0990            & 0.7139             \\
+				Higgs PT      & 0.0683          & 0.7584           & 0.0768            & 0.7759             \\
+				Higgs Eta     & 0.0647          & 0.9469           & 0.0719            & 0.9361             \\
+				Signal region & 0.0390          & 0.6028           & 0.0431            & 0.5990             \\
+				Top veto      & 0.0375          & 0.9612           & 0.0427            & 0.9909            
 			\end{tabular}
 		\end{table}
+
+		\begin{table}[htpb]
+			\centering
+			\caption{The selection passing rate and efficiency at each stage. The resonant mass is $\text{600 GeV}$.}
+			\label{tab:signal_selection_efficiency_600GeV}
+			\begin{tabular}{l|cc|cc}
+							  & \multicolumn{2}{c}{ATLAS 600 GeV} & \multicolumn{2}{|c}{My sample 600 GeV} \\
+				Cut           & pass rate   & efficiency  & pass rate     & efficiency    \\ \hline
+				Four tag      & 0.0821      & 0.0821      & 0.1120        & 0.1120        \\
+				Delta R       & 0.0739      & 0.9004      & 0.0856        & 0.7645        \\
+				Higgs PT      & 0.0703      & 0.9508      & 0.0820        & 0.9571        \\
+				Higgs Eta     & 0.0630      & 0.8966      & 0.0734        & 0.8951        \\
+				Signal region & 0.0324      & 0.5144      & 0.0287        & 0.3915        \\
+				Top veto      & 0.0306      & 0.9439      & 0.0284        & 0.9903       	
+			\end{tabular}
+		\end{table}
+
+
+		\subsubsection{Delta R cut}% (fold)
+		\label{subs:delta_r_cut}
+			Change the b-tagging efficiency in Delphes such that the ``Four tag'' efficiency is same as the ATLAS results. The b-tagging efficiency after the change is
+			\begin{equation}\label{eq:b_tagging_efficiency_2}
+				\text{eff.} = 0.78 \tanh(0.0025p_\text{T}) \frac{25.0}{1+0.063p_\text{T}}		
+			\end{equation}
+			Generate events and apply the selection again. The results are in Table \ref{tab:signal_selection_efficiency_1000GeV_change_btag}.
+			\begin{table}[htpb]
+				\centering
+				\caption{The selection passing rate and efficiency at each stage. The b-tagging efficiency is (\ref{eq:b_tagging_efficiency_2}). The resonant mass is $\text{1000 GeV}$.}
+				\label{tab:signal_selection_efficiency_1000GeV_change_btag}
+				\begin{tabular}{l|cc|cc}
+								  & \multicolumn{2}{|c|}{ATLAS 1000 GeV} & \multicolumn{2}{|c}{My sample 1000 GeV} \\
+					Cut           & pass rate       & efficiency       & pass rate         & efficiency         \\ \hline
+					Four tag      & 0.1000 & 0.1000 & 0.1006 & 0.1006 \\
+					Delta R       & 0.0900 & 0.9003 & 0.0781 & 0.7758 \\
+					Higgs PT      & 0.0683 & 0.7584 & 0.0627 & 0.8036 \\
+					Higgs Eta     & 0.0647 & 0.9469 & 0.0575 & 0.9173 \\
+					Signal region & 0.0390 & 0.6028 & 0.0297 & 0.5163 \\
+					Top veto      & 0.0375 & 0.9612 & 0.0294 & 0.9906      
+				\end{tabular}
+			\end{table}
+
+
+			
+			
+			Define the correct jet assignments by matching them to the simulated truth quarks within an angular distance of $\Delta R = \sqrt{\Delta\eta^2 + \Delta\phi^2}<0.4$.
+
+		The four b-jets with the highest $p_\text{T}$ are paired to construct two Higgs boson candidates in my samples. When I checked the truth matching, I found the four b-jets may not all decay from Higgs. The event with a b-jet does not decay from Higgs is hard to pass the ``Delta R cut''. The number is in Table \ref{tab:signal_selection_compared_whit_truth_matching_1000GeV}. 
+			\begin{table}[htpb]
+				\centering
+				\caption{The events that cannot define the correct jet assignments are dropped in this table. Use the correct jet assignments to determine if four b-jets are all from Higgs. The total number of events is 100k. The resonant mass is $\text{1000 GeV}$.}
+				\label{tab:signal_selection_compared_whit_truth_matching_1000GeV}
+				\begin{tabular}{l|ccc}
+							 & Total & All from Higgs & Not all from Higgs \\ \hline
+					Four tag & 11884 & 9348    & 2536      \\
+					Delta R  & 9818  & 8961    & 857        
+				\end{tabular}
+			\end{table}
+
+		% subsubsection delta_r_cut (end)	
 	% subsection atlas (end)	
 		
 
