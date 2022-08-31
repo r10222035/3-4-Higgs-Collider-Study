@@ -2313,7 +2313,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.8\textwidth]{ATLAS_signal_selection.png}
-			\caption{The selection acceptance times efficiency at each stage for scalar.}
+			\caption{The selection acceptance times efficiency at each stage for the scalar.}
 			\label{fig:ATLAS_signal_selection}
 		\end{figure}
 		\begin{table}[htpb]
@@ -2323,12 +2323,12 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\begin{tabular}{l|cc|cc}
 							  & \multicolumn{2}{|c|}{ATLAS 1000 GeV} & \multicolumn{2}{|c}{My sample 1000 GeV} \\
 				Cut           & pass rate       & efficiency       & pass rate         & efficiency         \\ \hline
-				Four tag      & 0.1000          & 0.1000           & 0.1386            & 0.1386             \\
-				Delta R       & 0.0900          & 0.9003           & 0.0990            & 0.7139             \\
-				Higgs PT      & 0.0683          & 0.7584           & 0.0768            & 0.7759             \\
-				Higgs Eta     & 0.0647          & 0.9469           & 0.0719            & 0.9361             \\
-				Signal region & 0.0390          & 0.6028           & 0.0431            & 0.5990             \\
-				Top veto      & 0.0375          & 0.9612           & 0.0427            & 0.9909            
+				Four tag      & 0.1000 & 0.1000 & 0.1386 & 0.1386 \\
+				Delta R       & 0.0900 & 0.9003 & 0.1089 & 0.7856 \\
+				Higgs PT      & 0.0683 & 0.7584 & 0.0871 & 0.7996 \\
+				Higgs Eta     & 0.0647 & 0.9469 & 0.0803 & 0.9225 \\
+				Signal region & 0.0390 & 0.6028 & 0.0422 & 0.5251 \\
+				Top veto      & 0.0375 & 0.9612 & 0.0418 & 0.9912
 			\end{tabular}
 		\end{table}
 
@@ -2351,7 +2351,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 		\subsubsection{Delta R cut}% (fold)
 		\label{subs:delta_r_cut}
-			Change the b-tagging efficiency in Delphes such that the ``Four tag'' efficiency is same as the ATLAS results. The b-tagging efficiency after the change is
+			Change the b-tagging efficiency in Delphes such that the ``Four tag'' efficiency is the same as the ATLAS results. The b-tagging efficiency after the change is
 			\begin{equation}\label{eq:b_tagging_efficiency_2}
 				\text{eff.} = 0.78 \tanh(0.0025p_\text{T}) \frac{25.0}{1+0.063p_\text{T}}		
 			\end{equation}
@@ -2371,25 +2371,58 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 					Top veto      & 0.0375 & 0.9612 & 0.0294 & 0.9906      
 				\end{tabular}
 			\end{table}
-
-
-			
 			
 			Define the correct jet assignments by matching them to the simulated truth quarks within an angular distance of $\Delta R = \sqrt{\Delta\eta^2 + \Delta\phi^2}<0.4$.
 
 		The four b-jets with the highest $p_\text{T}$ are paired to construct two Higgs boson candidates in my samples. When I checked the truth matching, I found the four b-jets may not all decay from Higgs. The event with a b-jet does not decay from Higgs is hard to pass the ``Delta R cut''. The number is in Table \ref{tab:signal_selection_compared_whit_truth_matching_1000GeV}. 
 			\begin{table}[htpb]
 				\centering
-				\caption{The events that cannot define the correct jet assignments are dropped in this table. Use the correct jet assignments to determine if four b-jets are all from Higgs. The total number of events is 100k. The resonant mass is $\text{1000 GeV}$.}
+				\caption{Unknow are the events that cannot define the correct jet assignments. Use the correct jet assignments to determine if four b-jets are all from Higgs. The total number of events is 100k. The resonant mass is $\text{1000 GeV}$.}
 				\label{tab:signal_selection_compared_whit_truth_matching_1000GeV}
-				\begin{tabular}{l|ccc}
-							 & Total & All from Higgs & Not all from Higgs \\ \hline
-					Four tag & 11884 & 9348    & 2536      \\
-					Delta R  & 9818  & 8961    & 857        
+				\begin{tabular}{l|c|ccc}
+							 & Total & All from Higgs & Not all from Higgs & Unknown\\ \hline
+					Four tag & 13863 & 9348    & 2536  & 1979   \\
+					Delta R  & 10891 & 8961    & 857   & 1073    
 				\end{tabular}
 			\end{table}
 
-		% subsubsection delta_r_cut (end)	
+		% subsubsection delta_r_cut (end)
+		\subsubsection{Change b-tag efficiency}% (fold)
+		\label{subs:change_b_tag_efficiency}
+			Change the b-tagging part in the Delphes card such that same as the MV2c10 b-tagger at 70\% WP. 
+
+			The b-jet efficiency is set to 0.70. The c-jet missing rate is set to 0.083. The light jet missing rate is set to 0.0026.
+
+			Regenerate the events and apply the cut. The result is in Table \ref{tab:signal_selection_efficiency_1000GeV_MV2c10}. The Delta R cut efficiency is 0.86, has a big difference compared to the before result of 0.78.
+
+			\begin{table}[htpb]
+				\centering
+				\caption{The selection passing rate and efficiency at each stage. The b-tagging part is the same as the MV2c10 70\% WP. The resonant mass is $\text{1000 GeV}$.}
+				\label{tab:signal_selection_efficiency_1000GeV_MV2c10}
+				\begin{tabular}{l|cc|cc}
+								  & \multicolumn{2}{|c|}{ATLAS 1000 GeV} & \multicolumn{2}{|c}{My sample 1000 GeV} \\
+					Cut           & pass rate       & efficiency       & pass rate         & efficiency         \\ \hline
+					Four tag      & 0.1000 & 0.1000 & 0.1257 & 0.1257 \\
+					Delta R       & 0.0900 & 0.9003 & 0.1087 & 0.8643 \\
+					Higgs PT      & 0.0683 & 0.7584 & 0.0896 & 0.8247 \\
+					Higgs Eta     & 0.0647 & 0.9469 & 0.0826 & 0.9216 \\
+					Signal region & 0.0390 & 0.6028 & 0.0445 & 0.5391 \\
+					Top veto      & 0.0375 & 0.9612 & 0.0441 & 0.9899
+				\end{tabular}
+			\end{table}
+
+			\begin{table}[htpb]
+				\centering
+				\caption{Unknow are the events that cannot define the correct jet assignments. Use the correct jet assignments to determine if four b-jets are all from Higgs. The total number of events is 100k. The b-tagging part is the same as the MV2c10 70\% WP. The resonant mass is $\text{1000 GeV}$.}
+				\label{tab:signal_selection_compared_whit_truth_matching_1000GeV_MV2c10}
+				\begin{tabular}{l|c|ccc}
+							 & Total & All from Higgs & Not all from Higgs & Unknown \\ \hline
+					Four tag & 12573 & 10041    & 1181  & 1351   \\
+					Delta R  & 10868 & 9635    & 337   & 856    
+				\end{tabular}
+			\end{table}
+
+		% subsubsection change_b_tag_efficiency (end)		
 	% subsection atlas (end)	
 		
 
