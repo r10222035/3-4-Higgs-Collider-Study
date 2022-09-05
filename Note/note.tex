@@ -670,7 +670,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\begin{verbatim}
 			python train.py -of <OPTIONS_FILE> --log_dir <LOG_DIR>  --name <NAME> --gpus 1
 		\end{verbatim}
-		\verb+<OPTIONS_FILE>+: JSON file with option overloads. \verb+<LOG_DIR>+: output directory. \verb+<NAME>+: subdirectory for this run. 
+		\verb+<OPTIONS_FILE>+: JSON file with option overloads. \verb+<LOG_DIR>+: output directory. \verb+<NAME>+: subdirectory name
 
 		Evaluation:
 		\begin{verbatim}
@@ -2423,6 +2423,95 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\end{table}
 
 		% subsubsection change_b_tag_efficiency (end)		
+		\subsubsection{Training SPANet for jet pairing}% (fold)
+		\label{subs:training_spanet_for_jet_pairing}
+			The training samples are required to pass the ``Four tag cut'', i.e., there are at least four b-tagged jets with $p_{\text{T}} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The b-tagging efficiency is the same as the MV2c10 b-tagger at 70\% WP.
+			\begin{itemize}
+				\item Training sample:
+				\begin{itemize}
+					\item Total sample size: 109,252
+					\item 1h sample size: 11,746
+					\item 2h sample size: 97,053
+					\item 5\% used on validation
+				\end{itemize}
+				\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 12,140
+					\item 1h sample size: 1,199
+					\item 2h sample size: 10,883
+				\end{itemize}
+			\end{itemize}
+			The training results is presented in Table \ref{tab:SPANet_diHiggs_4btag_MV2c10_pt40}.
+			\begin{table}[htpb]
+				\centering
+				\caption{SPA-NET training results on the di-Higgs samples with ``Four tag cut''.}
+				\label{tab:SPANet_diHiggs_4btag_MV2c10_pt40}
+				\begin{tabular}{c|c|cc}
+					$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+					\hline
+					$=4$	  &   0.307             &    1.000              &    1.000             \\
+					$=5$	  &   0.365             &    0.968              &    0.984             \\
+					$\ge 6$	  &   0.264             &    0.906              &    0.951             \\
+					Total	  &   0.896             &    0.961              &    0.980             \\
+				\end{tabular}
+			\end{table}
+	
+		% subsubsection training_spanet_for_jet_pairing (end)
+		\subsubsection{Use SPANet for event selection}% (fold)
+		\label{subs:use_spanet_for_event_selection}
+			The ``$\Delta R + \text{min-}D_{HH}$'' pairing is replaced by SPANet pairing. Other cuts are will remain unchanged. The result is in Table \ref{tab:signal_selection_efficiency_1000GeV_MV2c10_SPANet}.
+			\begin{table}[htpb]
+				\centering
+				\caption{The selection passing rate and efficiency at each stage for ``$\Delta R + \text{min-}D_{HH}$'' and SPA-NET pairing. The resonant mass is $\text{1000 GeV}$.}
+				\label{tab:signal_selection_efficiency_1000GeV_MV2c10_SPANet}
+				\begin{tabular}{l|cc|cc|cc}
+						& \multicolumn{4}{c|}{$\Delta R + \text{min-}D_{HH}$}                               & \multicolumn{2}{c}{SPA-NET}   \\
+								  & \multicolumn{2}{c|}{ATLAS} & \multicolumn{2}{c|}{My sample}             & \multicolumn{2}{c}{My sample} \\
+					Cut           & pass rate   & efficiency  & pass rate & \multicolumn{1}{c|}{efficiency} & pass rate     & efficiency    \\ \hline
+					Four tag      & 0.1000      & 0.1000      & 0.1257    & 0.1257                          & 0.1257        & 0.1257        \\
+					Delta R       & 0.0900      & 0.9003      & 0.1087    & 0.8643                          & N.A.          & N.A.          \\
+					Higgs PT      & 0.0683      & 0.7584      & 0.0896    & 0.8247                          & 0.0976        & 0.7759        \\
+					Higgs Eta     & 0.0647      & 0.9469      & 0.0826    & 0.9216                          & 0.0898        & 0.9202        \\
+					Signal region & 0.0390      & 0.6028      & 0.0445    & 0.5391                          & 0.0468        & 0.5213        \\
+					Top veto      & 0.0375      & 0.9612      & 0.0441    & 0.9899                          & 0.0463        & 0.9897   
+				\end{tabular}
+			\end{table}
+
+			To separate the signal and background, apply the same selection steps to both samples. The background process is pp->4b. The ``$\Delta R + \text{min-}D_{HH}$'' result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_minDHH}. The SPANet result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_SPANet}. After the ``Signal region cut'', the SPANet pairing method has an improvement on $S/\sqrt{B}$.
+			\begin{table}[htpb]
+				\centering
+				\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is ``$\Delta R + \text{min-}D_{HH}$''.}
+				\label{tab:diHiggs_signal_background_analysis_ATLAS_minDHH}
+				\begin{tabular}{l|cc|c|c|c|c}
+								  & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+								  & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+					No cut        & 0.644            & 6.29e+05             & 1.02e-06 & 0.00958                             & 0.0141                              & 0.0445                               \\
+					Four tag      & 0.081            & 5.9e+03              & 1.37e-05 & 0.0124                              & 0.0183                              & 0.0577                               \\
+					Delta R       & 0.070            & 2.94e+03             & 2.38e-05 & 0.0152                              & 0.0224                              & 0.0708                               \\
+					Higgs PT & 0.058            & 2.46e+03             & 2.34e-05 & 0.0137                              & 0.0201                              & 0.0637                               \\
+					Higgs Eta & 0.053            & 1.78e+03             & 2.99e-05 & 0.0149                              & 0.0219                              & 0.0691                               \\
+					Signal region  & 0.029            & 3.58e+02             & 8.01e-05 & 0.0179                              & 0.0262                              & 0.0830                               \\
+					Top veto      & 0.028            & 3.58e+02             & 7.93e-05 & 0.0177                              & 0.0260                              & 0.0822                              
+				\end{tabular}
+			\end{table}
+
+			\begin{table}[htpb]
+				\centering
+				\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is SPA-NET.}
+				\label{tab:diHiggs_signal_background_analysis_ATLAS_SPANet}
+				\begin{tabular}{l|cc|c|c|c|c}
+								  & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+								  & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+					No cut        & 0.644            & 6.29e+05             & 1.02e-06 & 0.00958                             & 0.0141                              & 0.0445                               \\
+					Four tag      & 0.081            & 6.06e+03             & 1.34e-05 & 0.0123                              & 0.018                               & 0.0570                                \\
+					Higgs PT & 0.063            & 4.07e+03             & 1.54e-05 & 0.0116                              & 0.0171                              & 0.0540                               \\
+					Higgs Eta & 0.058            & 3e+03                & 1.93e-05 & 0.0124                              & 0.0183                              & 0.0578                               \\
+					Signal region  & 0.030            & 52.2                 & 0.000578 & 0.0492                              & 0.0723                              & 0.2290                               \\
+					Top veto      & 0.030            & 52.2                 & 0.000572 & 0.0487                              & 0.0716                              & 0.2260                              
+				\end{tabular}	
+			\end{table}
+
+		% subsubsection use_spanet_for_event_selection (end)		
 	% subsection atlas (end)	
 		
 
