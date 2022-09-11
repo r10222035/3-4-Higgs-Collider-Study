@@ -2459,7 +2459,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		% subsubsection training_spanet_for_jet_pairing (end)
 		\subsubsection{Use SPANet for event selection}% (fold)
 		\label{subs:use_spanet_for_event_selection}
-			The ``$\Delta R + \text{min-}D_{HH}$'' pairing is replaced by SPANet pairing. Other cuts are will remain unchanged. The result is in Table \ref{tab:signal_selection_efficiency_1000GeV_MV2c10_SPANet}.
+		The ``$\Delta R + \text{min-}D_{HH}$'' pairing is replaced by SPANet pairing. Other cuts remained unchanged. The cutflow tables for signal and background are in Table \ref{tab:signal_selection_efficiency_1000GeV_MV2c10_SPANet}, \ref{tab:signal_selection_efficiency_background_MV2c10_SPANet}.
 			\begin{table}[htpb]
 				\centering
 				\caption{The selection passing rate and efficiency at each stage for ``$\Delta R + \text{min-}D_{HH}$'' and SPA-NET pairing. The resonant mass is $\text{1000 GeV}$.}
@@ -2476,23 +2476,52 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 					Top veto      & 0.0375      & 0.9612      & 0.0441    & 0.9899                          & 0.0463        & 0.9897   
 				\end{tabular}
 			\end{table}
+			\begin{table}[htpb]
+				\centering
+				\caption{The selection passing rate and efficiency at each stage for ``$\Delta R + \text{min-}D_{HH}$'' and SPA-NET pairing. }
+				\label{tab:signal_selection_efficiency_background_MV2c10_SPANet}
+				\begin{tabular}{l|cc|cc}
+								  & \multicolumn{4}{c}{pp4b}                                                         \\
+								  & \multicolumn{2}{c|}{$\Delta R + \text{min-}D_{HH}$}& \multicolumn{2}{c}{SPA-NET} \\
+					Cut           & pass rate               & efficiency               & pass rate    & efficiency   \\ \hline
+					Four tag      & 0.0096                  & 0.0096                   & 0.0096       & 0.0096       \\
+					Delta R       & 0.0050                  & 0.5234                   &  N.A.        & N.A.         \\
+					Higgs PT      & 0.0043                  & 0.8462                   & 0.0065       & 0.6714       \\
+					Higgs Eta     & 0.0030                  & 0.7127                   & 0.0048       & 0.7380       \\
+					Signal region & 0.0005                  & 0.1551                   & 0.0001       & 0.0174       \\
+					Top veto      & 0.0005                  & 0.9936                   & 0.0001       & 1.0000      
+				\end{tabular}
+				\begin{tabular}{l|cc|cc}
+								  & \multicolumn{4}{c}{pptt}                                                         \\
+								  & \multicolumn{2}{c}{$\Delta R + \text{min-}D_{HH}$} & \multicolumn{2}{c}{SPA-NET} \\
+					Cut           & pass rate               & efficiency               & pass rate    & efficiency   \\ \hline
+					Four tag      & 0.000747                & 0.000747                 & 0.000747     & 0.000747     \\
+					Delta R       & 0.000418                & 0.559572                 & N.A.         & N.A.         \\
+					Higgs PT      & 0.000370                & 0.885167                 & 0.000548     & 0.733601     \\
+					Higgs Eta     & 0.000310                & 0.837838                 & 0.000444     & 0.810219     \\
+					Signal region & 0.000067                & 0.216129                 & 0.000030     & 0.067568     \\
+					Top veto      & 0.000057                & 0.850746                 & 0.000027     & 0.900000    
+				\end{tabular}
+			\end{table}
 
-			To separate the signal and background, apply the same selection steps to both samples. The background process is pp->4b. The ``$\Delta R + \text{min-}D_{HH}$'' result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_minDHH}. The SPANet result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_SPANet}. After the ``Signal region cut'', the SPANet pairing method has an improvement on $S/\sqrt{B}$.
+			To separate the signal and background, apply the same selection steps to both samples. The background process are pp->4b and pp->tt->4j2b. Add up the cross sections of two background processes. The ``$\Delta R + \text{min-}D_{HH}$'' result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_minDHH}. The SPANet result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_SPANet}.
+
+			After the ``Signal region cut'', the SPANet pairing method has an improvement on $S/\sqrt{B}$.
 			\begin{table}[htpb]
 				\centering
 				\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is ``$\Delta R + \text{min-}D_{HH}$''.}
 				\label{tab:diHiggs_signal_background_analysis_ATLAS_minDHH}
 				\begin{tabular}{l|cc|c|c|c|c}
-								  & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
-								  & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
-					No cut        & 0.644            & 6.29e+05             & 1.02e-06 & 0.00958                             & 0.0141                              & 0.0445                               \\
-					Four tag      & 0.081            & 5.9e+03              & 1.37e-05 & 0.0124                              & 0.0183                              & 0.0577                               \\
-					Delta R       & 0.070            & 2.94e+03             & 2.38e-05 & 0.0152                              & 0.0224                              & 0.0708                               \\
-					Higgs PT & 0.058            & 2.46e+03             & 2.34e-05 & 0.0137                              & 0.0201                              & 0.0637                               \\
-					Higgs Eta & 0.053            & 1.78e+03             & 2.99e-05 & 0.0149                              & 0.0219                              & 0.0691                               \\
-					Signal region  & 0.029            & 3.58e+02             & 8.01e-05 & 0.0179                              & 0.0262                              & 0.0830                               \\
-					Top veto      & 0.028            & 3.58e+02             & 7.93e-05 & 0.0177                              & 0.0260                              & 0.0822                              
-				\end{tabular}
+								 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+								 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+					No cut       & 0.644            & 8.92e+05             & 7.22e-07 & 0.00804                             & 0.0118                              & 0.0374                               \\
+					Four tag     & 0.081            & 6.26e+03             & 1.29e-05 & 0.0121                              & 0.0177                              & 0.0561                               \\
+					Delta R      & 0.070            & 3.28e+03             & 2.13e-05 & 0.0144                              & 0.0212                              & 0.0669                               \\
+					Higgs PT     & 0.058            & 2.78e+03             & 2.08e-05 & 0.0129                              & 0.0190                              & 0.0600                               \\
+					Higgs Eta    & 0.053            & 2.00e+03             & 2.67e-05 & 0.0140                              & 0.0206                              & 0.0652                               \\
+					Signal region & 0.029            & 3.14e+02             & 9.13e-05 & 0.0191                              & 0.0280                              & 0.0886                               \\
+					Top veto     & 0.028            & 3.10e+02             & 9.17e-05 & 0.0190                              & 0.0279                              & 0.0884                              
+				\end{tabular}	
 			\end{table}
 
 			\begin{table}[htpb]
@@ -2500,18 +2529,46 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 				\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is SPA-NET.}
 				\label{tab:diHiggs_signal_background_analysis_ATLAS_SPANet}
 				\begin{tabular}{l|cc|c|c|c|c}
-								  & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
-								  & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
-					No cut        & 0.644            & 6.29e+05             & 1.02e-06 & 0.00958                             & 0.0141                              & 0.0445                               \\
-					Four tag      & 0.081            & 6.06e+03             & 1.34e-05 & 0.0123                              & 0.018                               & 0.0570                                \\
-					Higgs PT & 0.063            & 4.07e+03             & 1.54e-05 & 0.0116                              & 0.0171                              & 0.0540                               \\
-					Higgs Eta & 0.058            & 3e+03                & 1.93e-05 & 0.0124                              & 0.0183                              & 0.0578                               \\
-					Signal region  & 0.030            & 52.2                 & 0.000578 & 0.0492                              & 0.0723                              & 0.2290                               \\
-					Top veto      & 0.030            & 52.2                 & 0.000572 & 0.0487                              & 0.0716                              & 0.2260                              
-				\end{tabular}	
+								 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+								 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+					No cut       & 0.644            & 8.92e+05             & 7.22e-07 & 0.00804                             & 0.0118                              & 0.0374                               \\
+					Four tag     & 0.081            & 6.26e+03             & 1.29e-05 & 0.0121                              & 0.0177                              & 0.0561                               \\
+					Higgs PT     & 0.063            & 4.21e+03             & 1.49e-05 & 0.0114                              & 0.0168                              & 0.0530                               \\
+					Higgs Eta    & 0.058            & 3.12e+03             & 1.85e-05 & 0.0122                              & 0.0179                              & 0.0567                               \\
+					Signal region& 0.030            & 60.1                 & 0.000502 & 0.0459                              & 0.0674                              & 0.2130                               \\
+					Top veto     & 0.030            & 59.3                 & 0.000503 & 0.0457                              & 0.0671                              & 0.2120                              
+				\end{tabular}
 			\end{table}
 
-		% subsubsection use_spanet_for_event_selection (end)		
+		% subsubsection use_spanet_for_event_selection (end)
+		\subsubsection{Plots}% (fold)
+		\label{subs:plots}
+			The $\Delta R$ v.s. $m_{\text{4j}}$ plots are in Figure \ref{fig:Higgs_deltaR_m4j}.
+			\begin{figure}[htpb]
+				\centering
+				\includegraphics[width=0.9\textwidth]{Higgs_deltaR_m4j_s.png}
+				\includegraphics[width=0.9\textwidth]{Higgs_deltaR_m4j_4b.png}
+				\caption{The $\Delta R_{jj}$ for Higgs candidate.}
+				\label{fig:Higgs_deltaR_m4j}
+			\end{figure}
+
+			The histograms for Higgs candidate mass are in Figure \ref{fig:Higgs_mass_DHH}, \ref{fig:Higgs_mass_SPANET}
+			\begin{figure}[htpb]
+				\centering
+				\includegraphics[width=0.9\textwidth]{Higgs_mass_DHH_s.png}
+				\includegraphics[width=0.9\textwidth]{Higgs_mass_DHH_4b.png}
+				\caption{The mass plane and distribution for Higgs candidate. The pairing method is ``$\Delta R + \text{min-}D_{HH}$''.}
+				\label{fig:Higgs_mass_DHH}
+			\end{figure}
+
+			\begin{figure}[htpb]
+				\centering
+				\includegraphics[width=0.9\textwidth]{Higgs_mass_SPANET_s.png}
+				\includegraphics[width=0.9\textwidth]{Higgs_mass_SPANET_4b.png}
+				\caption{The mass plane and distribution for Higgs candidate. The pairing method is SPA-NET.}
+				\label{fig:Higgs_mass_SPANET}
+			\end{figure}
+		% subsubsection plots (end)		
 	% subsection atlas (end)	
 		
 
