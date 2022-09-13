@@ -2473,7 +2473,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 					Higgs PT      & 0.0683      & 0.7584      & 0.0896    & 0.8247                          & 0.0976        & 0.7759        \\
 					Higgs Eta     & 0.0647      & 0.9469      & 0.0826    & 0.9216                          & 0.0898        & 0.9202        \\
 					Signal region & 0.0390      & 0.6028      & 0.0445    & 0.5391                          & 0.0468        & 0.5213        \\
-					Top veto      & 0.0375      & 0.9612      & 0.0441    & 0.9899                          & 0.0463        & 0.9897   
+					Top veto      & 0.0375      & 0.9612      & 0.0426    & 0.9555                          & 0.0446        & 0.9534   
 				\end{tabular}
 			\end{table}
 			\begin{table}[htpb]
@@ -2489,7 +2489,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 					Higgs PT      & 0.0043                  & 0.8462                   & 0.0065       & 0.6714       \\
 					Higgs Eta     & 0.0030                  & 0.7127                   & 0.0048       & 0.7380       \\
 					Signal region & 0.0005                  & 0.1551                   & 0.0001       & 0.0174       \\
-					Top veto      & 0.0005                  & 0.9936                   & 0.0001       & 1.0000      
+					Top veto      & 0.0003                  & 0.5975                   & 0.0001       & 0.8675      
 				\end{tabular}
 				\begin{tabular}{l|cc|cc}
 								  & \multicolumn{4}{c}{pptt}                                                         \\
@@ -2500,7 +2500,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 					Higgs PT      & 0.000370                & 0.885167                 & 0.000548     & 0.733601     \\
 					Higgs Eta     & 0.000310                & 0.837838                 & 0.000444     & 0.810219     \\
 					Signal region & 0.000067                & 0.216129                 & 0.000030     & 0.067568     \\
-					Top veto      & 0.000057                & 0.850746                 & 0.000027     & 0.900000    
+					Top veto      & 0.000021                & 0.313433                 & 0.000010     & 0.333333    
 				\end{tabular}
 			\end{table}
 
@@ -2519,8 +2519,8 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 					Delta R      & 0.070            & 3.28e+03             & 2.13e-05 & 0.0144                              & 0.0212                              & 0.0669                               \\
 					Higgs PT     & 0.058            & 2.78e+03             & 2.08e-05 & 0.0129                              & 0.0190                              & 0.0600                               \\
 					Higgs Eta    & 0.053            & 2.00e+03             & 2.67e-05 & 0.0140                              & 0.0206                              & 0.0652                               \\
-					Signal region & 0.029            & 3.14e+02             & 9.13e-05 & 0.0191                              & 0.0280                              & 0.0886                               \\
-					Top veto     & 0.028            & 3.10e+02             & 9.17e-05 & 0.0190                              & 0.0279                              & 0.0884                              
+					Signal region& 0.029            & 3.14e+02             & 9.13e-05 & 0.0191                              & 0.0280                              & 0.0886                               \\
+					Top veto     & 0.027            & 1.83e+02             & 0.00015  & 0.0239                              & 0.0351                              & 0.1110                              
 				\end{tabular}	
 			\end{table}
 
@@ -2536,7 +2536,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 					Higgs PT     & 0.063            & 4.21e+03             & 1.49e-05 & 0.0114                              & 0.0168                              & 0.0530                               \\
 					Higgs Eta    & 0.058            & 3.12e+03             & 1.85e-05 & 0.0122                              & 0.0179                              & 0.0567                               \\
 					Signal region& 0.030            & 60.1                 & 0.000502 & 0.0459                              & 0.0674                              & 0.2130                               \\
-					Top veto     & 0.030            & 59.3                 & 0.000503 & 0.0457                              & 0.0671                              & 0.2120                              
+					Top veto     & 0.029            & 47.9                 & 0.000600 & 0.0490                              & 0.0719                              & 0.2270                              
 				\end{tabular}
 			\end{table}
 
@@ -2552,7 +2552,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 				\label{fig:Higgs_deltaR_m4j}
 			\end{figure}
 
-			The histograms for Higgs candidate mass are in Figure \ref{fig:Higgs_mass_DHH}, \ref{fig:Higgs_mass_SPANET}
+			The histograms for Higgs candidate mass are in Figure \ref{fig:Higgs_mass_DHH}, \ref{fig:Higgs_mass_SPANET}.
 			\begin{figure}[htpb]
 				\centering
 				\includegraphics[width=0.9\textwidth]{Higgs_mass_DHH_s.png}
@@ -2570,9 +2570,24 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 			\end{figure}
 		% subsubsection plots (end)		
 	% subsection atlas (end)	
-		
-
-
-
 % section di_higgs_signal_background_analysis (end)			
+\section{Tri-Higgs signal background analysis}% (fold)
+\label{sec:tri_higgs_signal_background_analysis}
+	\subsection{Tri-Higgs selection step}% (fold)
+	\label{sub:tri_higgs_selection_step}
+		The selection steps:
+
+		\begin{itemize}
+			\item Six tag: The event contains at least 6 b-tagged anti-kt small-$R$ ($R = 0.4$) jets with $p_\text{T} > \text{25 GeV}$ and $\abs{\eta} < 2.5$. The six jets with the highest transverse momentum are paired to construct three Higgs boson candidates.
+			\item Pick the pairing which minimize the mass difference of 3 Higgs candidates, i.e., minimize
+			\[
+				\chi^2 = [M(\text{b}_1\text{b}_2) - M(\text{b}_3 \text{b}_4)]^2 + [M(\text{b}_1\text{b}_2) - M(\text{b}_5 \text{b}_6)]^2 +[M(\text{b}_3\text{b}_4) - M(\text{b}_5 \text{b}_6)]^2
+			\] 
+			\item Signal region:
+			\[
+				X_{HHH} = \sqrt{ [M(H_1) - M_\text{H}]^2 + [M(H_2) - M_\text{H}]^2 + [M(H_3) - M_\text{H}]^2} < \text{40 GeV}
+			\] 
+		\end{itemize}
+	% subsection tri_higgs_selection_step (end)
+% section tri_higgs_signal_background_analysis (end)	
 \end{document} 
