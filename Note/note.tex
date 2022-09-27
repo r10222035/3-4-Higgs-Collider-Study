@@ -2548,6 +2548,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 				\centering
 				\includegraphics[width=0.9\textwidth]{Higgs_deltaR_m4j_s.png}
 				\includegraphics[width=0.9\textwidth]{Higgs_deltaR_m4j_4b.png}
+				\includegraphics[width=0.9\textwidth]{Higgs_deltaR_m4j_tt.png}
 				\caption{The $\Delta R_{jj}$ for Higgs candidate.}
 				\label{fig:Higgs_deltaR_m4j}
 			\end{figure}
@@ -2557,6 +2558,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 				\centering
 				\includegraphics[width=0.9\textwidth]{Higgs_mass_DHH_s.png}
 				\includegraphics[width=0.9\textwidth]{Higgs_mass_DHH_4b.png}
+				\includegraphics[width=0.9\textwidth]{Higgs_mass_DHH_tt.png}
 				\caption{The mass plane and distribution for Higgs candidate. The pairing method is ``$\Delta R + \text{min-}D_{HH}$''.}
 				\label{fig:Higgs_mass_DHH}
 			\end{figure}
@@ -2565,9 +2567,27 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 				\centering
 				\includegraphics[width=0.9\textwidth]{Higgs_mass_SPANET_s.png}
 				\includegraphics[width=0.9\textwidth]{Higgs_mass_SPANET_4b.png}
+				\includegraphics[width=0.9\textwidth]{Higgs_mass_SPANET_tt.png}
 				\caption{The mass plane and distribution for Higgs candidate. The pairing method is SPA-NET.}
 				\label{fig:Higgs_mass_SPANET}
 			\end{figure}
+
+			\begin{figure}[htpb]
+				\centering
+				\includegraphics[width=0.6\textwidth]{Higgs_mHH_DHH_s.png}
+				\includegraphics[width=0.6\textwidth]{Higgs_mHH_DHH_4b.png}
+				\caption{The di-Higgs mass distribution. The pairing method is ``$\Delta R + \text{min-}D_{HH}$''.}
+				\label{fig:Higgs_mHH_DHH}
+			\end{figure}
+
+			\begin{figure}[htpb]
+				\centering
+				\includegraphics[width=0.6\textwidth]{Higgs_mHH_SPANet_s.png}
+				\includegraphics[width=0.6\textwidth]{Higgs_mHH_SPANet_4b.png}
+				\caption{The di-Higgs mass distribution. The pairing method is SPA-NET.}
+				\label{fig:Higgs_mHH_SPANET}
+			\end{figure}
+
 		% subsubsection plots (end)		
 	% subsection atlas (end)	
 % section di_higgs_signal_background_analysis (end)			
@@ -2590,4 +2610,80 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 		\end{itemize}
 	% subsection tri_higgs_selection_step (end)
 % section tri_higgs_signal_background_analysis (end)	
+\section{SPANET for di-Higgs mixing samples}% (fold)
+\label{sec:spanet_for_di_higgs_mixing_samples}
+	\subsection{Training sample preparation}% (fold)
+	\label{sub:training_sample_preparation}
+		The di-Higgs process pp->h2, h2->hh, h->bb was generated at $\sqrt{s}= \text{13 TeV}$ using MadGraph. Then pass these events to Pythia8 for showering and hadronization. Then pass to Delphes for detector simulation. 
+
+		The b-tagging part in Delphes card are set such that the efficiency is the same as the MV2c10 b-tagger at 70\% WP. The b-jet eﬀiciency is set to 0.70. The c-jet missing rate is set to 0.083. The light jet missing rate is set to 0.0026.
+
+		Jets are reconstructed by the anti-$k_t$ algorithm with radius $R=0.4$ and are required to have $p_\text{T}\ge \text{20 GeV}$.
+
+		Generate the samples with different $h_2$ mass. Then mix these samples.
+
+		Preselection cut: required at least 4 b-tagged jet with $p_{\text{T}} > \text{40 GeV}$ in range $\abs{\eta} < 2.5$.
+
+		Define the correct jet assignments by matching them to the simulated truth quarks within an angular distance of $\Delta R = \sqrt{\Delta\eta^2 + \Delta\phi^2}<0.4$.
+
+	% subsection training_sample_preparation (end)
+
+	\subsection{Training results for mixing samples}% (fold)
+	\label{sub:training_results_for_mixing_samples}
+		\paragraph{Case 1:} Mix $m_H = \text{300 GeV}$, $\text{600 GeV}$, $\text{1000 GeV}$ samples.
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 20,000 + 20,000 + 20,000 = 60,000
+				\item 1h sample size:  3,770 + 3,112 + 2,130 = 8,982
+				\item 2h sample size:  15,431 + 16,715 + 17,780 = 49,926
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+				\begin{itemize}
+					\item Total sample size: 2,000 + 2,000 + 2,000 = 6,000
+					\item 1h sample size: 368 + 309 + 232 = 909
+					\item 2h sample size: 1,547 + 1,675 + 1,759 = 4,981
+				\end{itemize}
+		\end{itemize}
+
+		The training results is presented in Table \ref{tab:SPANet_diHiggs_4btag_MV2c10_pt40_mix}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET training results on the mixing di-Higgs samples.}
+			\label{tab:SPANet_diHiggs_4btag_MV2c10_pt40_mix}
+			\begin{tabular}{c|ccc|c}
+					 & \multicolumn{4}{c}{Efficiency}        \\
+				Case & 300 GeV  & 600 GeV  & 1000 GeV & Total \\ \hline
+				1    & 0.765    & 0.907    & 0.956    & 0.880
+			\end{tabular}
+		\end{table}
+		
+	% subsection training_results_for_mixing_samples (end)	
+	\subsection{Performance comparison}% (fold)
+	\label{sub:performance_comparison}
+		Calculate the pairing efficiency for $D_{HH}$ method and the SPA-NET trained in Section \ref{sub:training_results_for_mixing_samples}.
+
+		These pairing methods are tested on the 2h sample in which the 4 quarks from Higgs can be matched to separate 4 jets.
+
+		The pairing efficiency is defined as 
+		\[
+			\text{efficiency} = \frac{\text{Correct pairing sample size}}{\text{Total 2h sample size}}
+		\] 
+
+		The results is in Figure \ref{fig:pairing_efficiency}.
+
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{pairing_efficiency.png}
+			\caption{Performance of SPA-NET method compared to the $D_{HH} + \Delta R$ method.}
+			\label{fig:pairing_efficiency}
+		\end{figure}
+	% subsection performance_comparison (end)	
+
+% section spanet_for_di_higgs_mixing_samples (end)		
+\section{Decay width}% (fold)
+\label{sec:decay_width}
+	Check the heavy Higgs decay width in 2HDM. Check the MadGraph banner. For $m_H = \text{1000 GeV}$, decay width is $\text{35.5 GeV}$. For $m_H = \text{300 GeV}$, decay width is $\text{71.8 GeV}$. For $m_H = \text{600 GeV}$, decay width is $\text{56.9 GeV}$.
+% section decay_width (end)		
 \end{document} 
