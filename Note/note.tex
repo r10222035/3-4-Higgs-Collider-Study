@@ -2599,7 +2599,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 
 		\begin{itemize}
 			\item Six tag: The event contains at least 6 b-tagged anti-kt small-$R$ ($R = 0.4$) jets with $p_\text{T} > \text{25 GeV}$ and $\abs{\eta} < 2.5$. The six jets with the highest transverse momentum are paired to construct three Higgs boson candidates.
-			\item Pick the pairing which minimize the mass difference of 3 Higgs candidates, i.e., minimize
+			\item Pick the pairing which minimizes the mass difference of 3 Higgs candidates, i.e., minimize
 			\[
 				\chi^2 = [M(\text{b}_1\text{b}_2) - M(\text{b}_3 \text{b}_4)]^2 + [M(\text{b}_1\text{b}_2) - M(\text{b}_5 \text{b}_6)]^2 +[M(\text{b}_3\text{b}_4) - M(\text{b}_5 \text{b}_6)]^2
 			\] 
@@ -2616,7 +2616,7 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 	\label{sub:training_sample_preparation}
 		The di-Higgs process pp->h2, h2->hh, h->bb was generated at $\sqrt{s}= \text{13 TeV}$ using MadGraph. Then pass these events to Pythia8 for showering and hadronization. Then pass to Delphes for detector simulation. 
 
-		The b-tagging part in Delphes card are set such that the efficiency is the same as the MV2c10 b-tagger at 70\% WP. The b-jet eﬀiciency is set to 0.70. The c-jet missing rate is set to 0.083. The light jet missing rate is set to 0.0026.
+		The b-tagging part in the Delphes card is set such that the efficiency is the same as the MV2c10 b-tagger at 70\% WP. The b-jet eﬀiciency is set to 0.70. The c-jet missing rate is set to 0.083. The light jet missing rate is set to 0.0026.
 
 		Jets are reconstructed by the anti-$k_t$ algorithm with radius $R=0.4$ and are required to have $p_\text{T}\ge \text{20 GeV}$.
 
@@ -2685,5 +2685,119 @@ Table \ref{tab:Cross_section_from_MadGraph_and_paper} is the cross sections calc
 \section{Decay width}% (fold)
 \label{sec:decay_width}
 	Check the heavy Higgs decay width in 2HDM. Check the MadGraph banner. For $m_H = \text{1000 GeV}$, decay width is $\text{35.5 GeV}$. For $m_H = \text{300 GeV}$, decay width is $\text{71.8 GeV}$. For $m_H = \text{600 GeV}$, decay width is $\text{56.9 GeV}$.
+
+	The above decay widths are copied from the 2HDMC output.
 % section decay_width (end)		
+\section{Generate di-Higgs samples in SM}% (fold)
+\label{sec:generate_di_higgs_samples_in_sm}
+	Generate the double Higgs events in the standard model by MadGraph with \verb+loop_sm+ model. Following are the MadGraph scripts for generating di-Higgs samples:
+	\begin{verbatim}
+	import model loop_sm
+	generate p p > h h [QCD] QED^2<=99 QCD^2<=99
+	output /home/r10222035/CPVDM/Di-Higgs-SM/di-Higgs-sm
+
+	launch /home/r10222035/CPVDM/Di-Higgs-SM/di-Higgs-sm
+
+	shower=OFF
+	detector=OFF
+	analysis=OFF
+	done
+
+	set run_card nevents 10000
+	set run_card ebeam1 6500.0
+	set run_card ebeam2 6500.0
+
+	done
+	\end{verbatim}
+
+	\subsection{Variation with \texorpdfstring{$\kappa_\lambda$}{kappa_lambda}}% (fold)
+	\label{sub:variation_with_kappa_lambda}
+		Reference: \href{https://answers.launchpad.net/mg5amcnlo/+question/678406}{How to change the trilinear Higgs coupling in Madgraph?}
+
+		The definition of $\kappa_\lambda$
+		\begin{equation}
+			\kappa_\lambda \equiv \frac{\lambda_{HHH}}{\lambda_{HHH}^{\text{SM}}}
+		\end{equation}
+
+		Following the below steps, we can add a parameter $\kappa_\lambda$ in the model
+		\begin{enumerate}
+			\item Go to MadGraph model file directory. Copy \verb+loop_sm+ to \verb+my_loop_sm+.
+			\item Go to \verb+my_loop_sm+ directory. 
+			\item In \verb+parameters.py+, add a new parameter for $\kappa_\lambda$ by
+				\begin{verbatim}
+				khhh = Parameter(name = 'khhh',
+					  nature = 'external',
+					  type = 'real',
+					  value = 1,
+					  texname = '\\text{khhh}',
+					  lhablock = 'SMINPUTS',
+					  lhacode = [ 10 ])
+				\end{verbatim}
+			\item In \verb+vertices.py+, we can find the coupling for three Higgs vertex in the form \verb+GC_XX+. 
+			\item In \verb+couplings.py+, multiply the value for \verb+GC_XX+ found in step 4 by \verb+khhh+.
+			\item In \verb+restrict_default.dat+, add
+				\begin{verbatim}
+				10 2.000000e+00 # khhh 
+				\end{verbatim}
+				in Block SMINPUTS.
+		\end{enumerate}
+
+		Finish the above setting we can use the following scripts to generate di-Higgs samples:
+			\begin{verbatim}
+			import model my_loop_sm
+			generate p p > h h [QCD] QED^2<=99 QCD^2<=99
+			output /home/r10222035/CPVDM/Di-Higgs-SM/di-Higgs-sm-kappa
+
+			launch /home/r10222035/CPVDM/Di-Higgs-SM/di-Higgs-sm-kappa
+
+			shower=OFF
+			detector=OFF
+			analysis=OFF
+			done
+
+			set param_card khhh 1
+
+			set run_card nevents 10000
+			set run_card ebeam1 6500.0
+			set run_card ebeam2 6500.0
+
+			done
+			\end{verbatim}
+
+	% subsection variation_with_kappa_lambda (end)
+	\subsection{Results}% (fold)
+	\label{sub:di_Higgs_sample_generating_results}
+		The cross section of various $\kappa_\lambda$ is showed in Table \ref{tab:di-Higgs-SM-kappa-cross-section}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross section of various $\kappa_\lambda$. My data is the results from MadGraph. The reference data is from \href{https://link.springer.com/content/pdf/10.1007/JHEP06(2019)066.pdf}{here}. }
+			\label{tab:di-Higgs-SM-kappa-cross-section}
+			\begin{tabular}{c|cc|c}
+								 & \multicolumn{2}{c|}{Cross section (fb)} &       \\
+				$\kappa_\lambda$ & Ref.              & My data            & Ratio \\ \hline
+				-1               & 116.71            & 74.62              & 1.564 \\
+				0                & 62.51             & 41.96              & 1.490 \\
+				1                & 27.84             & 20.27              & 1.373 \\
+				2                & 12.42             & 9.56               & 1.299 \\
+				2.4              & 11.65             & 8.33               & 1.399 \\
+				3                & 16.28             & 9.81               & 1.660 \\
+				5                & 81.74             & 43.55              & 1.877
+			\end{tabular}
+		\end{table}
+
+		The $m_{HH}$ distribution with various $\kappa_\lambda$ is presented in Figure \ref{fig:di-Higgs-SM-kappa-mhh-my-data}. In this plot, the data is the parton level data from MadGraph. Compare to the results in Figure \ref{fig:di-Higgs-SM-kappa-mhh-ref}.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{di-Higgs-SM-kappa-mhh-my-data.png}
+			\caption{The $m_{HH}$ distribution with various $\kappa_\lambda$. The bin height is weighted by the cross section.}
+			\label{fig:di-Higgs-SM-kappa-mhh-my-data}
+		\end{figure}
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.8\textwidth]{di-Higgs-SM-kappa-mhh-ref.png}
+			\caption{The dip between the low and high $m_{HH}$ peak due to destructive interference.}
+			\label{fig:di-Higgs-SM-kappa-mhh-ref}
+		\end{figure}
+	% subsection di_Higgs_sample_generating_results (end)		
+% section generate_di_higgs_samples_in_sm (end)	
 \end{document} 
