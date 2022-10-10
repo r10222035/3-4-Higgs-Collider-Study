@@ -158,26 +158,36 @@ def main(file_path, output_name, nbj_min=2, nevent_max=100000):
                 quarks_Eta = []
                 quarks_Phi = []
                 quarks_Jet = [-1,-1,-1,-1]
+                
+                PID = GenParticle.PID_At(event)
+                D1 = GenParticle.D1_At(event)
+                D2 = GenParticle.D2_At(event)
+                h_list = []
+                h_count = 0
 
-                # 2 個 Higgs
-                for j in np.where(GenParticle.PID_At(event) == 25)[0]:
-                    # h > b b~
-                    b1 = GenParticle.D1_At(event)[j]
-                    b2 = GenParticle.D2_At(event)[j]
-
-                    # 找出 b 衰變前的編號
-                    d1 = GenParticle.D1_At(event)[b1]
-                    while abs(GenParticle.PID_At(event)[d1]) == 5:
-                        b1 = d1
-                        d1 = GenParticle.D1_At(event)[b1]
-
-                    # 找出 b~ 衰變前的編號
-                    d2 = GenParticle.D1_At(event)[b2]
-                    while abs(GenParticle.PID_At(event)[d2]) == 5:
-                        b2 = d2
-                        d2 = GenParticle.D1_At(event)[b2]
-
-                    quarks_id.extend([b1,b2])
+                # 找出衰變前的 b 編號
+                for i in range(len(PID)):    
+                    if PID[i] == 25 and i not in h_list:  
+                        h = i
+                        h_list.append(h)
+                        # 找出 h 衰變前的編號
+                        while PID[D1[h]] == PID[h]:
+                            h = D1[h]
+                            h_list.append(h)
+                        
+                        # 找出 b 衰變前的編號
+                        b1, b2 = D1[h], D2[h]
+                        while PID[D1[b1]] == PID[b1]:
+                            b1 = D1[b1]
+                        while PID[D1[b2]] == PID[b2]:
+                            b2 = D1[b2]
+                            
+                        quarks_id.extend([b1,b2])
+                        
+                        h_count += 1
+                    # 2 個 Higgs    
+                    if h_count == 2:
+                        break
 
                 quarks_Eta.extend(GenParticle.Eta_At(event)[quarks_id])
                 quarks_Phi.extend(GenParticle.Phi_At(event)[quarks_id])
