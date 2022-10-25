@@ -164,17 +164,17 @@
 			\centering
 			\caption{The cross sections of various $\kappa_\lambda$. My data is the results from MadGraph. The reference data is from \href{https://link.springer.com/content/pdf/10.1007/JHEP06(2019)066.pdf}{here}. }
 			\label{tab:di-Higgs-SM-kappa-cross-section}
-			\begin{tabular}{c|cc|c|cc|cc}
-							 & \multicolumn{3}{c|}{13 TeV}                     & \multicolumn{4}{c}{14 TeV}                                     \\
+			\begin{tabular}{c|cc|c|cc|cc|c}
+							 & \multicolumn{3}{c|}{13 TeV}                     & \multicolumn{5}{c}{14 TeV}                                     \\
 							 & \multicolumn{2}{c|}{Cross section (fb)} &        & \multicolumn{2}{c|}{Cross section (fb)} &       &               \\
-			$\kappa_\lambda$ & Ref.              & My data            & Ref./My& Ref.              & My data            &Ref./My& Ref. K-factor \\ \hline
-			-1               & 116.71            & 74.62              & 1.564  & 136.91            & 87.93              & 1.56  & 1.86          \\
-			0                & 62.51             & 41.96              & 1.490  & 73.64             & 49.45              & 1.49  & 1.79          \\
-			1                & 27.84             & 20.27              & 1.373  & 32.88             & 24.05              & 1.37  & 1.66          \\
-			2                & 12.42             & 9.56               & 1.299  & 14.75             & 11.34              & 1.30  & 1.56          \\
-			2.4              & 11.65             & 8.33               & 1.399  & 13.79             & 9.90               & 1.39  & 1.65          \\
-			3                & 16.28             & 9.81               & 1.660  & 19.07             & 11.55              & 1.65  & 1.90          \\
-			5                & 81.74             & 43.55              & 1.877  & 95.22             & 50.68              & 1.88  & 2.14         
+							 $\kappa_\lambda$ & Ref.              & My data            & Ref./My& Ref.              & My data            &Ref./My& Ref. K& Ref.K/My K \\ \hline
+			-1               & 116.71            & 74.62              & 1.564  & 136.91            & 87.93              & 1.56 & 1.86 & 1.19  \\
+			0                & 62.51             & 41.96              & 1.490  & 73.64             & 49.45              & 1.49 & 1.79 & 1.20  \\
+			1                & 27.84             & 20.27              & 1.373  & 32.88             & 24.05              & 1.37 & 1.66 & 1.21  \\
+			2                & 12.42             & 9.56               & 1.299  & 14.75             & 11.34              & 1.30 & 1.56 & 1.20  \\
+			2.4              & 11.65             & 8.33               & 1.399  & 13.79             & 9.90               & 1.39 & 1.65 & 1.18  \\
+			3                & 16.28             & 9.81               & 1.660  & 19.07             & 11.55              & 1.65 & 1.90 & 1.15  \\
+			5                & 81.74             & 43.55              & 1.877  & 95.22             & 50.68              & 1.88 & 2.14 & 1.14  \\
 			\end{tabular}
 		\end{table}
 
@@ -244,7 +244,7 @@
 		\begin{table}[htpb]
 			\centering
 			\caption{The selection passing rate and efficiency at each stage. The b-tagging part is the same as the DL1r 77\% WP. }
-			\label{tab:signal_selection_efficiency__DL1r}
+			\label{tab:signal_selection_efficiency_DL1r}
 			\begin{tabular}{l|cc|cc}
 							  & \multicolumn{2}{|c|}{ATLAS} & \multicolumn{2}{|c}{My sample} \\
 				Cut           & pass rate       & efficiency       & pass rate         & efficiency         \\ \hline
@@ -263,7 +263,7 @@
 		Figure \ref{fig:Higgs_mass_new} shows the Higgs mass distribution. There is a deviation between the mass distribution peak and the signal region's center.  
 		\begin{figure}[htpb]
 			\centering
-			\includegraphics[width=0.95\textwidth]{Higgs_mass_new_s.png}
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_s.png}
 			\caption{The mass plane and distribution for Higgs candidate.}
 			\label{fig:Higgs_mass_new}
 		\end{figure}
@@ -293,7 +293,7 @@
 				\end{array} 
 				\right\} \text{ if } m_{\text{4j}} >  \text{1250 GeV}
 			\] 
-			\item If there are more than 2 pairings satisfy the Delta R requirement. Calculate $D_{HH}$
+			\item If there are more than 2 pairings satisfies the Delta R requirement. Calculate $D_{HH}$
 			\[
 				D_{HH} = \frac{\abs{m_{\text{2j}}^{\text{lead}} - \frac{120}{110} m_{\text{2j}}^{\text{subl}}}}{\sqrt{1 + \left( \frac{120}{110} \right)^2}}
 			\] 
@@ -336,10 +336,115 @@
 					Top veto      & 0.0179 & 0.9275 & 0.0145 & 0.8537
 				\end{tabular}
 			\end{table}
-
+			
 		% subsubsection subsubsection_name (end)	
 
 	% subsection event_selection (end)	
+	\subsection{Background event selection}% (fold)
+	\label{sub:background_event_selection}
+		Apply the same selection step to the background samples. The cutflow table is in Table \ref{tab:signal_selection_efficiency_pp4b} and the mass distribution is in Figure \ref{fig:Higgs_mass_new_pp4b}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The selection passing rate and efficiency at each stage for ``$\text{min-}\Delta R$'' pairing method.}
+			\label{tab:signal_selection_efficiency_pp4b}
+			\begin{tabular}{l|cc}
+							  & \multicolumn{2}{c}{pp4b}                                                         \\
+							  & \multicolumn{2}{c}{$\text{min-}\Delta R$}\\
+				Cut           & pass rate               & efficiency                \\ \hline
+				Four tag      & 0.0096                  & 0.0096                    \\
+				Higgs Eta     & 0.0056                  & 0.5835                    \\
+				Top veto      & 0.0042                  & 0.7423                    \\
+				Signal region & 0.0001                  & 0.0232                    \\
+			\end{tabular}
+		\end{table}
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_mindR_pp4b.png}
+			\caption{The mass plane and distribution for Higgs candidate.}
+			\label{fig:Higgs_mass_new_pp4b}
+		\end{figure}
+
+	% subsection background_event_selection (end)		
 	
 % section non_resonant_di_higgs_event_selection (end)		
+\section{Apply SPANET on non-resonant di-Higgs event}% (fold)
+\label{sec:apply_spanet_on_non_resonant_di_higgs_event}
+	\subsection{Training SPANET}% (fold)
+	\label{sub:training_spanet}
+		The training samples are required to pass the ``Four tag cut'', i.e., there are at least four b-tagged jets with $p_{\text{T}} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The b-tagging efficiency is the same as the DL1r b-tagger at 77\% WP.
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 76,131
+				\item 1h sample size: 14,527
+				\item 2h sample size: 60,122			
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+			\begin{itemize}
+				\item Total sample size: 8,460
+				\item 1h sample size: 1,577
+				\item 2h sample size: 6,744
+			\end{itemize}
+		\end{itemize}
+		The training results is presented in Table \ref{tab:SPANet_diHiggs_4btag_DL1r_pt40}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET training results on the di-Higgs samples with ``Four tag cut''.}
+			\label{tab:SPANet_diHiggs_4btag_DL1r_pt40}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.280             &    0.961              &    0.961             \\
+				$=5$	  &   0.287             &    0.878              &    0.913             \\
+				$\ge 6$	  &   0.229             &    0.740              &    0.819             \\
+				Total	  &   0.797             &    0.868              &    0.903             \\
+			\end{tabular}
+		\end{table}
+
+	% subsection training_spanet (end)
+	\subsection{Use SPANET for event selection}% (fold)
+	\label{sub:use_spanet_for_event_selection}
+		The ``$ \text{min-}\Delta R$'' pairing is replaced by SPA-NET pairing. Other cuts remained unchanged. The cutflow tables for signal and background are in Table \ref{tab:signal_selection_efficiency_SPANet}, \ref{tab:signal_selection_efficiency_background_SPANet}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The selection passing rate and efficiency at each stage for ``$\text{min-}\Delta R$'' and SPA-NET pairing.}
+			\label{tab:signal_selection_efficiency_SPANet}
+			\begin{tabular}{l|cc|cc|cc}
+					& \multicolumn{4}{c|}{$\text{min-}\Delta R$}                               & \multicolumn{2}{c}{SPA-NET}   \\
+							  & \multicolumn{2}{c|}{ATLAS} & \multicolumn{2}{c|}{My sample}             & \multicolumn{2}{c}{My sample} \\
+				Cut           & pass rate   & efficiency  & pass rate & \multicolumn{1}{c|}{efficiency} & pass rate     & efficiency    \\ \hline
+				Four tag      & 0.0649 & 0.0649 & 0.0852 & 0.0852 & 0.0852 & 0.0852\\
+				Higgs Eta     & 0.0543 & 0.8360 & 0.0688 & 0.8074 & 0.0635 & 0.7454\\
+				Top veto      & 0.0456 & 0.8401 & 0.0553 & 0.8044 & 0.0508 & 0.8006\\
+				Signal region & 0.0220 & 0.4818 & 0.0181 & 0.3283 & 0.0027 & 0.0541\\
+			\end{tabular}
+		\end{table}
+		\begin{table}[htpb]
+			\centering
+			\caption{The selection passing rate and efficiency at each stage for ``$\text{min-}\Delta R$'' and SPA-NET pairing. }
+			\label{tab:signal_selection_efficiency_background_SPANet}
+			\begin{tabular}{l|cc|cc}
+							  & \multicolumn{4}{c}{pp4b}                                                         \\
+							  & \multicolumn{2}{c|}{$\text{min-}\Delta R$}& \multicolumn{2}{c}{SPA-NET} \\
+				Cut           & pass rate               & efficiency                & pass rate    & efficiency   \\ \hline
+				Four tag      & 0.0096                  & 0.0096                    & 0.0096       & 0.0096       \\
+				Higgs Eta     & 0.0056                  & 0.5835                    & 0.0055       & 0.5733       \\
+				Top veto      & 0.0042                  & 0.7423                    & 0.0042       & 0.7607      \\
+				Signal region & 0.0001                  & 0.0232                    & 0.0001       & 0.0181       \\
+			\end{tabular}
+		\end{table}
+
+		Figure \ref{fig:Higgs_mass_new_SPANET} shows the Higgs mass distribution for SPA-NET pairing.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_SPANET_s.png}
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_SPANET_4b.png}
+			\caption{The mass plane and distribution for Higgs candidate for SPA-NET pairing method. The above figure is for the signal sample and the below one is for the background sample.}
+			\label{fig:Higgs_mass_new_SPANET}
+		\end{figure}
+
+
+	% subsection use_spanet_for_event_selection (end)	
+% section apply_spanet_on_non_resonant_di_higgs_event (end)			
 \end{document} 
