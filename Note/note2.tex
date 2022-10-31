@@ -360,7 +360,7 @@
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_mindR_pp4b.png}
-			\caption{The mass plane and distribution for Higgs candidate.}
+			\caption{The mass plane and distribution for background events Higgs candidate.}
 			\label{fig:Higgs_mass_new_pp4b}
 		\end{figure}
 
@@ -435,6 +435,70 @@
 			\end{tabular}
 		\end{table}
 
+		Figure \ref{fig:Higgs_mass_new_SPANET_wrong} shows the Higgs mass distribution for SPA-NET pairing.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_SPANET_wrong_s.png}
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_SPANET_wrong_4b.png}
+			\caption{The mass plane and distribution for Higgs candidate for SPA-NET pairing method. The above figure is for the signal sample and the below one is for the background sample.}
+			\label{fig:Higgs_mass_new_SPANET_wrong}
+		\end{figure}
+
+
+	% subsection use_spanet_for_event_selection (end)	
+% section apply_spanet_on_non_resonant_di_higgs_event (end)			
+\section{Pairing performace}% (fold)
+\label{sec:pairing_performace}
+
+	The truth pairing is defined by matching the jets to the simulated quarks within the angular distance of $\Delta R = \sqrt{(\Delta\eta)^2 + (\Delta\phi)^2} < 0.4$.
+	
+	The ``$\text{min-}\Delta R$ '' pairing method contain two step: first select four b-jets with highest $p_\text{T}$, second, choose $\text{min-}\Delta R$ configuration. For first step, the correct selection rate is $89\%$. For the second step, the correct pairing rate is  $91 \%$. The pairing effciency is  $81 \%$.
+
+	The ``SPA-NET'' pairing method:  The pairing effciency is  $86.8 \%$.
+
+	The mass distribution for truth pairing are in Figure \ref{fig:Higgs_mass_new_truth}. The results are similar to the ``$\text{min-}\Delta R$'' ones, but much different to the SPA-NET's. There are indeed some bugs in the SPA-NET pairing code.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_truth_s.png}
+			\caption{The mass plane and distribution for truth pairing.}
+			\label{fig:Higgs_mass_new_truth}
+		\end{figure}
+
+% section pairing_performace (end)
+\section{Apply SPANET to non-resonant di-Higgs event again}% (fold)
+\label{sec:apply_spanet_to_non_resonant_di_higgs_event_again}
+	The bugs for Sec.\ref{sec:apply_spanet_on_non_resonant_di_higgs_event}: There are some variables are mis-defined twice, so they will get incorrect number when calculating some physical quantities. 
+
+	Fix this bug, then the cutflow tables for signal and background are in Table \ref{tab:signal_selection_efficiency_SPANet_correct}, \ref{tab:signal_selection_efficiency_background_SPANet_correct}.
+	\begin{table}[htpb]
+			\centering
+			\caption{The selection passing rate and efficiency at each stage for ``$\text{min-}\Delta R$'' and SPA-NET pairing.}
+			\label{tab:signal_selection_efficiency_SPANet_correct}
+			\begin{tabular}{l|cc|cc|cc}
+					& \multicolumn{4}{c|}{$\text{min-}\Delta R$}                               & \multicolumn{2}{c}{SPA-NET}   \\
+							  & \multicolumn{2}{c|}{ATLAS} & \multicolumn{2}{c|}{My sample}             & \multicolumn{2}{c}{My sample} \\
+				Cut           & pass rate   & efficiency  & pass rate & \multicolumn{1}{c|}{efficiency} & pass rate     & efficiency    \\ \hline
+				Four tag      & 0.0649 & 0.0649 & 0.0852 & 0.0852 & 0.0852 & 0.0852\\
+				Higgs Eta     & 0.0543 & 0.8360 & 0.0688 & 0.8074 & 0.0676 & 0.7942\\
+				Top veto      & 0.0456 & 0.8401 & 0.0553 & 0.8044 & 0.0544 & 0.8051\\
+				Signal region & 0.0220 & 0.4818 & 0.0181 & 0.3283 & 0.0194 & 0.3567\\
+			\end{tabular}
+		\end{table}
+		\begin{table}[htpb]
+			\centering
+			\caption{The selection passing rate and efficiency at each stage for ``$\text{min-}\Delta R$'' and SPA-NET pairing. }
+			\label{tab:signal_selection_efficiency_background_SPANet_correct}
+			\begin{tabular}{l|cc|cc}
+							  & \multicolumn{4}{c}{pp4b}                                                         \\
+							  & \multicolumn{2}{c|}{$\text{min-}\Delta R$}& \multicolumn{2}{c}{SPA-NET} \\
+				Cut           & pass rate               & efficiency                & pass rate    & efficiency   \\ \hline
+				Four tag      & 0.0096                  & 0.0096                    & 0.0096       & 0.0096       \\
+				Higgs Eta     & 0.0056                  & 0.5835                    & 0.0050       & 0.5202       \\
+				Top veto      & 0.0042                  & 0.7423                    & 0.0037       & 0.7341      \\
+				Signal region & 0.0001                  & 0.0232                    & 0.0002       & 0.0443       \\
+			\end{tabular}
+		\end{table}
+
 		Figure \ref{fig:Higgs_mass_new_SPANET} shows the Higgs mass distribution for SPA-NET pairing.
 		\begin{figure}[htpb]
 			\centering
@@ -444,7 +508,38 @@
 			\label{fig:Higgs_mass_new_SPANET}
 		\end{figure}
 
+		The ``$\text{min-}\Delta R$'' result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}. The SPANet result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_SPANet}.
 
-	% subsection use_spanet_for_event_selection (end)	
-% section apply_spanet_on_non_resonant_di_higgs_event (end)			
+		SPA-NET method will let more signal events pass the Higgs signal cut, but also true for background process. Therefore, the SPA-NET pairing method can not improve the $S/\sqrt{B}$.
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is ``$\text{min-}\Delta R$''.}
+			\label{tab:diHiggs_signal_background_analysis_ATLAS_mindR}
+			\begin{tabular}{l|cc|c|c|c|c}
+							 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+							 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+				No cut       & 6.774 & 6.29e+05 & 1.08e-05 & 0.101  & 0.148 & 0.468 \\
+				Four tag     & 0.577 & 6.06e+03 & 9.52e-05 & 0.0874 & 0.128 & 0.406 \\
+				Higgs Eta    & 0.466 & 3.54e+03 & 0.000132 & 0.0923 & 0.136 & 0.429 \\
+				Top veto     & 0.375 & 2.62e+03 & 0.000143 & 0.0862 & 0.127 & 0.401 \\
+				Higgs signal & 0.123 & 61.0     & 0.00202  & 0.186  & 0.273 & 0.862
+			\end{tabular}	
+		\end{table}
+
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is SPA-NET.}
+			\label{tab:diHiggs_signal_background_analysis_ATLAS_SPANet}
+			\begin{tabular}{l|cc|c|c|c|c}
+							 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+							 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+				No cut       & 6.774 & 6.29e+05 & 1.08e-05 & 0.101  & 0.148 & 0.468 \\
+				Four tag     & 0.577 & 6.06e+03 & 9.52e-05 & 0.0874 & 0.128 & 0.406 \\
+				Higgs Eta    & 0.458 & 3.15e+03 & 0.000145 & 0.0962 & 0.141 & 0.447 \\
+				Top veto     & 0.369 & 2.31e+03 & 0.000159 & 0.0904 & 0.133 & 0.420 \\
+				Higgs signal & 0.132 & 1.02e+02 & 0.00128  & 0.153  & 0.225 & 0.712			
+			\end{tabular}
+		\end{table}
+
+% section apply_spanet_to_non_resonant_di_higgs_event_again (end)		
 \end{document} 
