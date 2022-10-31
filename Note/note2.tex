@@ -159,7 +159,7 @@
 	% subsection variation_with_kappa_lambda (end)
 	\subsection{Results}% (fold)
 	\label{sub:di_Higgs_sample_generating_results}
-		The cross sections of various $\kappa_\lambda$ are showed in Table \ref{tab:di-Higgs-SM-kappa-cross-section}.
+		The cross sections of various $\kappa_\lambda$ are shown in Table \ref{tab:di-Higgs-SM-kappa-cross-section}.
 		\begin{table}[htpb]
 			\centering
 			\caption{The cross sections of various $\kappa_\lambda$. My data is the results from MadGraph. The reference data is from \href{https://link.springer.com/content/pdf/10.1007/JHEP06(2019)066.pdf}{here}. }
@@ -387,7 +387,7 @@
 				\item 2h sample size: 6,744
 			\end{itemize}
 		\end{itemize}
-		The training results is presented in Table \ref{tab:SPANet_diHiggs_4btag_DL1r_pt40}.
+		The training results are presented in Table \ref{tab:SPANet_diHiggs_4btag_DL1r_pt40}.
 		\begin{table}[htpb]
 			\centering
 			\caption{SPA-NET training results on the di-Higgs samples with ``Four tag cut''.}
@@ -452,11 +452,11 @@
 
 	The truth pairing is defined by matching the jets to the simulated quarks within the angular distance of $\Delta R = \sqrt{(\Delta\eta)^2 + (\Delta\phi)^2} < 0.4$.
 	
-	The ``$\text{min-}\Delta R$ '' pairing method contain two step: first select four b-jets with highest $p_\text{T}$, second, choose $\text{min-}\Delta R$ configuration. For first step, the correct selection rate is $89\%$. For the second step, the correct pairing rate is  $91 \%$. The pairing effciency is  $81 \%$.
+	The ``$\text{min-}\Delta R$ '' pairing method contain two-step: first select four b-jets with the highest $p_\text{T}$, and second, choose $\text{min-}\Delta R$ configuration. For the first step, the correct selection rate is $89\%$. For the second step, the correct pairing rate is  $91 \%$. The pairing efficiency is  $81 \%$.
 
-	The ``SPA-NET'' pairing method:  The pairing effciency is  $86.8 \%$.
+	The ``SPA-NET'' pairing method:  The pairing efficiency is  $86.8 \%$.
 
-	The mass distribution for truth pairing are in Figure \ref{fig:Higgs_mass_new_truth}. The results are similar to the ``$\text{min-}\Delta R$'' ones, but much different to the SPA-NET's. There are indeed some bugs in the SPA-NET pairing code.
+	The mass distribution for truth pairing is in Figure \ref{fig:Higgs_mass_new_truth}. The results are similar to the ``$\text{min-}\Delta R$'' ones, but much different to the SPA-NET's. There are indeed some bugs in the SPA-NET pairing code.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_truth_s.png}
@@ -467,7 +467,7 @@
 % section pairing_performace (end)
 \section{Apply SPANET to non-resonant di-Higgs event again}% (fold)
 \label{sec:apply_spanet_to_non_resonant_di_higgs_event_again}
-	The bugs for Sec.\ref{sec:apply_spanet_on_non_resonant_di_higgs_event}: There are some variables are mis-defined twice, so they will get incorrect number when calculating some physical quantities. 
+	The bugs for Sec.\ref{sec:apply_spanet_on_non_resonant_di_higgs_event}: Some variables are misdefined twice, so they will get an incorrect number when calculating some physical quantities. 
 
 	Fix this bug, then the cutflow tables for signal and background are in Table \ref{tab:signal_selection_efficiency_SPANet_correct}, \ref{tab:signal_selection_efficiency_background_SPANet_correct}.
 	\begin{table}[htpb]
@@ -510,7 +510,7 @@
 
 		The ``$\text{min-}\Delta R$'' result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}. The SPANet result is in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_SPANet}.
 
-		SPA-NET method will let more signal events pass the Higgs signal cut, but also true for background process. Therefore, the SPA-NET pairing method can not improve the $S/\sqrt{B}$.
+		The SPA-NET method will let more signal events pass the Higgs signal cut, but also true for the background process. Therefore, the SPA-NET pairing method can not improve the $S/\sqrt{B}$.
 		\begin{table}[htpb]
 			\centering
 			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is ``$\text{min-}\Delta R$''.}
