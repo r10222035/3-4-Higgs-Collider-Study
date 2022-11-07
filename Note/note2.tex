@@ -542,4 +542,223 @@
 		\end{table}
 
 % section apply_spanet_to_non_resonant_di_higgs_event_again (end)		
+\section{Train on resonant test on SM}% (fold)
+\label{sec:train_on_resonant_test_on_sm}
+	In Figure \ref{fig:di-Higgs-SM-kappa-mhh}, there is a peak around $\text{450 GeV}$ in the SM ($\kappa_\lambda = 1$) $m_{hh}$ distribution. This section trains a SPA-NET on the resonant samples with resonant mass $\text{450 GeV}$, then test its performance on SM samples.
+
+	\subsection{SPA-NET training on 450 GeV}% (fold)
+	\label{sub:spa_net_training_on_450_gev}
+		Set $m_H = \text{450 GeV}$. The training samples are required to pass the ``Four tag cut'', i.e., there are at least four b-tagged jets with $p_{\text{T}} > \text{40 GeV}$ and $\abs{\eta} < 2.5$.
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 51,145
+				\item 1h sample size: 9,320
+				\item 2h sample size: 40,991
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+			\begin{itemize}
+				\item Total sample size: 5,683
+				\item 1h sample size: 1,011
+				\item 2h sample size: 4,582
+			\end{itemize}
+		\end{itemize}
+		The training results are presented in Table \ref{tab:SPANet_diHiggs_4btag_pt40_450GeV}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET training results on the resonant di-Higgs samples with ``Four tag cut''.}
+			\label{tab:SPANet_diHiggs_4btag_pt40_450GeV}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.316             &    0.992              &    0.992             \\
+				$=5$	  &   0.282             &    0.903              &    0.936             \\
+				$\ge 6$	  &   0.208             &    0.768              &    0.838             \\
+				Total	  &   0.806             &    0.903              &    0.933             \\
+			\end{tabular}
+		\end{table}
+
+	% subsection spa_net_training_on_450_gev (end)
+	\subsection{Test SPA-NET on SM event}% (fold)
+	\label{sub:test_spa_net_on_sm_event}
+		In the below, the SPA-NET trained in Sec.\ref{sub:spa_net_training_on_450_gev} is called ``resonant SPA-NET''. Test the resonant SPA-NET on the non-resonant events. The testing results are in Table \ref{tab:SPANet_train_450GeV_test_SM}. The event efficiency is $0.805$. This result is worse than ``train on resonant test on resonant $0.903$'' and ``train on SM test on SM $0.868$''.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET testing results on the non-resonant di-Higgs samples. Where the SPA-NET is trained on the resonant samples.}
+			\label{tab:SPANet_train_450GeV_test_SM}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.280             &    0.940              &    0.940             \\
+				$=5$	  &   0.287             &    0.790              &    0.861             \\
+				$\ge 6$	  &   0.229             &    0.649              &    0.756             \\
+				Total	  &   0.797             &    0.805              &    0.861             \\
+			\end{tabular}
+		\end{table}
+	% subsection test_spa_net_on_sm_event (end)
+	\subsection{Apply the resonant SPA-NET on SM pairing}% (fold)
+	\label{sub:apply_the_resonant_spa_net_on_sm_pairing}
+		The ``$ \text{min-}\Delta R$'' pairing is replaced by SPA-NET pairing. Other cuts remained unchanged. The cutflow tables for signal and background are in Table \ref{tab:signal_selection_efficiency_resonant_SPANET}, \ref{tab:signal_selection_efficiency_background_resonant_SPANET}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The selection passing rate and efficiency at each stage for ``$\text{min-}\Delta R$'' and SPA-NET pairing. The SPA-NET is trained in Sec.\ref{sub:spa_net_training_on_450_gev}}
+			\label{tab:signal_selection_efficiency_resonant_SPANET}
+			\begin{tabular}{l|cc|cc|cc}
+					& \multicolumn{4}{c|}{$\text{min-}\Delta R$}                               & \multicolumn{2}{c}{SPA-NET}   \\
+							  & \multicolumn{2}{c|}{ATLAS} & \multicolumn{2}{c|}{My sample}             & \multicolumn{2}{c}{My sample} \\
+				Cut           & pass rate   & efficiency  & pass rate & \multicolumn{1}{c|}{efficiency} & pass rate     & efficiency    \\ \hline
+				Four tag      & 0.0649 & 0.0649 & 0.0852 & 0.0852 & 0.0852 & 0.0852\\
+				Higgs Eta     & 0.0543 & 0.8360 & 0.0688 & 0.8074 & 0.0685 & 0.8022\\
+				Top veto      & 0.0456 & 0.8401 & 0.0553 & 0.8044 & 0.0550 & 0.8048\\
+				Signal region & 0.0220 & 0.4818 & 0.0181 & 0.3283 & 0.0181 & 0.3296\\
+			\end{tabular}
+		\end{table}
+		\begin{table}[htpb]
+			\centering
+			\caption{The selection passing rate and efficiency at each stage for ``$\text{min-}\Delta R$'' and SPA-NET pairing. The SPA-NET is trained in Sec.\ref{sub:spa_net_training_on_450_gev}}
+			\label{tab:signal_selection_efficiency_background_resonant_SPANET}
+			\begin{tabular}{l|cc|cc}
+							  & \multicolumn{4}{c}{pp4b}                                                         \\
+							  & \multicolumn{2}{c|}{$\text{min-}\Delta R$}& \multicolumn{2}{c}{SPA-NET} \\
+				Cut           & pass rate               & efficiency                & pass rate    & efficiency   \\ \hline
+				Four tag      & 0.0096                  & 0.0096                    & 0.0096       & 0.0096       \\
+				Higgs Eta     & 0.0056                  & 0.5835                    & 0.0054       & 0.5589       \\
+				Top veto      & 0.0042                  & 0.7423                    & 0.0039       & 0.7326      \\
+				Signal region & 0.0001                  & 0.0232                    & 0.0001       & 0.0200       \\
+			\end{tabular}
+		\end{table}
+
+		Figure \ref{fig:Higgs_mass_new_resonant_SPANET} shows the Higgs mass distribution for resonant SPA-NET pairing.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_res-SPANET_s.png}
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_res-SPANET_4b.png}
+			\caption{The mass plane and distribution for Higgs candidate for resonant SPA-NET pairing. The above figure is for the signal sample and the below one is for the background sample.}
+			\label{fig:Higgs_mass_new_resonant_SPANET}
+		\end{figure}
+		The $\frac{S}{\sqrt{B}}$ of resonant SPA-NET results are in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_resonant_SPANET}.
+
+		Compared to ``$\text{min-}\Delta R$'' method (Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}), the resonant SPA-NET will let roughly the same number of signal events pass the Higgs signal cut, and let the smaller number of the background events pass, but not so much difference. Therefore, the resonant SPA-NET can a little improve the $S/\sqrt{B}$.
+
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is resonant SPA-NET. Compared to Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}, there is a little improvement.}
+			\label{tab:diHiggs_signal_background_analysis_ATLAS_resonant_SPANET}
+			\begin{tabular}{l|cc|c|c|c|c}
+							 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+							 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+				No cut       & 6.774 & 6.29e+05 & 1.08e-05 & 0.101  & 0.148 & 0.468 \\
+				Four tag     & 0.577 & 6.06e+03 & 9.52e-05 & 0.0874 & 0.128 & 0.406 \\
+				Higgs Eta    & 0.464 & 3.39e+03 & 0.000137 & 0.0941 & 0.138 & 0.437 \\
+				Top veto     & 0.372 & 2.48e+03 & 0.00015  & 0.0881 & 0.129 & 0.410 \\
+				Higgs signal & 0.123 & 49.7     & 0.00247  & 0.205  & 0.302 & 0.954	
+			\end{tabular}
+		\end{table}
+
+	% subsection apply_the_resonant_spa_net_on_sm_pairing (end)	
+% section train_on_resonant_test_on_sm (end)
+\section{Apply the \texorpdfstring{$\text{min-}\Delta R$}{min delta R} method on the resonant sample}% (fold)
+\label{sec:apply_the_min_delta_r_method_on_the_resonant_sample}
+	In the previous, the pairing method for resonant samples is $\Delta R+\text{min-}D_{HH}$ method. This section will test the $\text{min-}\Delta R$ pairing method for resonant samples. The ``$\Delta R + \text{min-}D_{HH}$'' pairing is replaced by $\text{min-}\Delta R$ pairing. Other cuts remained unchanged. The cutflow tables for signal and background are in Table \ref{tab:signal_selection_efficiency_1000GeV_MV2c10_mindR}, \ref{tab:signal_selection_efficiency_background_MV2c10_mindR}.
+	\begin{table}[htpb]
+		\centering
+		\caption{The selection passing rate and efficiency at each stage for $\Delta R + \text{min-}D_{HH}$, $\text{min-}\Delta R$ and SPA-NET pairing. The resonant mass is $\text{1000 GeV}$.}
+		\label{tab:signal_selection_efficiency_1000GeV_MV2c10_mindR}
+		\begin{tabular}{l|cc|cc|cc}
+				 & \multicolumn{2}{c|}{$\Delta R + \text{min-}D_{HH}$} & \multicolumn{2}{c|}{$\text{min-}\Delta R$} & \multicolumn{2}{c}{SPA-NET} \\
+			Cut	 & pass rate               & efficiency               & pass rate           & efficiency          & pass rate    & efficiency   \\ \hline
+			Four tag     & 0.1257 & 0.1257 & 0.1257 & 0.1257 & 0.1257 & 0.1257 \\
+			Delta R      & 0.1087 & 0.8644 & N.A.   & N.A.   & N.A.   & N.A.   \\
+			Higgs PT     & 0.0896 & 0.8247 & 0.0936 & 0.7444 & 0.0978 & 0.7775 \\
+			Higgs Eta    & 0.0826 & 0.9216 & 0.0863 & 0.9226 & 0.0900 & 0.9203 \\
+			Higgs signal & 0.0445 & 0.5391 & 0.0445 & 0.5155 & 0.0468 & 0.5197 \\
+			Top veto     & 0.0425 & 0.9555 & 0.0425 & 0.9553 & 0.0446 & 0.9536
+		\end{tabular}
+	\end{table}
+	\begin{table}[htpb]
+		\centering
+		\caption{The selection passing rate and efficiency at each stage for $\Delta R + \text{min-}D_{HH}$, $\text{min-}\Delta R$ and SPA-NET pairing.}
+		\label{tab:signal_selection_efficiency_background_MV2c10_mindR}
+		\begin{tabular}{l|cc|cc|cc}
+			     & \multicolumn{6}{c}{pp4b}                                                         \\
+				 & \multicolumn{2}{c|}{$\Delta R + \text{min-}D_{HH}$} & \multicolumn{2}{c|}{$\text{min-}\Delta R$} & \multicolumn{2}{c}{SPA-NET} \\
+			Cut	 & pass rate               & efficiency               & pass rate           & efficiency          & pass rate    & efficiency   \\ \hline
+			Four tag     & 0.0096 & 0.0096 & 9.6420e-03 & 0.0096 & 9.6420e-03 & 0.0096 \\
+			Delta R      & 0.0050 & 0.5234 & 9.6420e-03 & 1.0000 & 9.6420e-03 & 1.0000 \\
+			Higgs PT     & 0.0043 & 0.8462 & 6.6460e-03 & 0.6893 & 6.7200e-03 & 0.6970 \\
+			Higgs Eta    & 0.0030 & 0.7127 & 5.0040e-03 & 0.7529 & 4.8580e-03 & 0.7229 \\
+			Higgs signal & 0.0005 & 0.1551 & 1.1600e-04 & 0.0232 & 7.5000e-05 & 0.0154 \\
+			Top veto     & 0.0003 & 0.5975 & 9.4000e-05 & 0.8103 & 6.6000e-05 & 0.8800
+		\end{tabular}
+	\end{table}
+
+	Figure \ref{fig:Higgs_mass_old_signal} shows the Higgs mass distribution for resonant signal events with different pairing methods. Figure \ref{fig:Higgs_mass_old_background} is for background events with different pairing methods. The mass planes for the signal process all look similar. For background, $\Delta R + \text{min-}D_{HH}$ pairing is much different from the other two methods.
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.97\textwidth]{Higgs_mass_old_DHH_s.png}
+		\includegraphics[width=0.97\textwidth]{Higgs_mass_old_mindR_s.png}
+		\includegraphics[width=0.97\textwidth]{Higgs_mass_old_SPANET_s.png}
+		\caption{The mass plane and distribution of Higgs candidate for resonant signal events with different pairing methods. The top one is $\Delta R + \text{min-}D_{HH}$ pairing, the middle one is $\text{min-}\Delta R$ pairing, bottom one is SPA-NET pairing.}
+		\label{fig:Higgs_mass_old_signal}
+	\end{figure}
+
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.97\textwidth]{Higgs_mass_old_DHH_4b.png}
+		\includegraphics[width=0.97\textwidth]{Higgs_mass_old_mindR_4b.png}
+		\includegraphics[width=0.97\textwidth]{Higgs_mass_old_SPANET_4b.png}
+		\caption{The mass plane and distribution of Higgs candidate for background events with different pairing methods. The top one is $\Delta R + \text{min-}D_{HH}$ pairing, the middle one is $\text{min-}\Delta R$ pairing, bottom one is SPA-NET pairing.}
+		\label{fig:Higgs_mass_old_background}
+	\end{figure}
+
+	The results of $S/\sqrt{B}$ are presented in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_1000GeV_DHH}, \ref{tab:diHiggs_signal_background_analysis_ATLAS_1000GeV_mindR}, \ref{tab:diHiggs_signal_background_analysis_ATLAS_1000GeV_SPANET}. Compared to the $\Delta R + \text{min-}D_{HH}$ pairing method, the $\text{min-}\Delta R$ and SPA-NET pairing method can reduce more background events, so they can improve the $S/\sqrt{B}$. The SPA-NET method has the best performance.
+	\begin{table}[htpb]
+		\centering
+		\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is $\Delta R + \text{min-}D_{HH}$.}
+		\label{tab:diHiggs_signal_background_analysis_ATLAS_1000GeV_DHH}
+		\begin{tabular}{l|cc|c|c|c|c}
+						 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+						 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+			No cut       & 0.644 & 6.29e+05 & 1.02e-06 & 0.0096 & 0.0141 & 0.0445 \\
+			Four tag     & 0.081 & 6.06e+03 & 1.34e-05 & 0.0123 & 0.0180 & 0.0570 \\
+			Delta R      & 0.070 & 3.17e+03 & 2.21e-05 & 0.0147 & 0.0215 & 0.0681 \\
+			Higgs PT     & 0.058 & 2.68e+03 & 2.15e-05 & 0.0131 & 0.0193 & 0.0610 \\
+			Higgs Eta    & 0.053 & 1.91e+03 & 2.78e-05 & 0.0143 & 0.0211 & 0.0666 \\
+			Higgs signal & 0.029 & 2.97e+02 & 9.67e-05 & 0.0196 & 0.0288 & 0.0912 \\
+			Top veto     & 0.027 & 1.77e+02 & 0.000155 & 0.0243 & 0.0357 & 0.1128
+		\end{tabular}
+	\end{table}
+	\begin{table}[htpb]
+		\centering
+		\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is $\text{min-}\Delta R$.}
+		\label{tab:diHiggs_signal_background_analysis_ATLAS_1000GeV_mindR}
+		\begin{tabular}{l|cc|c|c|c|c}
+						 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+						 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+			No cut       & 0.644 & 6.29e+05 & 1.02e-06 & 0.0096 & 0.0141 & 0.0445 \\
+			Four tag     & 0.081 & 6.06e+03 & 1.34e-05 & 0.0123 & 0.0180 & 0.0570 \\
+			Higgs PT     & 0.060 & 4.18e+03 & 1.44e-05 & 0.0110 & 0.0162 & 0.0511 \\
+			Higgs Eta    & 0.056 & 3.15e+03 & 1.77e-05 & 0.0117 & 0.0172 & 0.0543 \\
+			Higgs signal & 0.029 & 72.9     & 0.000393 & 0.0396 & 0.0582 & 0.1839 \\
+			Top veto     & 0.027 & 59.1     & 0.000464 & 0.0420 & 0.0617 & 0.1952
+		\end{tabular}
+	\end{table}
+	\begin{table}[htpb]
+		\centering
+		\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is SPA-NET.}
+		\label{tab:diHiggs_signal_background_analysis_ATLAS_1000GeV_SPANET}
+		\begin{tabular}{l|cc|c|c|c|c}
+						 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+						 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+			No cut       & 0.644 & 6.29e+05 & 1.02e-06 & 0.0096 & 0.0141 & 0.0445 \\
+			Four tag     & 0.081 & 6.06e+03 & 1.34e-05 & 0.0123 & 0.0180 & 0.0570 \\
+			Higgs PT     & 0.063 & 4.22e+03 & 1.49e-05 & 0.0114 & 0.0168 & 0.0531 \\
+			Higgs Eta    & 0.058 & 3.05e+03 & 1.9e-05  & 0.0124 & 0.0182 & 0.0574 \\
+			Higgs signal & 0.030 & 47.1     & 0.000639 & 0.0517 & 0.0760 & 0.2403 \\
+			Top veto     & 0.029 & 41.5     & 0.000692 & 0.0526 & 0.0772 & 0.2443
+		\end{tabular}
+	\end{table}
+
+% section apply_the_min_delta_r_method_on_the_resonant_sample (end)		
 \end{document} 
