@@ -761,4 +761,121 @@
 	\end{table}
 
 % section apply_the_min_delta_r_method_on_the_resonant_sample (end)		
+\section{Hyperparameter tuning}% (fold)
+\label{sec:hyperparameter_tuning}
+	Some hyperparameters of SPA-NET:
+	\begin{itemize}
+		\item Learning rate: 0.0007
+		\item Central encoder count: 6
+		\item Branch encoder count: 3
+		\item Dropout percentage: 0.0
+		\item L2 weight normalization: 0.0002
+		\item L2 gradient clipping: 0.0
+	\end{itemize}
+	the above values are used in Sec.\ref{sec:train_on_resonant_test_on_sm}.
+	\subsection{Scan hyperparameters}% (fold)
+	\label{sub:scan_hyperparameters}
+		In below, use the same samples in Sec.\ref{sub:spa_net_training_on_450_gev} for hyperparameter scan.
+
+		\paragraph{Learning rate} Range: $[0.0003,  0.0030]$. Step size: $0.0003$. Figure \ref{fig:SPANet_scan_lr} is the scanning results. When learning rate is equal to 0.0018, the model will get the best performance at the first 10 epochs, but the difference between different learning rate is very small. The model cannot be trained when the learning rate is greater than 0.0030.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.9\textwidth]{accuracy_curve_hp_scan_lr_450GeV.png}
+			\caption{SPA-NET training results for different learning rates.}
+			\label{fig:SPANet_scan_lr}
+		\end{figure}
+
+		\paragraph{Central encoder count} Range: $[2,6]$. Step size: $1$. Figure \ref{fig:SPANet_scan_n_cen} is the scanning results. When central encoder layers is equal to 3, the model will get the best performance at the first 10 epochs.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.9\textwidth]{accuracy_curve_hp_scan_n_cen_450GeV.png}
+			\caption{SPA-NET training results for different central encoder layers.}
+			\label{fig:SPANet_scan_n_cen}
+		\end{figure}
+
+		\paragraph{Branch encoder count} Range: $[2,7]$. Step size: $1$. Figure \ref{fig:SPANet_scan_n_bren} is the scanning results. When branch encoder layers is equal to 6, the model will get the best performance at the first 10 epochs. 
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.9\textwidth]{accuracy_curve_hp_scan_n_bren_450GeV.png}
+			\caption{SPA-NET training results for different branch encoder layers.}
+			\label{fig:SPANet_scan_n_bren}
+		\end{figure}
+
+	% subsection scan_hyperparameters (end)
+	\subsection{Training results for different hyperparamers}% (fold)
+	\label{sub:training_results_for_different_hyperparamers}
+		In this section, use the same samples in Sec.\ref{sub:spa_net_training_on_450_gev} for training. Train 50 epochs. Table \ref{tab:SPANet_hp_50ep} is the training results for different hyperparameters. Table \ref{tab:SPANet_hp_50ep_test_SM} is the testing results on SM samples.
+		
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET training results for different hyperparameters.}
+			\label{tab:SPANet_hp_50ep}
+			\begin{tabular}{c|ccc|cc}
+			 Case & Central encoder & Branch encoder & learning rate & Event efficiency & Higgs efficiency \\
+			 \hline
+			 1&    6             &     3           &  0.0007             &   0.902               &    0.932              \\
+			 2&    6             &     3           &  0.0018             &   0.870               &    0.898              \\
+			 3&    3             &     3           &  0.0007             &   0.908               &    0.936             \\
+			 4&    6             &     6           &  0.0007             &   0.911               &    0.941             \\
+			 5&    3             &     6           &  0.0018             &   0.883               &    0.911             \\
+			 6&    3             &     6           &  0.0007             &   0.910               &    0.940             
+			\end{tabular}
+		\end{table}
+
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET testing results on SM samples for different hyperparameters.}
+			\label{tab:SPANet_hp_50ep_test_SM}
+			\begin{tabular}{c|ccc|cc}
+			 Case & Central encoder & Branch encoder & learning rate & Event efficiency & Higgs efficiency \\
+			 \hline
+			 1&    6             &     3           &  0.0007             &   0.810               &    0.863          \\
+			 2&    6             &     3           &  0.0018             &   0.824               &    0.858          \\
+			 3&    3             &     3           &  0.0007             &   0.831               &    0.876          \\
+			 4&    6             &     6           &  0.0007             &   0.812               &    0.865          \\
+			 5&    3             &     6           &  0.0018             &   0.829               &    0.863			\\
+			 6&    3             &     6           &  0.0007             &   0.793               &    0.854             
+			\end{tabular}
+		\end{table}
+
+	% subsection training_results_for_different_hyperparamers (end)
+	\subsection{Use the best SPA-NET on selection}% (fold)
+	\label{sub:use_the_best_spa_net_on_selection}
+		The section uses the best SPA-NET trained in Sec.\ref{sub:training_results_for_different_hyperparamers} for pairing (Case 3 and 5). Other cuts remained unchanged. The cutflow tables for signal and background are presented in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_best_hp_SPANET_3}, \ref{tab:diHiggs_signal_background_analysis_ATLAS_best_hp_SPANET_5}.
+
+		Compared to the SPA-NET trained in Sec.\ref{sub:spa_net_training_on_450_gev} (Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_resonant_SPANET}), the results are similar. Consider $S/\sqrt{B}$, for case 3: $0.2123$, for case 5: $ 0.2060$, for case 1: $ 0.2050$ ($\mathcal{L} = 139 \text{ fb}^{-1}$). 
+
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is the SPA-NET trained in Sec.\ref{sub:training_results_for_different_hyperparamers} case 3. Compared to Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_resonant_SPANET}, the results are similar.}
+			\label{tab:diHiggs_signal_background_analysis_ATLAS_best_hp_SPANET_3}
+			\begin{tabular}{l|cc|c|c|c|c}
+							 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+							 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+				No cut       & 6.774 & 6.29e+05 & 1.08e-05 & 0.1007 & 0.1480 & 0.4680 \\
+				Four tag     & 0.577 & 6.06e+03 & 9.52e-05 & 0.0874 & 0.1284 & 0.4059 \\
+				Higgs Eta    & 0.464 & 3.34e+03 & 0.000139 & 0.0948 & 0.1392 & 0.4403 \\
+				Top veto     & 0.373 & 2.44e+03 & 0.000153 & 0.0891 & 0.1309 & 0.4139 \\
+				Higgs signal & 0.125 & 48.4     & 0.00259  & 0.2123 & 0.3118 & 0.9862
+			\end{tabular}
+		\end{table}
+
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is the SPA-NET trained in Sec.\ref{sub:training_results_for_different_hyperparamers} case 5. Compared to Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_resonant_SPANET}, the results are similar.}
+			\label{tab:diHiggs_signal_background_analysis_ATLAS_best_hp_SPANET_5}
+			\begin{tabular}{l|cc|c|c|c|c}
+							 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+							 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+				No cut       & 6.774 & 6.29e+05 & 1.08e-05 & 0.1007 & 0.1480 & 0.4680 \\
+				Four tag     & 0.577 & 6.06e+03 & 9.52e-05 & 0.0874 & 0.1284 & 0.4059 \\
+				Higgs Eta    & 0.459 & 3.3e+03  & 0.000139 & 0.0941 & 0.1383 & 0.4374 \\
+				Top veto     & 0.369 & 2.43e+03 & 0.000152 & 0.0882 & 0.1296 & 0.4100 \\
+				Higgs signal & 0.125 & 50.9     & 0.00245  & 0.2060 & 0.3026 & 0.9568
+			\end{tabular}
+		\end{table}
+
+
+	% subsection use_the_best_spa_net_on_selection (end)	
+% section hyperparameter_tuning (end)	
 \end{document} 
