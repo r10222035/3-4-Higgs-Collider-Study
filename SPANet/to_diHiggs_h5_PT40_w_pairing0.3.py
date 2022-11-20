@@ -12,7 +12,6 @@ import h5py
 from tqdm import tqdm
 import sys
 import math
-import os
 
 class BranchGenParticles:
     def __init__(self,file,start,end):
@@ -121,7 +120,7 @@ def resize_h5(file_path, nevent):
                 f[group][dataset].resize(shape)
     print(f'{file_path} resize to {nevent}')
     
-def main(file_path, output_path, nbj_min=2, nevent_max=100000):
+def main(file_path, output_name, nbj_min=2, nevent_max=100000):
 
     nbj_min = int(nbj_min)
     MAX_JETS = 10
@@ -145,10 +144,7 @@ def main(file_path, output_path, nbj_min=2, nevent_max=100000):
         nevent = len(jet_PT)
         event_index = 0
 
-#         event_file_path = f'{output_name}-{i:02}.h5'
-        
-        root, ext = os.path.splitext(output_path)
-        event_file_path = f'{root}-{i:02}.h5'
+        event_file_path = f'{output_name}-{i:02}.h5'
 
         with h5py.File(event_file_path, 'w') as f_out:
 
@@ -220,9 +216,9 @@ def main(file_path, output_path, nbj_min=2, nevent_max=100000):
                 for quark in range(len(quarks_Jet)):
                     for i in range(min(nj,MAX_JETS)):
                         dR = DeltaR(Eta[i], Phi[i], quarks_Eta[quark], quarks_Phi[quark])
-                        if dR < 0.4 and quarks_Jet[quark]==-1:
+                        if dR < 0.3 and quarks_Jet[quark]==-1:
                             quarks_Jet[quark] = i
-                        elif dR < 0.4:
+                        elif dR < 0.3:
                             more_than_1_jet = True
 
                 if more_than_1_jet: continue
