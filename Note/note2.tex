@@ -874,8 +874,79 @@
 				Higgs signal & 0.125 & 50.9     & 0.00245  & 0.2060 & 0.3026 & 0.9568
 			\end{tabular}
 		\end{table}
-
-
 	% subsection use_the_best_spa_net_on_selection (end)	
 % section hyperparameter_tuning (end)	
+\section{Constraints on \texorpdfstring{$\kappa_\lambda$}{kappa}}% (fold)
+\label{sec:constraints_on_kappa}
+	In this section, the $m_{HH}$ distribution are used to set the constraints of $\kappa_\lambda$.
+
+	The binned $m_{HH}$ distribution are used. The likelihood function $L$ consisting of a product of Poisson distributions 
+	\begin{equation}
+		L(\kappa_\lambda \mid \text{data}) = \prod_{i=1}^{B} \text{Pois}(n_i\mid n_{i,\text{exp}})
+	\end{equation}
+	where $B$ is the number of bins, $n_i$ is the number of events in bin $i$ from data, $n_{i,\text{exp}}$ is the expected number of events in bin $i$. The expected number of events is the sum of the signal and background events, so $n_{i,\text{exp}}$ depend on $\kappa_\lambda$.
+
+	From Poisson distribution
+	\begin{equation}
+		\text{Pois}(n\mid \lambda) = \frac{\euler^{-\lambda} \lambda^{n}}{n!} 
+	\end{equation}
+	then
+	\begin{equation}
+		\begin{aligned}
+			\ln \left( \prod_{i=1}^{B} \text{Pois}(n_i\mid n_{i,\text{exp}}) \right) &=  \sum_{i=1}^{B} \ln \left( \frac{\euler^{-n_{i,\text{exp}}} n_{i,\text{exp}}^{n_i}}{n_i!} \right) \\
+			&=  \sum_{i=1}^{B} \left[ - n_{i,\text{exp}} + n_i \ln (n_{i,\text{exp}} ) - \ln (n_i!)\right]
+		\end{aligned}
+	\end{equation}
+	$\sum_{i=1}^{B} \ln(n_i)$ is independent of $\kappa$.
+
+	Define the test statistic as follow
+	\begin{equation}
+		-2 \Delta \ln (L) \equiv -2 \ln \left( \frac{L (\kappa_\lambda)}{L(\hat{\kappa}_\lambda)} \right)
+	\end{equation}
+	where $\hat{\kappa}_\lambda$ is the maximum likelihood estimate of $\kappa_\lambda$.
+
+	\subsection{\texorpdfstring{$m_{HH}$}{mhh} distribution}% (fold)
+	\label{sub:mhh_distribution}
+		Figure \ref{fig:mhh_distribution_min_dR} and \ref{fig:mhh_distribution_SPANET} are the $m_{HH}$ distrubiton of $\text{min-}\Delta R$ and SPA-NET pairing method, respectively. The events passing all selection cuts are used. For signal, both pairing method give the similar results. For background, the results look different.
+
+		Parameter setting:
+		\begin{itemize}
+			\item Number of bins: $10$
+			\item Range: $[200,1000]$
+			\item Luminosity: $\mathcal{L} = 139 \text{ fb}^{-1}$
+		\end{itemize}
+
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.5\textwidth]{mhh_distribution_min_dR.png}
+			\caption{The $m_{H H}$ distribution with $\text{min-}\Delta R$ pairing method.}
+			\label{fig:mhh_distribution_min_dR}
+		\end{figure}
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.5\textwidth]{mhh_distribution_SPANET.png}
+			\caption{The $m_{H H}$ distribution with SPA-NET pairing method.}
+			\label{fig:mhh_distribution_SPANET}
+		\end{figure}
+	% subsection mhh_distribution (end)
+	\subsection{Expected limit of \texorpdfstring{$\kappa_\lambda$}{kappa}}% (fold)
+	\label{sub:expected_limit_of_kappa}
+		For expected limit setting, $n_i$ is the background data. The likelihood of different $\kappa_\lambda$ are calulated. The range of $\kappa_\lambda$ is $[-10,15]$ by step $1$.
+
+		Figure \ref{fig:log_likelihood_ratio_kappa_min_dR} and \ref{fig:log_likelihood_ratio_kappa_SPANET} are the profile likelihood ratio scans for $\kappa_\lambda$ with $\text{min-}\Delta R$ and SPA-NET pairing method. The $2\sigma$ exclusion limit: $\kappa_\lambda \in \left[ -5.01,12.21 \right]$ for $\text{min-}\Delta R$ method; $\kappa_\lambda \in \left[ -5.30, 13.02 \right]$ for SPA-NET method.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.5\textwidth]{log_likelihood_ratio_kappa_min_dR.png}
+			\caption{The profile likelihood ratio scans for $\kappa_\lambda$. The pairing method is $\text{min-}\Delta R$ method. The orange line indicates the $2\sigma$ exclusion boundary.}
+			\label{fig:log_likelihood_ratio_kappa_min_dR}
+		\end{figure}
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.5\textwidth]{log_likelihood_ratio_kappa_SPANET.png}
+			\caption{The profile likelihood ratio scans for $\kappa_\lambda$. The pairing method is SPA-NET method. The orange line indicates the $2\sigma$ exclusion boundary.}
+			\label{fig:log_likelihood_ratio_kappa_SPANET}
+		\end{figure}
+	% subsection expected_limit_of_kappa (end)	
+
+% section constraints_on_kappa (end)		
 \end{document} 
