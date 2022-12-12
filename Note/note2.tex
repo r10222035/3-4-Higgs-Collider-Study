@@ -167,7 +167,7 @@
 			\begin{tabular}{c|cc|c|cc|cc|c}
 							 & \multicolumn{3}{c|}{13 TeV}                     & \multicolumn{5}{c}{14 TeV}                                     \\
 							 & \multicolumn{2}{c|}{Cross section (fb)} &        & \multicolumn{2}{c|}{Cross section (fb)} &       &               \\
-							 $\kappa_\lambda$ & Ref.              & My data            & Ref./My& Ref.              & My data            &Ref./My& Ref. K& Ref.K/My K \\ \hline
+							 $\kappa_\lambda$ & Ref.              & My data            & Ref./My& Ref.              & My data            &Ref./My& Ref. K& Ref. K/My K \\ \hline
 			-1               & 116.71            & 74.62              & 1.564  & 136.91            & 87.93              & 1.56 & 1.86 & 1.19  \\
 			0                & 62.51             & 41.96              & 1.490  & 73.64             & 49.45              & 1.49 & 1.79 & 1.20  \\
 			1                & 27.84             & 20.27              & 1.373  & 32.88             & 24.05              & 1.37 & 1.66 & 1.21  \\
@@ -967,4 +967,155 @@
 	% subsection cls_method (end)	
 
 % section constraints_on_kappa (end)		
+\section{SPA-NET with \texorpdfstring{$\kappa_\lambda=5$}{kappa=5} sample}% (fold)
+\label{sec:spa_net_with_kappa_5_sample}
+	This section trains a SPA-NET with $\kappa_\lambda=5$ samples, then use it on the analysis. Expect it can improve the low mass pairing efficiency.
+	\subsection{Training results}% (fold)
+	\label{sub:training_results_k5}
+		Set $\kappa_\lambda = 5$, then generate the di-Higgs samples. The training samples are required to pass the ``Four tag cut'', i.e., there are at least four b-tagged jets with $p_{\text{T}} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The b-tagging efficiency is the same as the DL1r b-tagger at 77\% WP.
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 78,388
+				\item 1h sample size: 16,013
+				\item 2h sample size: 59,180
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+			\begin{itemize}
+				\item Total sample size: 8,710
+				\item 1h sample size: 1,846
+				\item 2h sample size: 6,486
+			\end{itemize}
+		\end{itemize}
+		The training results are presented in Table \ref{tab:SPANet_diHiggs_4btag_DL1r_pt40_k5}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET training results on the di-Higgs $\kappa_\lambda =5$ samples.}
+			\label{tab:SPANet_diHiggs_4btag_DL1r_pt40_k5}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.280             &    0.785              &    0.785             \\
+				$=5$	  &   0.287             &    0.725              &    0.746             \\
+				$\ge 6$	  &   0.229             &    0.618              &    0.657             \\
+				Total	  &   0.797             &    0.725              &    0.742             \\
+			\end{tabular}
+		\end{table}
+
+	% subsection training_results_k5 (end)	
+	\subsection{Test on SM samples}% (fold)
+	\label{sub:test_on_sm_samples}
+		In the below, the SPA-NET trained in Sec.\ref{sub:training_results_k5} is called ``$\kappa 5$ SPA-NET''. Test the $\kappa 5$ SPA-NET on the SM events. The testing results are shown in Table \ref{tab:SPANet_train_k5_test_SM}. The event efficiency is $0.839$. This result is better than the ``train on $\kappa_\lambda = 5$ test on $\kappa_\lambda=5$'' $0.725$ but worse than the ``train on SM test on SM'' $0.868$.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET testing results on the non-resonant di-Higgs samples. Where the SPA-NET is trained on the $\kappa_\lambda=5$ samples.}
+			\label{tab:SPANet_train_k5_test_SM}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.280             &    0.933              &    0.940             \\
+				$=5$	  &   0.287             &    0.841              &    0.876             \\
+				$\ge 6$	  &   0.229             &    0.713              &    0.786             \\
+				Total	  &   0.797             &    0.839              &    0.871             \\
+			\end{tabular}
+		\end{table}
+	% subsection test_on_sm_samples (end)	
+	\subsection{Apply the \texorpdfstring{$\kappa 5$}{k5} SPA-NET on SM pairing}% (fold)
+	\label{sub:apply_the_k5_spa_net_on_sm_pairing}
+		The ``$ \text{min-}\Delta R$'' pairing is replaced by $\kappa 5$ SPA-NET pairing. Other cuts remained unchanged. 
+
+		Figure \ref{fig:Higgs_mass_new_k5_SPANET} shows the Higgs mass distribution for $\kappa 5$ SPA-NET pairing. For signal, the results are similar to before, but for the background, the shape is sculpted.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_k5-SPANET_s.png}
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_k5-SPANET_4b.png}
+			\caption{The mass plane and distribution for Higgs candidate for $\kappa 5$ SPA-NET pairing. The above figure is for the signal sample and the below one is for the background sample.}
+			\label{fig:Higgs_mass_new_k5_SPANET}
+		\end{figure}
+
+		The $S / \sqrt{B}$ of resonant SPA-NET results are in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_k5_SPANET}.
+
+		Compared to ``$\text{min-}\Delta R$'' method (Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}), the $\kappa 5$ SPA-NET will let roughly the same number of signal events pass the Higgs signal cut, but let more background events pass. Therefore, the $\kappa 5$ SPA-NET can not improve the $S/\sqrt{B}$.
+
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is $\kappa 5$ SPA-NET. Compared to Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}, the $\kappa 5$ SPA-NET cannot improve the $S/\sqrt{B}$.}
+			\label{tab:diHiggs_signal_background_analysis_ATLAS_k5_SPANET}
+			\begin{tabular}{l|cc|c|c|c|c}
+							 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+							 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+				No cut        & 6.859 & 6.29e+05 & 1.09e-05 & 0.1020 & 0.1499 & 0.4739 \\
+				Four tag      & 0.584 & 6.06e+03 & 9.64e-05 & 0.0885 & 0.1300 & 0.4110 \\
+				Higgs Eta cut & 0.465 & 3.16e+03 & 0.000147 & 0.0975 & 0.1432 & 0.4529 \\
+				Top veto      & 0.374 & 2.35e+03 & 0.000159 & 0.0908 & 0.1334 & 0.4219 \\
+				Higgs signal  & 0.135 & 2.07e+02 & 0.000649 & 0.1103 & 0.1620 & 0.5123
+			\end{tabular}
+		\end{table}
+
+	% subsection apply_the_k5_spa_net_on_sm_pairing (end)
+	\subsection{Set the \texorpdfstring{$\kappa_\lambda$}{kappa} constraint by \texorpdfstring{$\kappa 5$}{k5} SPA-NET}% (fold)
+	\label{sub:set_the_kappa_constraint_by_k5_spa_net}
+		Use the same method presented in Sec. \ref{sec:constraints_on_kappa} to determine the $\kappa_\lambda$ constraints.
+
+		Figure  \ref{fig:mhh_distribution_SPANET_k5} is the $m_{HH}$ distribution of $\kappa 5$ SPA-NET pairing. The events passing all selection cuts are used.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.5\textwidth]{mhh_distribution_SPANET-k5.png}
+			\caption{The $m_{H H}$ distribution with $\kappa 5$ SPA-NET pairing.}
+			\label{fig:mhh_distribution_SPANET_k5}
+		\end{figure}
+
+		Figure \ref{fig:log_likelihood_ratio_kappa_SPANET} is the profile likelihood ratio scans for $\kappa_\lambda$ with $\kappa 5$ SPA-NET pairing. The $2\sigma$ exclusion limit: The values of $\kappa_\lambda$ beyond $\left[ -5.00, 12.15 \right]$ are excluded for $\kappa 5$ SPA-NET method.
+
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.5\textwidth]{log_likelihood_ratio_kappa_SPANET-k5.png}
+			\caption{The profile likelihood ratio scans for $\kappa_\lambda$. The pairing method is the $\kappa 5$ SPA-NET. The orange line indicates the $2\sigma$ exclusion boundary.}
+			\label{fig:log_likelihood_ratio_kappa_SPANET-k5}
+		\end{figure}
+
+		Figure \ref{fig:CL_limit_kappa_SPANET} is the upper limits scans for $\kappa_\lambda$ with $\kappa 5$ SPA-NET pairing. The values of $\kappa_\lambda$ beyond $\left[ -4.92, 12.02 \right]$ are excluded for $\kappa 5$ SPA-NET method.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.6\textwidth]{CL_limit_kappa_SPANET-k5.png}
+			\caption{The upper limit of the cross-section with different $\kappa_\lambda$. The pairing method is the $\kappa 5$ SPA-NET method.}
+			\label{fig:CL_limit_kappa_SPANET-k5}
+		\end{figure}
+
+		The results of $\kappa_\lambda$ constraints are summarized in Table \ref{tab:kappa_constraint}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The $\kappa_\lambda$ constraints with different pairing method.}
+			\label{tab:kappa_constraint}
+			\begin{tabular}{c|cc|cc}
+								  & \multicolumn{4}{c}{Expected Constraint}                          \\
+								  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+			Pairing method        & Lower              & Upper             & Lower      & Upper      \\ \hline
+			$\text{min-}\Delta R$ & $-5.01$            & 12.21             & $-4.93$      & 12.03      \\
+			resonant SPA-NET      & $-5.30$            & 13.02             & $-5.22$     & 12.86      \\
+			$\kappa 5$ SPA-NET    & $-5.00$            & 12.15             & $-4.92$      & 12.02          
+			\end{tabular}
+		\end{table}
+
+
+	% subsection set_the_kappa_constraint_by_k5_spa_net (end)	
+% section spa_net_with_kappa_5_sample (end)	
+\section{Pairing performance}% (fold)
+\label{sec:pairing_performance}
+	This section calculates the pairing efficiency of the $\text{min-}\Delta R$'' method and SPA-NET method. The results of different $\kappa_\lambda$ samples are shown in Figure \ref{fig:pairing_efficiency_kappa}.
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.45\textwidth]{pairing_efficiency_kappa.png}
+		\caption{The pairing efficiency of differenct $\kappa_\lambda $ samples. The SPA-NET is resonant SPA-NET trained in Sec. \ref{sub:spa_net_training_on_450_gev}.}
+		\label{fig:pairing_efficiency_kappa}
+	\end{figure}
+
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.45\textwidth]{pairing_efficiency_kappa-k5.png}
+		\caption{The pairing efficiency of differenct $\kappa_\lambda $ samples. The SPA-NET is $\kappa 5 $ SPA-NET trained in Sec. \ref{sub:training_results_k5}.}
+		\label{fig:pairing_efficiency_kappa-k5}
+	\end{figure}
+% section pairing_performance (end)		
 \end{document} 
