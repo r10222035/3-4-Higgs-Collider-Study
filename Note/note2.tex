@@ -1118,4 +1118,78 @@
 		\label{fig:pairing_efficiency_kappa-k5}
 	\end{figure}
 % section pairing_performance (end)		
+\section{Event classifier}% (fold)
+\label{sec:event_classifier}
+	This section trains an event classifier to classify the signal and the background events. The deep neural network (DNN) is used.  The DNN has two internal layers each with 256 nodes.
+
+	\subsection{Training samples}% (fold)
+	\label{sub:training_samples}
+		The input variables are summarised in Table \ref{tab:DNN_variables}. There are 20 variables.
+		\begin{table}[htpb]
+			\centering
+			\caption{Input variables used to train the neural network.}
+			\label{tab:DNN_variables}
+			\begin{tabular}{l|c|c}
+				Reconstructed objects       & Variables used for training   & \# \\ \hline
+				Higgs candidate             & $(p_\text{T}, \eta, \phi, m)$ & 8  \\
+				Subjects                    & $\Delta R(j_1,j_2)$                    & 2  \\
+				Missing transveres momentum & $E_{\text{T}}^{\text{miss}}, \phi(\vec{p}_{\text{T}}^{\text{miss}})$  & 2  \\
+				Leptons                     & $N_e, N_\mu $                  & 2  \\
+				b-tagging                   & Boolean for $j_i \in h_{1,2}^{\text{cand}}$       & 4  \\
+				Di-Higgs system             & $p_\text{T}^{hh}, m_{hh}$        & 2 
+			\end{tabular}		
+		\end{table}
+
+		For some input variables, the Higgs pairing should be done first. There are 3 training datasets, which are constructed from different pairing methods ($\text{min-}\Delta R$, resonant SPA-NET, and $\kappa 5$ SPA-NET).
+
+		Training sample sizes are shown in Table \ref{tab:DNN_sample_size}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The sample size for signal and background. 80\% samples are used in training, and 20\% samples are used in testing.}
+			\label{tab:DNN_sample_size}
+			\begin{tabular}{c|c}
+			 Signal & Background\\ \hline
+			 17k      & 20k      
+			\end{tabular}
+		\end{table}
+
+	% subsection training_samples (end)
+	\subsection{Training results}% (fold)
+	\label{sub:training_results}
+		The DNN training results are summarized in Table \ref{tab:DNN_results}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The DNN training results with different pairing methods. The average and standard deviation of 10 training are presented.}
+			\label{tab:DNN_results}
+			\begin{tabular}{c|cc}
+			Pairing method        & ACC     & AUC   \\ \hline
+			$\text{min-}\Delta R$ & $0.810 \pm 0.013$ & $0.884 \pm 0.016$ \\
+			resonant SPA-NET      & $0.810 \pm 0.014$ & $0.894 \pm 0.014$ \\
+			$\kappa 5$ SPA-NET    & $0.817 \pm 0.015$ & $0.893 \pm 0.015$
+			\end{tabular}      
+		\end{table}
+	
+	% subsection training_results (end)	
+	\subsection{Selection with DNN}% (fold)
+	\label{sub:selection_with_dnn}
+	In this section, the cuts-based selection method is replaced by the DNN trained in the previous section. 
+
+	When an event is put in DNN, DNN will return a signal score $p_{\text{signal}}$ which represents the confidence of this event is a signal event. The requirement of $p_{\text{signal}} > 0.75$ is imposed for $S / \sqrt{B}$ counting.
+
+	Table \ref{tab:DNN_selection_results} is the selection results. Compared to Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}, \ref{tab:diHiggs_signal_background_analysis_ATLAS_resonant_SPANET}, \ref{tab:diHiggs_signal_background_analysis_ATLAS_k5_SPANET} (cuts based), more signal and background events can pass. There is an improvement of $S / \sqrt{B}$ for $\text{min-}\Delta R$ (0.186) and $\kappa 5$ SPA-NET (0.110) pairing method. For resonant SPA-NET, the  $S / \sqrt{B}$ is similar to before (0.205).
+		\begin{table}[htpb]
+			\centering
+			\caption{The DNN selection results with different pairing methods.}
+			\label{tab:DNN_selection_results}
+			\begin{tabular}{l|cc|c|c}
+								  & \multicolumn{2}{c|}{Cross section (fb)} &         & $\mathcal{L} = 139 \text{ fb}^{-1}$ \\
+			Pairing               & Signal           & Background           & $S / B$ & $S/\sqrt{B}$                        \\ \hline
+			$\text{min-}\Delta R$ & 0.319            & 2.90e+02             & 0.00110 & 0.221                               \\
+			resonant SPA-NET      & 0.327            & 3.68e+02             & 0.00089 & 0.201                               \\
+			$\kappa 5$ SPA-NET    & 0.366            & 3.17e+02             & 0.00116 & 0.243                              
+			\end{tabular}     
+		\end{table}
+
+	% subsection selection_with_dnn (end)	
+% section event_classifier (end)	
 \end{document} 
