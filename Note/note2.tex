@@ -61,6 +61,7 @@
 
 %
 \usepackage{graphicx}
+\usepackage{subfig}
 %
 \graphicspath{{image/}}
 
@@ -1025,7 +1026,7 @@
 	\label{sub:apply_the_k5_spa_net_on_sm_pairing}
 		The ``$ \text{min-}\Delta R$'' pairing is replaced by $\kappa 5$ SPA-NET pairing. Other cuts remained unchanged. 
 
-		Figure \ref{fig:Higgs_mass_new_k5_SPANET} shows the Higgs mass distribution for $\kappa 5$ SPA-NET pairing. For signal, the results are similar to before, but for the background, the shape is sculpted.
+		Figure \ref{fig:Higgs_mass_new_k5_SPANET} shows the Higgs mass distribution for $\kappa 5$ SPA-NET pairing. For signal, the results are similar to before, but the shape is sculpted for the background.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_k5-SPANET_s.png}
@@ -1140,7 +1141,7 @@
 			\end{tabular}		
 		\end{table}
 
-		For some input variables, the Higgs pairing should be done first. There are 3 training datasets, which are constructed from different pairing methods ($\text{min-}\Delta R$, resonant SPA-NET, and $\kappa 5$ SPA-NET).
+		For some input variables, the Higgs pairing should be done first. There are 3 training datasets constructed from different pairing methods ($\text{min-}\Delta R$, resonant SPA-NET, and $\kappa 5$ SPA-NET).
 
 		Training sample sizes are shown in Table \ref{tab:DNN_sample_size}.
 		\begin{table}[htpb]
@@ -1181,15 +1182,202 @@
 			\centering
 			\caption{The DNN selection results with different pairing methods.}
 			\label{tab:DNN_selection_results}
-			\begin{tabular}{l|cc|c|c}
-								  & \multicolumn{2}{c|}{Cross section (fb)} &         & $\mathcal{L} = 139 \text{ fb}^{-1}$ \\
-			Pairing               & Signal           & Background           & $S / B$ & $S/\sqrt{B}$                        \\ \hline
-			$\text{min-}\Delta R$ & 0.319            & 2.90e+02             & 0.00110 & 0.221                               \\
-			resonant SPA-NET      & 0.327            & 3.68e+02             & 0.00089 & 0.201                               \\
-			$\kappa 5$ SPA-NET    & 0.366            & 3.17e+02             & 0.00116 & 0.243                              
-			\end{tabular}     
+			\resizebox{\textwidth}{!}{
+			\begin{tabular}{l|cc|c|ccc}
+								  & \multicolumn{2}{c|}{Cross section (fb)} &         & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+			Pairing               & Signal           & Background           & $S / B$ & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+			$\text{min-}\Delta R$ & 0.319            & 2.90e+02             & 0.00110 & 0.221 & 0.325 & 1.027                             \\
+			resonant SPA-NET      & 0.327            & 3.68e+02             & 0.00089 & 0.201 & 0.295 & 0.934                             \\
+			$\kappa 5$ SPA-NET    & 0.366            & 3.17e+02             & 0.00116 & 0.243 & 0.357 & 1.129                            
+			\end{tabular}
+			}
 		\end{table}
 
 	% subsection selection_with_dnn (end)	
-% section event_classifier (end)	
+% section event_classifier (end)		
+\section{SPA-NET with mixing \texorpdfstring{$\kappa_\lambda$}{kappa} sample}% (fold)
+\label{sec:spa_net_with_mixing_kappa_sample}
+	This section trains a SPA-NET by mixing $\kappa_\lambda$ samples, then using it on the analysis. The different $\kappa_\lambda$ value samples are generated, then mix it for training.
+	\subsection{Training results}% (fold)
+	\label{sub:training_results_mix}
+		Set $\kappa_\lambda = [-5, -3, -1, 1, 2, 3, 5, 7, 9, 12]$, for each $\kappa_\lambda$ point generate $100,000$ samples. The training samples are required to pass the ``Four tag cut'', i.e., there are at least four b-tagged jets with $p_{\text{T}} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The b-tagging efficiency is the same as the DL1r b-tagger at 77\% WP. Then mix these samples for training. Note that the $\kappa_\lambda$ values are also put in as the input feature.
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 1,000,000
+				\item 1h sample size: 198,016
+				\item 2h sample size: 770,950
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+			\begin{itemize}
+				\item Total sample size: 100,000
+				\item 1h sample size: 19,918
+				\item 2h sample size: 77,024
+			\end{itemize}
+		\end{itemize}
+		The training results are presented in Table \ref{tab:SPANet_diHiggs_4btag_DL1r_pt40_mix}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET training results on the mixing $\kappa$ samples.}
+			\label{tab:SPANet_diHiggs_4btag_DL1r_pt40_mix}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.304             &    0.882              &    0.882             \\
+				$=5$	  &   0.265             &    0.837              &    0.861             \\
+				$\ge 6$	  &   0.202             &    0.756              &    0.811             \\
+				Total	  &   0.770             &    0.833              &    0.856             \\
+			\end{tabular}
+		\end{table}
+	% subsection training_results_mix (end)
+	
+	\subsection{Test on SM samples}% (fold)
+	\label{sub:test_on_sm_samples}
+	In the below, the SPA-NET trained in Sec. \ref{sub:training_results_mix} is called ``mixing SPA-NET''. Test the mixing SPA-NET on the SM events. The testing results are shown in Table \ref{tab:SPANet_train_mix_test_SM}. The event efficiency is $0.902$. This result is better than the ``train on mixing test on mixing'' $0.833$ and the ``train on SM test on SM'' $0.868$.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPA-NET testing results on the SM di-Higgs samples. Where the SPA-NET is trained on the mixing samples.}
+			\label{tab:SPANet_train_mix_test_SM}
+			\begin{tabular}{c|c|cc}
+				$N_\text{Jet}$ & Event Fraction & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &   0.280             &    0.974              &    0.974             \\
+				$=5$	  &   0.287             &    0.909              &    0.938             \\
+				$\ge 6$	  &   0.229             &    0.799              &    0.867             \\
+				Total	  &   0.797             &    0.902              &    0.931             \\
+			\end{tabular}
+		\end{table}
+	% subsection test_on_sm_samples (end)
+	\subsection{Pairing performance}% (fold)
+	\label{sub:pairing_performance}
+		Calculate the pairing efficiency of the $\text{min-}\Delta R$ method and mixing SPA-NET method. The results of different $\kappa_\lambda$ samples are shown in Figure \ref{fig:pairing_efficiency_kappa_mix}. The mixing SPA-NET has the best performance.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.45\textwidth]{pairing_efficiency_kappa-mix.png}
+			\caption{The pairing efficiency of differenct $\kappa_\lambda $ samples. The SPA-NET is mixing SPA-NET trained in Sec. \ref{sub:training_results_mix}.}
+			\label{fig:pairing_efficiency_kappa_mix}
+		\end{figure}
+
+	% subsection pairing_performance (end)	
+
+	\subsection{Apply the mix SPA-NET on SM pairing}% (fold)
+	\label{sub:apply_the_mix_spa_net_on_sm_pairing}
+		The ``$ \text{min-}\Delta R$'' pairing is replaced by the mixing SPA-NET pairing. Other cuts remained unchanged. 
+
+		Figure \ref{fig:Higgs_mass_new_mix_SPANET} shows the Higgs mass distribution for mix SPA-NET pairing. For signal, the results are similar to before, but the shape is sculpted for the background.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_mix-SPANET_s.png}
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_new_mix-SPANET_4b.png}
+			\caption{The mass plane and distribution of Higgs candidates for the mixing SPA-NET pairing. The above figure is for the signal sample and the below one is for the background sample.}
+			\label{fig:Higgs_mass_new_mix_SPANET}
+		\end{figure}
+
+		The $S / \sqrt{B}$ of resonant SPA-NET results are in Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mix_SPANET}.
+
+		Compared to ``$\text{min-}\Delta R$'' method (Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}), the mixing SPA-NET will let roughly the same number of signal events pass the Higgs signal cut, but let more background events pass. Therefore, the mixing SPA-NET can not improve the $S/\sqrt{B}$.
+
+		\begin{table}[htpb]
+			\centering
+			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is mixing SPA-NET. Compared to Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}, the mixing SPA-NET cannot improve the $S/\sqrt{B}$.}
+			\label{tab:diHiggs_signal_background_analysis_ATLAS_mix_SPANET}
+			\begin{tabular}{l|cc|c|c|c|c}
+							 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+							 & Signal           & Background           & $S / B$  & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+				No cut        & 6.859 & 6.29e+05 & 1.09e-05 & 0.1020 & 0.1499 & 0.4739 \\
+				Four tag      & 0.584 & 6.06e+03 & 9.64e-05 & 0.0885 & 0.1300 & 0.4110 \\
+				Higgs Eta cut & 0.463 & 3.10e+03 & 0.000150 & 0.0982 & 0.1443 & 0.4563 \\
+				Top veto      & 0.372 & 2.27e+03 & 0.000164 & 0.0921 & 0.1353 & 0.4279 \\
+				Higgs signal  & 0.137 & 1.71e+02 & 0.000803 & 0.1238 & 0.1818 & 0.5750
+			\end{tabular}
+		\end{table}
+
+	% subsection apply_the_k5_spa_net_on_sm_pairing (end)
+	\subsection{Set the \texorpdfstring{$\kappa_\lambda$}{kappa} constraint by mix SPA-NET}% (fold)
+	\label{sub:set_the_kappa_constraint_by_mix_spa_net}
+		Use the same method presented in Sec. \ref{sec:constraints_on_kappa} to determine the $\kappa_\lambda$ constraints.
+
+		Figure  \ref{fig:mhh_distribution_SPANET_mix} is the $m_{HH}$ distribution of mixing SPA-NET pairing. The events passing all selection cuts are used.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.5\textwidth]{mhh_distribution_SPANET-mix.png}
+			\caption{The $m_{H H}$ distribution with mixing SPA-NET pairing.}
+			\label{fig:mhh_distribution_SPANET_mix}
+		\end{figure}
+
+		Figure \ref{fig:log_likelihood_ratio_kappa_SPANET_mix} is the profile likelihood ratio scans for $\kappa_\lambda$ with mixing SPA-NET pairing. The $2\sigma$ exclusion limit: The values of $\kappa_\lambda$ beyond $\left[ -5.18, 12.04 \right]$ are excluded for the mixing SPA-NET method.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.5\textwidth]{log_likelihood_ratio_kappa_SPANET-mix.png}
+			\caption{The profile likelihood ratio scans for $\kappa_\lambda$. The pairing method is the mixing SPA-NET. The orange line indicates the $2\sigma$ exclusion boundary.}
+			\label{fig:log_likelihood_ratio_kappa_SPANET_mix}
+		\end{figure}
+
+		Figure \ref{fig:CL_limit_kappa_SPANET_mix} is the upper limits scans for $\kappa_\lambda$ with mixing SPA-NET pairing. The values of $\kappa_\lambda$ beyond $\left[ -5.12, 11.94 \right]$ are excluded for the mixed SPA-NET method.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.6\textwidth]{CL_limit_kappa_SPANET-mix.png}
+			\caption{The upper limit of the cross-section with different $\kappa_\lambda$. The pairing method is the mixing SPA-NET method.}
+			\label{fig:CL_limit_kappa_SPANET_mix}
+		\end{figure}
+
+		The results of $\kappa_\lambda$ constraints are summarized in Table \ref{tab:kappa_constraint2}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The $\kappa_\lambda$ constraints with different pairing method.}
+			\label{tab:kappa_constraint2}
+			\begin{tabular}{c|cc|cc}
+								  & \multicolumn{4}{c}{Expected Constraint}                          \\
+								  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+			Pairing method        & Lower              & Upper             & Lower      & Upper      \\ \hline
+			$\text{min-}\Delta R$ & $-5.01$            & 12.21             & $-4.93$      & 12.03      \\
+			resonant SPA-NET      & $-5.30$            & 13.02             & $-5.22$      & 12.86      \\
+			$\kappa 5$ SPA-NET    & $-5.00$            & 12.15             & $-4.92$      & 12.02   \\
+			mixing SPA-NET        & $-5.18$            & 12.04             & $-5.12$      & 11.94          
+			\end{tabular}
+		\end{table}
+	% subsection set_the_kappa_constraint_by_mix_spa_net (end)	
+% section spa_net_with_mixing_kappa_sample (end)		
+\section{\texorpdfstring{$\kappa_\lambda$}{kappa} constraints with DNN selection}% (fold)
+\label{sec:kappa_constraints_with_dnn_selection}
+	This section uses the DNN trained in Sec. \ref{sec:event_classifier} to set the $\kappa_\lambda$ constraints.
+	\subsection{\texorpdfstring{$m_{HH}$}{mhh} distribution}% (fold)
+	\label{sub:mhh_distribution}
+		Figure \ref{fig:mhh_distribution_DNN} are the $m_{HH}$ distributions after the DNN selection.
+		\begin{figure}[htpb]
+			\centering
+			\subfloat[$\text{min-}\Delta R$]{
+				\includegraphics[width=0.30\textwidth]{mhh_distribution_DNN_min_dR.png}
+			}
+			\subfloat[resonant SPA-NET]{
+				\includegraphics[width=0.30\textwidth]{mhh_distribution_DNN_res_SPANET.png}
+			}
+			\subfloat[$\kappa 5$ SPA-NET]{
+				\includegraphics[width=0.30\textwidth]{mhh_distribution_DNN_k5_SPANET.png}
+			}
+			\caption{The $m_{H H}$ distribution after the DNN selection. The DNNs are trained with different pairing method samples.}
+			\label{fig:mhh_distribution_DNN}
+		\end{figure}
+	% subsection mhh_distribution (end)
+	\subsection{\texorpdfstring{$\kappa_\lambda$}{kappa} limits}% (fold)
+	\label{sub:kappa_limits}
+		Set the $\kappa_\lambda$ limits by the profile likelihood method and CLs method.
+
+		The results of $\kappa_\lambda$ constraints are summarized in Table \ref{tab:kappa_constraint3}. The results are similar to Table \ref{tab:DNN_selection_results}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The $\kappa_\lambda$ constraints with DNN selection samples.}
+			\label{tab:kappa_constraint3}
+			\begin{tabular}{c|cc|cc}
+								  & \multicolumn{4}{c}{Expected Constraint}                          \\
+								  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+			Pairing method        & Lower              & Upper             & Lower      & Upper      \\ \hline
+			$\text{min-}\Delta R$ & $-5.04$            & 11.61             & $-4.96$      & 11.60      \\
+			resonant SPA-NET      & $-6.19$            & 13.53             & $-6.11$      & 13.48      \\
+			$\kappa 5$ SPA-NET    & $-4.92$            & 11.49             & $-4.85$      & 11.45   
+			\end{tabular}
+		\end{table}
+	% subsection kappa_limits (end)	
+% section kappa_constraints_with_dnn_selection (end)		
 \end{document} 
