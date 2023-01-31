@@ -42,7 +42,7 @@
 \renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
 
 \usepackage{caption}
-
+\usepackage{multirow}
 \usepackage{enumitem}
 
 %
@@ -277,7 +277,7 @@
 			\begin{itemize}
 			\item Four tag: The event contains at least 4 b-tagged anti-kt small-$R$ ($R = 0.4$) jets with $p_\text{T} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The four jets with the highest b-tagging score are paired to construct two Higgs boson candidates.
 			\item The four jets with the highest $p_\text{T}$ are paired to construct two Higgs boson candidates in my samples.
-			\item Delta R: Pairing jets to Higgs boson candidate need to satisfy the following requirements:
+			\item Delta R: Pairing jets to Higgs boson candidate needs to satisfy the following requirements:
 			\[
 				\left.
 				\begin{array}{c}
@@ -644,7 +644,7 @@
 
 		\begin{table}[htpb]
 			\centering
-			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is resonant SPA-NET. Compared to Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}, there is a little improvement.}
+			\caption{The cross sections for the di-Higgs signal and background processes at different cuts. The pairing method is resonant SPA-NET. There is a little improvement compared to Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}.}
 			\label{tab:diHiggs_signal_background_analysis_ATLAS_resonant_SPANET}
 			\begin{tabular}{l|cc|c|c|c|c}
 							 & \multicolumn{2}{c|}{Cross section (fb)} &          & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
@@ -885,7 +885,7 @@
 	\begin{equation}
 		L(\kappa_\lambda \mid \text{data}) = \prod_{i=1}^{B} \text{Pois}(n_i\mid n_{i,\text{exp}})
 	\end{equation}
-	where $B$ is the number of bins, $n_i$ is the number of events in bin $i$ from data, $n_{i,\text{exp}}$ is the expected number of events in bin $i$. The expected number of events is the sum of the signal and background events, so $n_{i,\text{exp}}$ depend on $\kappa_\lambda$.
+	where $B$ is the number of bins, $n_i$ is the number of events in bin $i$ from data, $n_{i,\text{exp}}$ is the expected number of events in bin $i$. The expected number of events is the sum of the signal and background events, so $n_{i,\text{exp}}$ depends on $\kappa_\lambda$.
 
 	From Poisson distribution
 	\begin{equation}
@@ -1396,7 +1396,7 @@
 		\end{table}
 
 	% subsection training_samples (end)
-		\subsection{Training results}% (fold)
+	\subsection{Training results}% (fold)
 	\label{sub:training_results}
 		The DNN training results are summarized in Table \ref{tab:DNN_results2}. The results are better than Table \ref{tab:DNN_results}, where the DNN is trained on the smaller sample.
 		\begin{table}[htpb]
@@ -1455,21 +1455,29 @@
 			\end{tabular}
 		\end{table}
 	% subsection kappa_limits (end)	
-		\subsection{Train on different \texorpdfstring{$\kappa_\lambda$}{kappa}}% (fold)
+	\subsection{Train on different \texorpdfstring{$\kappa_\lambda$}{kappa}}% (fold)
 	\label{sub:train_on_different_kappa}
-	The DNNs are trained on different $\kappa_\lambda$ samples, then used to select the samples with $\kappa_\lambda = -5, 11$. The results are shown in Table \ref{tab:DNN_selection_results_different_kappa}.
+		The DNNs are trained on different $\kappa_\lambda$ samples, then used to select the samples with $\kappa_\lambda = -5, 11$. The results are shown in Table \ref{tab:DNN_selection_results_different_kappa}. For the DNNs train on different $\kappa_\lambda$ samples show better results on $S / \sqrt{B}$. But there is no such difference between the $\text{min-}\Delta R$ and SPA-NET pairing methods.
 		\begin{table}[htpb]
 			\centering
-			\caption{The DNN selection results with different training and testing samples. The pairing method is $\text{min-}\Delta R$.}
+			\caption{The DNN selection results with different training and testing samples.}
 			\label{tab:DNN_selection_results_different_kappa}
 			\resizebox{\textwidth}{!}{
-			\begin{tabular}{cc|cc|c|ccc}
-			      &      & \multicolumn{2}{c}{Cross section (fb)} &         & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
-Train & Test & Signal           & Background          & $S / B$ & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
-			1  & $-5$ & 1.791 & 90.8 & 0.0197 & 2.2159 & 3.2554 & 10.2946 \\
-			$-5$ & $-5$ & 1.233 & 41.2 & 0.0300 & 2.2657 & 3.3286 & 10.5260 \\
-			1  & 11 & 1.272 & 90.8 & 0.0140 & 1.5730 & 2.3108 & 7.3075  \\
-			11 & 11 & 1.061 & 30.8 & 0.0344 & 2.2539 & 3.3113 & 10.4711			
+			\begin{tabular}{c|cc|cc|c|ccc}
+										   &       &      & \multicolumn{2}{c}{Cross section (fb)} &         & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+	Pairing method                                & Train & Test & Signal            & Bkg.               & $S / B$ & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+			\multirow{4}{*}{$\text{min-}\Delta R$} & $1$  & $-5$ & 1.791 & 90.8     & 0.0197 & 2.2159 & 3.2554 & 10.2946 \\
+												   & $-5$ & $-5$ & 1.233 & 41.2     & 0.0300 & 2.2657 & 3.3286 & 10.5260 \\
+												   & $1$  & $11$ & 1.272 & 90.8     & 0.0140 & 1.5730 & 2.3108 & 7.3075  \\
+												   & $11$ & $11$ & 1.061 & 30.8     & 0.0344 & 2.2539 & 3.3113 & 10.4711 \\ \hline
+			\multirow{4}{*}{resonant SPA-NET}      & $1$  & $-5$ & 1.196 & 49.0     & 0.0244 & 2.0131 & 2.9575 & 9.3525  \\ 
+												   & $-5$ & $-5$ & 1.268 & 36.8     & 0.0345 & 2.4662 & 3.6231 & 11.4573 \\
+												   & $1$  & $11$ & 0.778 & 49.0     & 0.0159 & 1.3107 & 1.9255 & 6.0891  \\
+												   & $11$ & $11$ & 0.711 & 22.6     & 0.0314 & 1.7611 & 2.5872 & 8.1814  \\ \hline
+			\multirow{4}{*}{$\kappa 5$ SPA-NET}    & $1$  & $-5$ & 1.949 & 1.13e+02 & 0.0173 & 2.1630 & 3.1777 & 10.0487 \\
+												   & $-5$ & $-5$ & 0.640 & 14.5     & 0.0442 & 1.9832 & 2.9135 & 9.2134  \\
+												   & $1$  & $11$ & 1.417 & 1.13e+02 & 0.0126 & 1.5727 & 2.3105 & 7.3064  \\
+												   & $11$ & $11$ & 1.073 & 31.7     & 0.0338 & 2.2463 & 3.3000 & 10.4356
 			\end{tabular}
 			}
 		\end{table}
@@ -1477,4 +1485,117 @@ Train & Test & Signal           & Background          & $S / B$ & $S/\sqrt{B}$  
 	% subsection train_on_different_kappa (end)	
 	
 % section dnn_event_classifier (end)		
+\section{DNN classifier with mixing \texorpdfstring{$\kappa_\lambda$}{kappa} samples}% (fold)
+\label{sec:dnn_classifier_with_mixing_kappa_samples}
+	This section trains a DNN by mixing $\kappa_\lambda$ samples, then using it on the analysis. The different $\kappa_\lambda$ value samples are generated, then mix it for training.
+	\subsection{Training samples}% (fold)
+	\label{sub:training_samples2}
+	Set $\kappa_\lambda = [-5, -3, -1, 1, 2, 3, 5, 7, 9, 12]$, for each $\kappa_\lambda$ point generate samples. The training features listed in Sec. \ref{sub:training_samples} are also used, and another feature $\kappa_\lambda$ value is added. For signal, the different $\kappa_\lambda$ samples are mixed. For each type, the same number of samples is used. For background, the $\kappa_\lambda$ values are randomly chosen from the above list. Training sample sizes are shown in Table \ref{tab:DNN_sample_size3}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The sample size for signal and background, which are the training sample size plus the testing sample size.}
+			\label{tab:DNN_sample_size3}
+			\begin{tabular}{c|c}
+			 Signal & Background\\ \hline
+			 $\text{80k} + \text{8k}$      &$\text{80k} + \text{8k}$ 
+			\end{tabular}
+		\end{table}
+
+	% subsection training_samples (end)
+	\subsection{Training results}% (fold)
+	\label{sub:training_results}
+		The DNN training results are summarized in Table \ref{tab:DNN_results3}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The DNN training results with different pairing methods. The training samples contain different $\kappa_\lambda$ samples.}
+			\label{tab:DNN_results3}
+			\begin{tabular}{c|cc}
+			Pairing method        & ACC     & AUC   \\ \hline
+			$\text{min-}\Delta R$ & $0.783$ & $0.864$ \\
+			resonant SPA-NET      & $0.788$ & $0.873$ \\
+			$\kappa 5$ SPA-NET    & $0.792$ & $0.875$
+			\end{tabular}      
+		\end{table}
+	
+	% subsection training_results (end)	
+	\subsection{Selection with DNN}% (fold)
+	\label{sub:selection_with_dnn}
+		In this section, the cuts-based selection method is replaced by the DNN trained in the previous section. 
+
+		When an event is put in DNN, DNN will return a signal score $p_{\text{signal}}$ which represents the confidence of this event is a signal event. The requirement of $p_{\text{signal}} > p_{\text{th}}$ is imposed for $S / \sqrt{B}$ counting. The $p_{\text{th}}$ is scanned from $0$ to $1$ by step $0.01$, then choose the value which maximize the  $S / \sqrt{B}$. For $\text{min-}\Delta R$, $p_{\text{th}} = 0.91$; resonant SPA-NET, $p_{\text{th}} = 0.92$; $\kappa 5$ SPA-NET, $p_{\text{th}} = 0.93$.
+
+
+		Table \ref{tab:DNN_selection_results3} is the selection results. Compared to Table \ref{tab:diHiggs_signal_background_analysis_ATLAS_mindR}, \ref{tab:diHiggs_signal_background_analysis_ATLAS_resonant_SPANET}, \ref{tab:diHiggs_signal_background_analysis_ATLAS_k5_SPANET} (cuts based), more signal and background events can pass. There is an improvement of $S / \sqrt{B}$ for $\text{min-}\Delta R$ (0.186), $\kappa 5$ SPA-NET (0.110), and resonant SPA-NET (0.205). These results are similar to the previous DNNs (Table \ref{tab:DNN_selection_results2}).
+		\begin{table}[htpb]
+			\centering
+			\caption{The DNN selection results with different pairing methods. The thresholds which maximize the $S / \sqrt{B}$ are chosen.}
+			\label{tab:DNN_selection_results3}
+			\resizebox{\textwidth}{!}{
+			\begin{tabular}{l|cc|c|ccc}
+								  & \multicolumn{2}{c|}{Cross section (fb)} &         & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+			Pairing               & Signal           & Background           & $S / B$ & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+			$\text{min-}\Delta R$ & 0.218 & 78.9 & 0.00276 & 0.2893 & 0.4250 & 1.3439 \\
+			resonant SPA-NET      & 0.227 & 99.6 & 0.00227 & 0.2675 & 0.3930 & 1.2429 \\
+			$\kappa 5$ SPA-NET    & 0.223 & 89.3 & 0.00249 & 0.2779 & 0.4082 & 1.2908
+			\end{tabular}
+			}
+		\end{table}
+
+	% subsection selection_with_dnn (end)
+	\subsection{\texorpdfstring{$\kappa_\lambda$}{kappa} limits}% (fold)
+	\label{sub:kappa_limits}
+		Set the $\kappa_\lambda$ limits by the profile likelihood method and CLs method.
+
+		The results of $\kappa_\lambda$ constraints are summarized in Table \ref{tab:kappa_constraint5}. The results are a little better than Table \ref{tab:kappa_constraint4}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The $\kappa_\lambda$ constraints with DNN selection samples.}
+			\label{tab:kappa_constraint5}
+			\begin{tabular}{c|cc|cc}
+								  & \multicolumn{4}{c}{Expected Constraint}                          \\
+								  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+			Pairing method        & Lower              & Upper             & Lower      & Upper      \\ \hline
+			$\text{min-}\Delta R$ & $-3.81$            & 11.16             & $-3.73$      & 11.15      \\
+			resonant SPA-NET      & $-4.74$            & 11.78             & $-4.68$      & 11.73      \\
+			$\kappa 5$ SPA-NET    & $-4.08$            & 11.65             & $-4.02$      & 11.68   
+			\end{tabular}
+		\end{table}
+	% subsection kappa_limits (end)
+	\subsection{Test on different \texorpdfstring{$\kappa_\lambda$}{kappa} samples}% (fold)
+	\label{sub:test_on_different_kappa_samples}
+		The mixing DNN is used to select the samples with $\kappa_\lambda = -5, 11$. The results are shown in Table \ref{tab:DNN_selection_results_different_kappa2}. For the DNNs train on different $\kappa_\lambda$ samples show better results on $S / \sqrt{B}$. But there is no such difference between the $\text{min-}\Delta R$ and SPA-NET pairing methods.
+		\begin{table}[htpb]
+			\centering
+			\caption{The DNN selection results with different training and testing samples.}
+			\label{tab:DNN_selection_results_different_kappa2}
+			\resizebox{\textwidth}{!}{
+			\begin{tabular}{c|cc|cc|c|ccc}
+										   &       &      & \multicolumn{2}{c}{Cross section (fb)} &         & $\mathcal{L} = 139 \text{ fb}^{-1}$ & $\mathcal{L} = 300 \text{ fb}^{-1}$ & $\mathcal{L} = 3000 \text{ fb}^{-1}$ \\
+	Pairing method                                & Train & Test & Signal            & Bkg.               & $S / B$ & $S/\sqrt{B}$                        & $S/\sqrt{B}$                        & $S/\sqrt{B}$                         \\ \hline
+			\multirow{4}{*}{$\text{min-}\Delta R$}& $1$ & $-5$ & 1.791 & 90.8 & 0.0197  & 2.2159 & 3.2554 & 10.2946 \\
+												& mix & $-5$ & 2.030 & 78.9 & 0.0257  & 2.6949 & 3.9591 & 12.5198 \\
+												& $1$ & $11$ & 1.272 & 90.8 & 0.0140  & 1.5730 & 2.3108 & 7.3075  \\
+												& mix & $11$ & 1.285 & 78.9 & 0.0163  & 1.7062 & 2.5066 & 7.9266  \\ \hline
+			\multirow{4}{*}{resonant SPA-NET}   & $1$ & $-5$ & 1.038 & 40.9 & 0.0254  & 1.9148 & 2.8130 & 8.8956  \\
+												& mix & $-5$ & 1.832 & 99.6 & 0.0184  & 2.1639 & 3.1790 & 10.0529 \\
+												& $1$ & $11$ & 0.778 & 49.0 & 0.0159  & 1.3107 & 1.9255 & 6.0891  \\
+												& mix & $11$ & 1.362 & 99.6 & 0.0137  & 1.6082 & 2.3627 & 7.4714  \\ \hline
+			\multirow{4}{*}{$\kappa 5$ SPA-NET} & $1$ & $-5$ & 1.611 & 81.1 & 0.0199  & 2.1096 & 3.0993 & 9.8008  \\
+												& mix & $-5$ & 1.887 & 89.3 & 0.0211  & 2.3543 & 3.4588 & 10.9376 \\
+												& $1$ & $11$ & 1.130 & 81.1 & 0.0139  & 1.4798 & 2.1740 & 6.8747  \\
+												& mix & $11$ & 0.852 & 89.3 & 0.00954 & 1.0630 & 1.5617 & 4.9385 
+			\end{tabular}
+			}
+		\end{table}
+
+		Figure \ref{fig:SB_kappa} is the $S / \sqrt{B}$ for different $\kappa_\lambda$ samples after DNN selection.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.55\textwidth]{SB_different_kappa.png}
+			\caption{The $S / \sqrt{B}$ for different $\kappa_\lambda$ samples. The DNNs are trained with different pairing method samples. The ``mix'' means the mixing  $\kappa_\lambda$ samples are used. Where $\mathcal{L} = 139 \text{ fb}^{-1}$.}
+			\label{fig:SB_kappa}
+		\end{figure}
+
+	% subsection test_on_different_kappa_samples (end)	
+% section dnn_classifier_with_mixing_kappa_samples (end)		
 \end{document} 
