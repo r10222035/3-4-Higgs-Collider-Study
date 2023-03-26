@@ -524,5 +524,141 @@
 		
 	% subsection mass_distribution_plot (end)
 % section comparision_with_previous_results (end)		
+\section{SPANet2 pairing + DNN selection}% (fold)
+\label{sec:spanet2_pairing_dnn_selection}
+	This section uses the mixing $\kappa$ SPANet2 for jet pairing and generates the samples for DNN training. The training samples are consisted of different $\kappa_\lambda$ value events.
+
+	\subsection{Training samples}% (fold)
+	\label{sub:training_samples2}
+	Set $\kappa_\lambda = [-5, -3, -1, 1, 2, 3, 5, 7, 9, 11]$, for each $\kappa_\lambda$ point generate samples. For signal, the different $\kappa_\lambda$ samples are mixed. For each type, the same number of samples is used. For background, the $\kappa_\lambda$ values are randomly chosen from the above list. Training sample sizes are shown in Table \ref{tab:DNN_sample_size3}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The sample size for signal and background, which are the training sample size plus the testing sample size.}
+			\label{tab:DNN_sample_size3}
+			\begin{tabular}{c|c}
+			 Signal & Background\\ \hline
+			 $\text{80k} + \text{8k}$      &$\text{80k} + \text{8k}$ 
+			\end{tabular}
+		\end{table}
+
+	% subsection training_samples (end)
+	\subsection{Training results}% (fold)
+	\label{sub:training_results}
+		The DNN training results are summarized in Table \ref{tab:DNN_results}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The DNN training results with different pairing methods. The training samples contain different $\kappa_\lambda$ samples. The average and standard deviation of 10 training are presented.}
+			\label{tab:DNN_results}
+			\begin{tabular}{c|cc}
+			Pairing method        & ACC     & AUC   \\ \hline
+			$\text{min-}\Delta R$ & $0.800 \pm 0.010$ & $0.882 \pm 0.010$ \\
+			$\kappa 5$ SPA-NET    & $0.794 \pm 0.004$ & $0.876 \pm 0.004$ \\
+			mixing $\kappa$ SPANet2 & $0.800 \pm 0.003$ & $0.882 \pm 0.004$ \\
+			\end{tabular}      
+		\end{table}
+	
+	% subsection training_results (end)
+	\subsection{\texorpdfstring{$\kappa_\lambda$}{kappa} limits}% (fold)
+	\label{sub:kappa_limits}
+		Set the $\kappa_\lambda$ limits by the profile likelihood method and CLs method. The model with the best ACC are used. The $p_\text{th}$ is chosen such that maximize $S / \sqrt{B}$.
+
+		The results of $\kappa_\lambda$ constraints are summarized in Table \ref{tab:kappa_constraint_DNN}. 
+		\begin{table}[htpb]
+			\centering
+			\caption{The $\kappa_\lambda$ constraints with DNN selection samples.}
+			\label{tab:kappa_constraint_DNN}
+			\begin{tabular}{c|cc|cc}
+								  & \multicolumn{4}{c}{Expected Constraint}                          \\
+								  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+			Pairing method        & Lower              & Upper             & Lower      & Upper      \\ \hline
+			$\text{min-}\Delta R$ & $-3.20$            & $10.87$             & $-3.16$      & $10.78$    \\
+			$\kappa 5$ SPA-NET    & $-4.44$            & $10.86$             & $-4.35$      & $10.78$   \\
+			mixing $\kappa$ SPANet2& $-3.42$           & $10.85$             & $-3.40$      & $10.77$   
+			\end{tabular}
+		\end{table}
+
+		Here, the bug of the previous testing sample is fixed. In the previous background testing sample, all $\kappa_\lambda$ are set to $1$ not randomly chosen from $\kappa_\lambda$ value list.
+	% subsection kappa_limits (end)
+% section spanet2_pairing_dnn_selection (end)
+\section{Summary}% (fold)
+\label{sec:summary}
+	\subsection{Classification performance}% (fold)
+	\label{sub:classification_performance}
+		The classification training results are presented in Table \ref{tab:classification_results_summary2}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The classification performance of different selection methods.}
+			\label{tab:classification_results_summary2}
+			\begin{tabular}{l|cc}
+			Selection method          & ACC   & AUC   \\ \hline
+			$\text{min-}\Delta R$ DNN   & $0.800 \pm 0.010$ & $0.882 \pm 0.010$ \\
+			$\kappa 5$ SPANet DNN       & $0.794 \pm 0.004$ & $0.876 \pm 0.004$ \\
+			mixing $\kappa$ SPANet2 DNN & $0.800 \pm 0.003$ & $0.882 \pm 0.004$ \\
+			mixing $\kappa$ SPANet2     & $0.822 \pm 0.007$ & $0.906 \pm 0.006$ 
+			\end{tabular}			
+		\end{table}
+
+	% subsection classification_performance (end)
+	\subsection{\texorpdfstring{$\kappa_\lambda$}{kappa} constraints}% (fold)
+	\label{sub:kappa_constraints}
+		Table \ref{tab:kappa_constraint_summary} is the $\kappa_\lambda$ constraints of the different selection methods.
+		\begin{table}[htpb]
+			\centering
+			\caption{The $\kappa_\lambda$ constraints of different selection methods.}
+			\label{tab:kappa_constraint_summary}
+			\begin{tabular}{cc|cc|cc}
+									&                  & \multicolumn{4}{c}{Expected Constraints}                         \\
+									&                  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+			Pairing method          & Selection method & Lower              & Upper             & Lower       & Upper     \\ \hline
+			$\text{min-}\Delta R$   & DNN              & $-3.20$            & $10.87$           & $-3.16$      & $10.78$    \\
+			$\kappa 5$ SPANet       & DNN              & $-4.44$            & $10.86$           & $-4.35$      & $10.78$   \\
+			Mixing $\kappa$ SPANet2 & DNN              & $-3.42$            & $10.85$           & $-3.40$      & $10.77$   \\
+			Mixing $\kappa$ SPANet2 & SPANet2          & $-3.18$            & $8.79$            & $-3.13$      & $8.77$   
+			\end{tabular}		
+		\end{table}
+	% subsection kappa_constraints (end)
+	
+% section summary (end)		
+\section{\texorpdfstring{$\kappa_\lambda$}{kappa} constraints with different luminosities}% (fold)
+\label{sec:kappa_constraints_with_different_luminosities}
+	Use $\text{min-}\Delta R$ method to set constraints with different luminosity. The results are shown in Figure \ref{fig:kappa_constraint_luminosity}.
+	\begin{figure}[htpb]
+		\centering
+		\subfloat[]{
+			\includegraphics[width=0.45\textwidth]{kappa_constraint_LLr_L_mindR_DNN.png}
+		}
+		\subfloat[]{
+			\includegraphics[width=0.45\textwidth]{kappa_constraint_CLs_L_mindR_DNN.png}
+		}
+		\caption{The $\kappa_\lambda$ constraints with different luminosities. Use $\text{min-}\Delta R$ method for pairing and DNN for selection.}
+		\label{fig:kappa_constraint_luminosity}
+	\end{figure}
+
+	Use mixing $\kappa$ SPANet2 for constraints setting with different luminosity. The results are presented in Table \ref{tab:kappa_constraint_luminosity_mix_class_SPANET2}.
+	\begin{table}[htpb]
+		\centering
+		\caption{The $\kappa_\lambda$ constraints with different luminosities. Use SPANet2 for event selection.}
+		\label{tab:kappa_constraint_luminosity_mix_class_SPANET2}
+		\begin{tabular}{c|cc|cc|cc|cc}
+										& \multicolumn{4}{c}{Expected Constraints}                         & \multicolumn{4}{c}{Equivlent luminosity for $\text{min-}\Delta R$}       \\
+										& \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs}         \\ \hline
+		$\mathcal{L} \text{ (fb$^{-1}$)}$ & Lower               & Upper            & Lower       & Upper     & Lower              & Upper             & Lower          & Upper          \\ \hline
+		139  & $-3.18$ & $8.79$ & $-3.13$ & $8.77$ & 145 & 388 & 144 & 381 \\
+		300  & $-1.96$ & $7.96$ & $-1.96$ & $7.89$ & 280 & 810 & 275 & 796 \\
+		\end{tabular}
+	\end{table}
+% section kappa_constraints_with_different_luminosities (end)
+\section{SPANet classifier}% (fold)
+\label{sec:spanet_classifier}
+	Figure \ref{fig:SPANet2_structure} is the model structure of SPANet2. The classifier part takes the outputs of transformer encoder. The architecture of classifier part is just the feed foward structure networks.
+	
+	The SPANet classifier does not take the results from the jet assignment part, because it is worse than if we just take the transformer outputs. The reason is that it can lead to worse performance due to errors in that part.
+	\begin{figure}[htpb]
+		\centering
+		\includegraphics[width=0.8\textwidth]{SPANet2_structure.png}
+		\caption{The model structure of SPANet2.}
+		\label{fig:SPANet2_structure}
+	\end{figure}
+% section spanet_classifier (end)
 \end{document} 
 
