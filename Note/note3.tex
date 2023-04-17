@@ -396,7 +396,7 @@
 				\end{tabular}
 			\end{table}	
 
-			The classification training results are presented in Table \ref{tab:SPANET_cls_results}.
+			Table \ref{tab:SPANET_cls_results} presents the classification training results.
 			\begin{table}[htpb]
 				\centering
 				\caption{The SPANet2 classification training results with mixing $\kappa_\lambda$ sample.}
@@ -440,7 +440,7 @@
 	This section summary the results among the ``$\text{min-}\Delta R$ DNN'', ``$\kappa 5$ SPANet DNN'', ``mixing $\kappa$ SPANet2''.
 	\subsection{Pairing performance}% (fold)
 	\label{sub:pairing_performance}
-		Figure \ref{fig:pairing_performance_kappa} is the pairing efficiency of different pairing methods. Where the mixing $\kappa$ SPANet2 has the best performance.
+		Figure \ref{fig:pairing_performance_kappa} shows the pairing efficiency of different methods. Where the mixing $\kappa$ SPANet2 has the best performance.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.65\textwidth]{pairing_efficiency_kappa-SPANet2.png}
@@ -451,7 +451,7 @@
 	% subsection pairing_performance (end)
 	\subsection{Classification performance}% (fold)
 	\label{sub:classification_performance}
-		The classification training results are presented in Table \ref{tab:SPANET_cls_results}.
+		Table \ref{tab:SPANET_cls_results} presents the classification training results.
 		\begin{table}[htpb]
 			\centering
 			\caption{The classification performance of different selection methods.}
@@ -526,7 +526,7 @@
 % section comparision_with_previous_results (end)		
 \section{SPANet2 pairing + DNN selection}% (fold)
 \label{sec:spanet2_pairing_dnn_selection}
-	This section uses the mixing $\kappa$ SPANet2 for jet pairing and generates the samples for DNN training. The training samples are consisted of different $\kappa_\lambda$ value events.
+	This section uses the mixing $\kappa$ SPANet2 for jet pairing and generates the samples for DNN training. The training samples consisted of different $\kappa_\lambda$ value events.
 
 	\subsection{Training samples}% (fold)
 	\label{sub:training_samples2}
@@ -560,7 +560,7 @@
 	% subsection training_results (end)
 	\subsection{\texorpdfstring{$\kappa_\lambda$}{kappa} limits}% (fold)
 	\label{sub:kappa_limits}
-		Set the $\kappa_\lambda$ limits by the profile likelihood method and CLs method. The model with the best ACC are used. The $p_\text{th}$ is chosen such that maximize $S / \sqrt{B}$.
+		Set the $\kappa_\lambda$ limits by the profile likelihood method and CLs method. The model with the best ACC is used. The $p_\text{th}$ is chosen such that maximize $S / \sqrt{B}$.
 
 		The results of $\kappa_\lambda$ constraints are summarized in Table \ref{tab:kappa_constraint_DNN}. 
 		\begin{table}[htpb]
@@ -584,7 +584,7 @@
 \label{sec:summary}
 	\subsection{Classification performance}% (fold)
 	\label{sub:classification_performance}
-		The classification training results are presented in Table \ref{tab:classification_results_summary2}.
+		Table \ref{tab:classification_results_summary2} presents the classification training results.
 		\begin{table}[htpb]
 			\centering
 			\caption{The classification performance of different selection methods.}
@@ -621,7 +621,7 @@
 % section summary (end)		
 \section{\texorpdfstring{$\kappa_\lambda$}{kappa} constraints with different luminosities}% (fold)
 \label{sec:kappa_constraints_with_different_luminosities}
-	Use $\text{min-}\Delta R$ method to set constraints with different luminosity. The results are shown in Figure \ref{fig:kappa_constraint_luminosity}.
+	Use the $\text{min-}\Delta R$ method to set constraints with different luminosity. The results are shown in Figure \ref{fig:kappa_constraint_luminosity}.
 	\begin{figure}[htpb]
 		\centering
 		\subfloat[]{
@@ -650,7 +650,7 @@
 % section kappa_constraints_with_different_luminosities (end)
 \section{SPANet classifier}% (fold)
 \label{sec:spanet_classifier}
-	Figure \ref{fig:SPANet2_structure} is the model structure of SPANet2. The classifier part takes the outputs of transformer encoder. The architecture of classifier part is just the feed foward structure networks.
+	Figure \ref{fig:SPANet2_structure} is the model structure of SPANet2. The classifier part takes the outputs of the transformer encoder. The architecture of the classifier part is just the feed-forward structure networks.
 	
 	The SPANet classifier does not take the results from the jet assignment part, because it is worse than if we just take the transformer outputs. The reason is that it can lead to worse performance due to errors in that part.
 	\begin{figure}[htpb]
@@ -660,5 +660,75 @@
 		\label{fig:SPANet2_structure}
 	\end{figure}
 % section spanet_classifier (end)
+\section{SPANet2 classification}% (fold)
+\label{sec:spanet2_classification}
+	This section turns off the jet assignment part in SPANet2 by setting the assignment loss weight to zero.
+	\begin{itemize}
+		\item \verb+assignment_loss_scale+: 0.0
+		\item \verb+classification_loss_scale+: 1.0
+	\end{itemize}
+
+	Using the mixing $\kappa$ samples for training. The samples are the same as Sec. \ref{subs:training_samples}. Table \ref{tab:SPANET_no_pairing_cls_results} presents the classification training results.
+	\begin{table}[htpb]
+		\centering
+		\caption{The SPANet2 classification training results with mixing $\kappa_\lambda$ sample. The jet assignment part is turned off. The average and standard deviation of 10 training are presented.}
+		\label{tab:SPANET_no_pairing_cls_results}
+		\begin{tabular}{c|cc}
+		Training sample        & ACC     & AUC   \\ \hline
+		Mixing $\kappa_\lambda $ & $0.809 \pm 0.013$ & $0.890 \pm 0.014$
+		\end{tabular}      
+	\end{table}
+
+	Set $p_\text{th} = 0.95$ and use the profile likelihood method and CLs method for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_SPANet_no_pair} is the results of $\kappa_\lambda$ constraints. These results are worse than simultaneously training on jet assignment and classification tasks.
+	\begin{table}[htpb]
+		\centering
+		\caption{The $\kappa_\lambda$ constraints of SPANet2.}
+		\label{tab:kappa_constraint_SPANet_no_pair}
+		\begin{tabular}{c|cc|cc}
+							  & \multicolumn{4}{c}{Expected Constraint}                          \\
+							  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+		Selection method      & Lower              & Upper             & Lower      & Upper      \\ \hline
+		SPANet2      & $-5.07$            & $10.98$             & $-4.99$      & $10.91$      \\
+		\end{tabular}
+	\end{table}
+% section spanet2_classification (end)	
+\section{SPANet embedding vectors}% (fold)
+\label{sec:spanet_embedding_vectors}
+	The SPANet embedding vectors can be saved in \verb+.hdf5+ file by this command
+	\begin{verbatim}
+		python -m spanet.predict <log_dir> <output name> -tf <TEST_FILE> \
+		--gpu --output_vectors
+	\end{verbatim}
+	\verb+<log_dir>+: directory containing the checkpoint and options file. \verb+<TEST_FILE>+: the test file path.
+
+	\subsection{Principal component analysis}% (fold)
+	\label{sub:principal_component_analysis}
+		Use the PCA class implemented in scikit-learn to do the principal component analysis (PCA) on the SPANet embedding vectors. The variance ratio of the first ten components is shown in Figure \ref{fig:PCA_variance_ratio}.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.7\textwidth]{PCA_variance_ratio.png}
+			\caption{The variance ratio of the first ten principal components.}
+			\label{fig:PCA_variance_ratio}
+		\end{figure}
+
+		Calculate the correlation coefficients with principal components and the high-level observables. The high-level observables are the DNN input features that are constructed by the SPANet2 pairing.
+
+		The results are presented in Figure \ref{fig:correlation_coefficients_pca}. In Figure \ref{fig:correlation_coefficients_pca-signal-background}, the correlation coefficients of signal and background events are calculated separately. The level of correlation of most variables is very low in the background case compared to the signal one's.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.99\textwidth]{correlation_coefficients_pca.png}
+			\caption{The correlation coefficients of the first three principal components and high-level observables.}
+			\label{fig:correlation_coefficients_pca}
+		\end{figure}
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.99\textwidth]{correlation_coefficients_pca-signal.png}
+			\includegraphics[width=0.99\textwidth]{correlation_coefficients_pca-background.png}
+			\caption{The correlation coefficients of the first three principal components and high-level observables. Where the signal and background samples are calculated separately.}
+			\label{fig:correlation_coefficients_pca-signal-background}
+		\end{figure}
+
+	% subsection principal_component_analysis (end)	
+% section spanet_embedding_vectors (end)	
 \end{document} 
 
