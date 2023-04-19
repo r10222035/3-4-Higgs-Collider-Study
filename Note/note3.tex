@@ -601,11 +601,11 @@
 	% subsection classification_performance (end)
 	\subsection{\texorpdfstring{$\kappa_\lambda$}{kappa} constraints}% (fold)
 	\label{sub:kappa_constraints}
-		Table \ref{tab:kappa_constraint_summary} is the $\kappa_\lambda$ constraints of the different selection methods.
+		Table \ref{tab:kappa_constraint_summary2} is the $\kappa_\lambda$ constraints of the different selection methods.
 		\begin{table}[htpb]
 			\centering
 			\caption{The $\kappa_\lambda$ constraints of different selection methods.}
-			\label{tab:kappa_constraint_summary}
+			\label{tab:kappa_constraint_summary2}
 			\begin{tabular}{cc|cc|cc}
 									&                  & \multicolumn{4}{c}{Expected Constraints}                         \\
 									&                  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
@@ -679,7 +679,7 @@
 		\end{tabular}      
 	\end{table}
 
-	Set $p_\text{th} = 0.95$ and use the profile likelihood method and CLs method for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_SPANet_no_pair} is the results of $\kappa_\lambda$ constraints. These results are worse than simultaneously training on jet assignment and classification tasks.
+	Set $p_\text{th} = 0.93$ and use the profile likelihood method and CLs method for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_SPANet_no_pair} is the results of $\kappa_\lambda$ constraints. These results are worse than simultaneously training on jet assignment and classification tasks.
 	\begin{table}[htpb]
 		\centering
 		\caption{The $\kappa_\lambda$ constraints of SPANet2.}
@@ -688,7 +688,7 @@
 							  & \multicolumn{4}{c}{Expected Constraint}                          \\
 							  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
 		Selection method      & Lower              & Upper             & Lower      & Upper      \\ \hline
-		SPANet2      & $-5.07$            & $10.98$             & $-4.99$      & $10.91$      \\
+		SPANet2      & $-5.01$            & $10.97$             & $-4.92$      & $10.89$      \\
 		\end{tabular}
 	\end{table}
 % section spanet2_classification (end)	
@@ -730,5 +730,64 @@
 
 	% subsection principal_component_analysis (end)	
 % section spanet_embedding_vectors (end)	
+\section{Hyperparameter tuning}% (fold)
+\label{sec:hyperparameter_tuning}
+	This section uses the Optuna to do the hyperparameter optimization.
+
+	\subsection{Optimization range}% (fold)
+	\label{sub:optimization_range}
+		The optimization range of different hyperparameters are listed in the below
+		\begin{itemize}
+			\item \verb+learning_rate+: $[10^{-5}, 10^{-2}]$ 
+			\item \verb+dropout+: $[0, 0.5]$ 
+			\item \verb+gradient_clip+: $[0, 0.5]$ 
+			\item \verb+l2_penalty+: $[0, 0.0005]$ 
+			\item \verb+hidden_dim+: $[16,32,64,128,256]$ 
+			\item \verb+num_encoder_layers+: $[2,8]$ 
+			\item \verb+num_branch_encoder_layers+: $[2,8]$ 
+			\item \verb+num_classification_layers+: $[1,5]$ 
+		\end{itemize}
+		Each parameter-set was trained for 10 epochs. Test 100 trials.
+	% subsection optimization_range (end)
+	\subsection{Hyperparameter optimization results}% (fold)
+	\label{sub:hyperparameter_optimization_results}
+		The hyperparameters optimization results are listed in the below
+		\begin{itemize}
+			\item \verb+learning_rate+: $0.00659$ 
+			\item \verb+dropout+: $0.0059$ 
+			\item \verb+gradient_clip+: $0.425$ 
+			\item \verb+l2_penalty+: $0.000374$ 
+			\item \verb+hidden_dim+: $32$ 
+			\item \verb+num_encoder_layers+: $8$ 
+			\item \verb+num_branch_encoder_layers+: $2$ 
+			\item \verb+num_classification_layers+: $1$ 
+		\end{itemize}
+
+		Use this parameter set for full training. The samples are the same as Sec. \ref{subs:training_samples}. Table \ref{tab:SPANET_best_hp_cls_results} presents the classification training results. This result is a little better than the Table \ref{tab:classification_results_summary2}.
+	\begin{table}[htpb]
+		\centering
+		\caption{The SPANet2 classification training results with mixing $\kappa_\lambda$ sample. Use the Optuna hyperparameter optimatization results. The average and standard deviation of 10 training are presented.}
+		\label{tab:SPANET_best_hp_cls_results}
+		\begin{tabular}{c|cc}
+		& ACC     & AUC   \\ \hline
+		Best HP & $0.828 \pm 0.002$ & $0.911 \pm 0.001$
+		\end{tabular}      
+	\end{table}
+
+	Set $p_\text{th} = 0.95$ and use the profile likelihood method and CLs method for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_SPANet_best_hp} is the results of $\kappa_\lambda$ constraints. These results are similar to the previous one (Table \ref{tab:kappa_constraint_summary2}).
+	\begin{table}[htpb]
+		\centering
+		\caption{The $\kappa_\lambda$ constraints of SPANet2.}
+		\label{tab:kappa_constraint_SPANet_best_hp}
+		\begin{tabular}{c|cc|cc}
+							  & \multicolumn{4}{c}{Expected Constraint}                          \\
+							  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+		Selection method      & Lower              & Upper             & Lower      & Upper      \\ \hline
+		SPANet2      & $-3.07$            & $8.80$             & $-3.04$      & $8.76$      \\
+		\end{tabular}
+	\end{table}
+
+	% subsection hyperparameter_optimization_results (end)	
+% section hyperparameter_tuning (end)		
 \end{document} 
 
