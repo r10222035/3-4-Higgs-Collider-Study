@@ -381,7 +381,7 @@
 		% subsubsection hyperparameters_setting (end)		
 		\subsubsection{Training results}% (fold)
 		\label{subs:training_results}
-			The jet assignment training results are presented in Table \ref{tab:SPANet2_diHiggs_4b_pt40_mix_class}.
+			Table \ref{tab:SPANet2_diHiggs_4b_pt40_mix_class} presents the jet assignment training results.
 			\begin{table}[htpb]
 				\centering
 				\caption{SPANet2 training results on the mixing $\kappa_\lambda$ samples.}
@@ -417,7 +417,7 @@
 	\label{sub:spanet2_classification}
 		Use the SPANet2 to do the signal background classification task. 
 
-		When an event is put in SPANet2, SPANet2 will return a signal score $p_\text{signal}$ which represents the confidence of this event is a signal event. The requirement of $p_\text{signal} > p_\text{th}$ is imposed for event selection, where $p_\text{th} = 0.90$. In where do not choose the value which can maximize the $S / \sqrt{B}$. Because the value is too close to $1$, then very few events can pass this selection. Thus we can not do further analysis.  
+		When an event is put in SPANet2, SPANet2 will return a signal score $p_\text{signal}$ which represents the confidence of this event is a signal event. The requirement of $p_\text{signal} > p_\text{th}$ is imposed for event selection, where $p_\text{th} = 0.90$. Where we do not choose the value that can maximize the $S / \sqrt{B}$. Because the value is too close to $1$, then very few events can pass this selection. Thus we can not do further analysis.  
 
 		Set the $\kappa_\lambda$ limits by the profile likelihood method and CLs method. Table \ref{tab:kappa_constraint_SPANet} results from $\kappa_\lambda$ constraints.
 		\begin{table}[htpb]
@@ -533,7 +533,7 @@
 	Set $\kappa_\lambda = [-5, -3, -1, 1, 2, 3, 5, 7, 9, 11]$, for each $\kappa_\lambda$ point generate samples. For signal, the different $\kappa_\lambda$ samples are mixed. For each type, the same number of samples is used. For background, the $\kappa_\lambda$ values are randomly chosen from the above list. Training sample sizes are shown in Table \ref{tab:DNN_sample_size3}.
 		\begin{table}[htpb]
 			\centering
-			\caption{The sample size for signal and background, which are the training sample size plus the testing sample size.}
+			\caption{The sample size for signal and background, which are the training and testing sample sizes.}
 			\label{tab:DNN_sample_size3}
 			\begin{tabular}{c|c}
 			 Signal & Background\\ \hline
@@ -547,7 +547,7 @@
 		The DNN training results are summarized in Table \ref{tab:DNN_results}.
 		\begin{table}[htpb]
 			\centering
-			\caption{The DNN training results with different pairing methods. The training samples contain different $\kappa_\lambda$ samples. The average and standard deviation of 10 training are presented.}
+			\caption{The DNN training results with different pairing methods. The training samples contain different $\kappa_\lambda$ samples. The average and standard deviation of 10 training is presented.}
 			\label{tab:DNN_results}
 			\begin{tabular}{c|cc}
 			Pairing method        & ACC     & AUC   \\ \hline
@@ -732,11 +732,11 @@
 % section spanet_embedding_vectors (end)	
 \section{Hyperparameter tuning}% (fold)
 \label{sec:hyperparameter_tuning}
-	This section uses the Optuna to do the hyperparameter optimization.
+	This section uses Optuna to do the hyperparameter optimization.
 
 	\subsection{Optimization range}% (fold)
 	\label{sub:optimization_range}
-		The optimization range of different hyperparameters are listed in the below
+		The optimization range of different hyperparameters is listed in the below
 		\begin{itemize}
 			\item \verb+learning_rate+: $[10^{-5}, 10^{-2}]$ 
 			\item \verb+dropout+: $[0, 0.5]$ 
@@ -747,11 +747,11 @@
 			\item \verb+num_branch_encoder_layers+: $[2,8]$ 
 			\item \verb+num_classification_layers+: $[1,5]$ 
 		\end{itemize}
-		Each parameter-set was trained for 10 epochs. Test 100 trials.
+		Each parameter set was trained for 10 epochs. Test 100 trials.
 	% subsection optimization_range (end)
 	\subsection{Hyperparameter optimization results}% (fold)
 	\label{sub:hyperparameter_optimization_results}
-		The hyperparameters optimization results are listed in the below
+		The hyperparameters optimization results are listed the below
 		\begin{itemize}
 			\item \verb+learning_rate+: $0.00659$ 
 			\item \verb+dropout+: $0.0059$ 
@@ -763,10 +763,10 @@
 			\item \verb+num_classification_layers+: $1$ 
 		\end{itemize}
 
-		Use this parameter set for full training. The samples are the same as Sec. \ref{subs:training_samples}. Table \ref{tab:SPANET_best_hp_cls_results} presents the classification training results. This result is a little better than the Table \ref{tab:classification_results_summary2}.
+		Use this parameter set for full training. The samples are the same as Sec. \ref{subs:training_samples}. Table \ref{tab:SPANET_best_hp_cls_results} presents the classification training results. This result is a little better than Table \ref{tab:classification_results_summary2}.
 	\begin{table}[htpb]
 		\centering
-		\caption{The SPANet2 classification training results with mixing $\kappa_\lambda$ sample. Use the Optuna hyperparameter optimatization results. The average and standard deviation of 10 training are presented.}
+		\caption{The SPANet2 classification training results with mixing $\kappa_\lambda$ sample. Use the Optuna hyperparameter optimization results. The average and standard deviation of 10 training are presented.}
 		\label{tab:SPANET_best_hp_cls_results}
 		\begin{tabular}{c|cc}
 		& ACC     & AUC   \\ \hline
@@ -788,6 +788,149 @@
 	\end{table}
 
 	% subsection hyperparameter_optimization_results (end)	
+	\subsection{DNN hyperparameter optimization}% (fold)
+	\label{sub:dnn_hyperparameter_optimization}
+		The optimization range of different hyperparameters is listed in the below
+		\begin{itemize}
+			\item \verb+learning_rate+: $[10^{-5}, 10^{-1}]$ 
+			\item \verb+hidden_dim+: $[16,32,64,128,256]$ 
+			\item \verb+n_layers+: $[1,5]$ 
+		\end{itemize}
+		Test 100 trials.
+	% subsection dnn_hyperparameter_optimization (end)
+	\subsection{DNN hyperparameter optimization results}% (fold)
+	\label{sub:dnn_hyperparameter_optimization_results}
+		For $\text{min-}\Delta R$, the hyperparameters optimization results are 
+		\begin{itemize}
+			\item \verb+learning_rate+: $0.00495$ 
+			\item \verb+hidden_dim+: $256$ 
+			\item \verb+n_layers+: $3$ 
+		\end{itemize}
+		
+		For mixing $\kappa$ SPANet2, the results are
+		\begin{itemize}
+			\item \verb+learning_rate+: $0.000948$ 
+			\item \verb+hidden_dim+: $256$ 
+			\item \verb+n_layers+: $2$ 
+		\end{itemize}
+
+		Use these parameter sets for training. The samples are the same as Sec. \ref{sub:training_samples2}. Table \ref{tab:DNN_best_hp_cls_results} presents the DNN classification training results. The results are similar to Table \ref{tab:classification_results_summary2}.
+		\begin{table}[htpb]
+			\centering
+			\caption{The DNN classification training results with mixing $\kappa_\lambda$ sample. Use the Optuna hyperparameter optimization results. The average and standard deviation of 10 training are presented.}
+			\label{tab:DNN_best_hp_cls_results}
+			\begin{tabular}{c|cc}
+				& ACC     & AUC   \\ \hline
+				$\text{min-}\Delta R$   & $0.799 \pm 0.011$ & $0.881 \pm 0.012$ \\
+				mixing $\kappa$ SPANet2 & $0.803 \pm 0.004$ & $0.884 \pm 0.004$
+			\end{tabular}      
+		\end{table}
+
+		Set $p_\text{th} = 0.95$ and use the profile likelihood method and CLs method for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_DNN_best_hp} is the results of $\kappa_\lambda$ constraints. These results are similar to the previous one (Table \ref{tab:kappa_constraint_summary2}).
+		\begin{table}[htpb]
+			\centering
+			\caption{The $\kappa_\lambda$ constraints of DNN with best hyperparameters.}
+			\label{tab:kappa_constraint_DNN_best_hp}
+			\begin{tabular}{c|cc|cc}
+								  & \multicolumn{4}{c}{Expected Constraint}                          \\
+								  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+			Selection method      & Lower              & Upper             & Lower      & Upper      \\ \hline
+			$\text{min-}\Delta R$ DNN   & $-3.20$            & $10.31$            & $-3.16$      & $10.19$      \\
+			mixing $\kappa$ SPANet2 DNN & $-3.29$            & $11.14$            & $-3.14$      & $11.04$      \\
+			\end{tabular}
+		\end{table}
+	% subsection dnn_hyperparameter_optimization_results (end)	
 % section hyperparameter_tuning (end)		
+\section{Summary}% (fold)
+\label{sec:summary2}
+	\subsection{Pairing performance}% (fold)
+	\label{sub:pairing_performance2}
+	Figure \ref{fig:pairing_performance_kappa2} shows the pairing efficiency of different methods. Table \ref{tab:pairing_performance_kappa} is the pairing efficiency of some $\kappa_\lambda$ points. Where the mixing $\kappa$ SPANet2 has the best performance.
+		\begin{table}[htpb]
+			\centering
+			\caption{The classification performance of different selection methods.}
+			\label{tab:pairing_performance_kappa}
+			\begin{tabular}{l|ccc}
+			& \multicolumn{3}{c}{$\kappa_\lambda$} \\
+			Pairing method          & $-5$    & $1$     & $5$  \\ \hline
+			$\text{min-}\Delta R$ 	& $0.644$ & $0.809$ & $0.395$  \\
+			mixing $\kappa$ SPANet2 & $0.793$ & $0.885$ & $0.729$
+			\end{tabular}			
+		\end{table}
+
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.65\textwidth]{pairing_efficiency_kappa-mindR-SPANet2.png}
+			\caption{The pairing performance for different $\kappa_\lambda$ samples.}
+			\label{fig:pairing_performance_kappa2}
+		\end{figure}
+
+	% subsection pairing_performance (end)
+	\subsection{Classification performance}% (fold)
+	\label{sub:classification_performance_summary2}
+		Table \ref{tab:classification_results_summary3} presents the classification training results. Where the hyperparameter optimization is finished.
+		\begin{table}[htpb]
+			\centering
+			\caption{The classification performance of different selection methods.}
+			\label{tab:classification_results_summary3}
+			\begin{tabular}{l|cc}
+			Selection method          & ACC   & AUC   \\ \hline
+			$\text{min-}\Delta R$ DNN   & $0.799 \pm 0.011$ & $0.881 \pm 0.012$ \\
+			mixing $\kappa$ SPANet2 DNN & $0.803 \pm 0.004$ & $0.884 \pm 0.004$ \\
+			mixing $\kappa$ SPANet2     & $0.828 \pm 0.002$ & $0.911 \pm 0.001$ 
+			\end{tabular}			
+		\end{table}
+	% subsection classification_performance (end)
+	\subsection{\texorpdfstring{$\kappa_\lambda$}{kappa} constraints}% (fold)
+	\label{sub:kappa_constraints2}
+		Table \ref{tab:kappa_constraint_summary3} is the $\kappa_\lambda$ constraints of the different selection methods. Where the hyperparameter optimization is finished.
+		\begin{table}[htpb]
+			\centering
+			\caption{The $\kappa_\lambda$ constraints of different selection methods.}
+			\label{tab:kappa_constraint_summary3}
+			\begin{tabular}{cc|cc|cc}
+									&                  & \multicolumn{4}{c}{Expected Constraints}                         \\
+									&                  & \multicolumn{2}{c}{Profile likelihood} & \multicolumn{2}{c}{CLs} \\ \hline
+			Pairing method          & Selection method & Lower              & Upper             & Lower       & Upper     \\ \hline
+			$\text{min-}\Delta R$   & DNN              & $-3.20$            & $10.31$           & $-3.16$      & $10.19$    \\
+			Mixing $\kappa$ SPANet2 & DNN              & $-3.29$            & $11.14$           & $-3.14$      & $11.04$   \\
+			Mixing $\kappa$ SPANet2 & SPANet2          & $-3.07$            & $8.80$            & $-3.04$      & $8.76$   
+			\end{tabular}		
+		\end{table}
+	% subsection kappa_constraints (end)
+% section summary2 (end)		
+\section{Compared 13 TeV and 14 TeV samples}% (fold)
+\label{sec:compared_13_tev_and_14_tev_samples}
+	This section plots the $p_\text{T}$, $\eta$, and invariant mass distribution with different energy.
+	\subsection{Signal plots}% (fold)
+	\label{sub:signal_plots}
+		Generate the di-Higgs samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of di-Higgs $m_{hh}$ and the $p_{\text{T}}$ of Higgs. The results are presented in Figure \ref{fig:di-Higgs-SM-kappa-13-14TeV}. The distribution of different energy is similar.
+
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.9\textwidth]{di-Higgs-SM-kappa-mhh-13-14TeV.png}
+			\includegraphics[width=0.9\textwidth]{di-Higgs-SM-kappa-pth-13-14TeV.png}
+			\caption{The total invariant mass $m_{hh}$ distribution of di-Higgs system and the $p_{\text{T}}^{h}$ distribution of Higgs. The distribution of different energy look similar.}
+			\label{fig:di-Higgs-SM-kappa-13-14TeV}
+		\end{figure}
+	% subsection signal_plots (end)
+	\subsection{Background plots}% (fold)
+	\label{sub:background_plots}
+	Generate the pp4b samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of 4b quarks and the $p_{\text{T}}$ $\eta$ of b quarks. The results are presented in Figure \ref{fig:pp4b-m4b-13-14TeV} and Figure \ref{fig:pp4b-pt-eta-13-14TeV}. The distribution of different energy is similar.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.6\textwidth]{pp4b-m4b-13-14TeV.png}
+			\caption{The total invariant mass $m_{4b}$ distribution}
+			\label{fig:pp4b-m4b-13-14TeV}
+		\end{figure}
+
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.9\textwidth]{pp4b-pt-eta-13-14TeV.png}
+			\caption{The $p_{\text{T}}$ and $\eta$ distribution of b quarks, the first row is for leading b quarks and the second row is for sub-leading b quarks. The distribution of different energy look similar.}
+			\label{fig:pp4b-pt-eta-13-14TeV}
+		\end{figure}
+	% subsection background_plots (end)	
+% section compared_13_tev_and_14_tev_samples (end)		
 \end{document} 
 
