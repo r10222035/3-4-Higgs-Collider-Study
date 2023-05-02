@@ -577,7 +577,7 @@
 			\end{tabular}
 		\end{table}
 
-		Here, the bug of the previous testing sample is fixed. In the previous background testing sample, all $\kappa_\lambda$ are set to $1$ not randomly chosen from $\kappa_\lambda$ value list.
+		Here, the bug of the previous testing sample is fixed. In the previous background testing sample, all $\kappa_\lambda$ are set to $1$ not randomly chosen from the $\kappa_\lambda$ value list.
 	% subsection kappa_limits (end)
 % section spanet2_pairing_dnn_selection (end)
 \section{Summary}% (fold)
@@ -904,33 +904,83 @@
 	This section plots the $p_\text{T}$, $\eta$, and invariant mass distribution with different energy.
 	\subsection{Signal plots}% (fold)
 	\label{sub:signal_plots}
-		Generate the di-Higgs samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of di-Higgs $m_{hh}$ and the $p_{\text{T}}$ of Higgs. The results are presented in Figure \ref{fig:di-Higgs-SM-kappa-13-14TeV}. The distribution of different energy is similar.
+		Generate the di-Higgs samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of di-Higgs $m_{hh}$ and the $p_{\text{T}}$ of Higgs. The results are presented in Figure \ref{fig:di-Higgs-SM-kappa-13-14TeV}. The distribution of different energy is similar and the ratio is close to 1.
 
 		\begin{figure}[htpb]
 			\centering
-			\includegraphics[width=0.9\textwidth]{di-Higgs-SM-kappa-mhh-13-14TeV.png}
-			\includegraphics[width=0.9\textwidth]{di-Higgs-SM-kappa-pth-13-14TeV.png}
-			\caption{The total invariant mass $m_{hh}$ distribution of di-Higgs system and the $p_{\text{T}}^{h}$ distribution of Higgs. The distribution of different energy look similar.}
+			\includegraphics[width=0.45\textwidth]{di-Higgs-SM-kappa1-mhh-13-14TeV.png}
+			\includegraphics[width=0.45\textwidth]{di-Higgs-SM-kappa1-pt-13-14TeV.png}
+			\includegraphics[width=0.45\textwidth]{di-Higgs-SM-kappa2-mhh-13-14TeV.png}
+			\includegraphics[width=0.45\textwidth]{di-Higgs-SM-kappa2-pt-13-14TeV.png}
+			\caption{The total invariant mass $m_{hh}$ distribution of di-Higgs system and the $p_{\text{T}}^{h}$ distribution of Higgs. The ratio is obtained by dividing the 14 TeV samples by the 13 TeV samples. The distribution of different energy look similar.}
 			\label{fig:di-Higgs-SM-kappa-13-14TeV}
 		\end{figure}
 	% subsection signal_plots (end)
 	\subsection{Background plots}% (fold)
 	\label{sub:background_plots}
-	Generate the pp4b samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of 4b quarks and the $p_{\text{T}}$ $\eta$ of b quarks. The results are presented in Figure \ref{fig:pp4b-m4b-13-14TeV} and Figure \ref{fig:pp4b-pt-eta-13-14TeV}. The distribution of different energy is similar.
+	Generate the pp4b samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of 4b quarks and the $p_{\text{T}}$, $\eta$ of b quarks. The results are presented in Figure \ref{fig:pp4b-m4b-13-14TeV} and Figure \ref{fig:pp4b-pt-eta-13-14TeV}. The distribution of different energy is similar and the ratio is close to 1.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.6\textwidth]{pp4b-m4b-13-14TeV.png}
-			\caption{The total invariant mass $m_{4b}$ distribution}
+			\caption{The total invariant mass $m_{4b}$ distribution. The ratio is obtained by dividing the 14 TeV samples by the 13 TeV samples.}
 			\label{fig:pp4b-m4b-13-14TeV}
 		\end{figure}
 
 		\begin{figure}[htpb]
 			\centering
-			\includegraphics[width=0.9\textwidth]{pp4b-pt-eta-13-14TeV.png}
-			\caption{The $p_{\text{T}}$ and $\eta$ distribution of b quarks, the first row is for leading b quarks and the second row is for sub-leading b quarks. The distribution of different energy look similar.}
+			\includegraphics[width=0.9\textwidth]{pp4b-pt-eta-13-14TeV-1.png}
+			\includegraphics[width=0.9\textwidth]{pp4b-pt-eta-13-14TeV-2.png}
+			\caption{The $p_{\text{T}}$ and $\eta$ distribution of b quarks, the first row is for leading b quarks and the second row is for sub-leading b quarks. The ratio is the 14 TeV samples divided by the 13 TeV samples. The distribution of different energy look similar.}
 			\label{fig:pp4b-pt-eta-13-14TeV}
 		\end{figure}
 	% subsection background_plots (end)	
 % section compared_13_tev_and_14_tev_samples (end)		
+\section{\texorpdfstring{$\kappa_\lambda$}{kappa} constraints with different cross section and luminosity}% (fold)
+\label{sec:kappa_constraints_with_different_cross_section_and_luminosity}
+	Because the kinematics for 13 TeV and 14 TeV are similar, we can just scale the cross section to 14 TeV ones. Calculate the $\kappa_\lambda$ constraints with 14 TeV cross section and luminosity $\mathcal{L} = \text{300, 3000 fb}^{-1}$. Table \ref{tab:kappa_constraint_summary4} is the result.
+	\begin{table}[htpb]
+		\centering
+		\caption{The $\kappa_\lambda$ constraints of different selection methods. Where the 14 TeV cross sections are used.}
+		\label{tab:kappa_constraint_summary4}
+		\begin{tabular}{l|c|rrr|rrr}
+									  &                                   & \multicolumn{6}{c}{Expected Constraints}                                          \\
+									  &                                   & \multicolumn{3}{c}{Profile likelihood}  & \multicolumn{3}{c}{CLs}                 \\ \hline
+		S/B classifier                & $\mathcal{L} \text{ (fb$^{-1}$)}$ & Lower & Upper & $\Delta \kappa_\lambda$ & Lower & Upper & $\Delta \kappa_\lambda$ \\ \hline
+		$\text{min-}\Delta R$ + DNN   & 300  & $-1.47 $ & $8.51$ & $9.98 $ & $-1.44$ & $8.49$ & $9.92 $ \\
+		$\text{min-}\Delta R$ + DNN   & 3000 & $1.01  $ & $6.11$ & $5.10 $ & $0.36 $ & $6.08$ & $5.72 $ \\ \hline
+		Mixing $\kappa$ SPANet2 + DNN & 300  & $-1.75 $ & $9.03$ & $10.78$ & $-1.72$ & $8.94$ & $10.67$ \\
+		Mixing $\kappa$ SPANet2 + DNN & 3000 & $0.87  $ & $6.23$ & $5.36 $ & $0.33 $ & $6.20$ & $5.87 $ \\ \hline
+		Mixing $\kappa$ SPANet2       & 300  & $-1.59 $ & $7.60$ & $9.19 $ & $-1.57$ & $7.49$ & $9.06 $ \\
+		Mixing $\kappa$ SPANet2       & 3000 & $0.91  $ & $5.29$ & $4.38 $ & $0.33 $ & $5.31$ & $4.98 $
+		\end{tabular}
+	\end{table}
+
+	The $\Delta \kappa_\lambda$ for different luminosity are shown in Figure \ref{fig:delta_kappa_luminosity_14TeV}. Where the $\Delta\kappa_\lambda$ is the upper limit minus the lower limit.
+	\begin{figure}[htpb]
+		\centering
+		\subfloat[]{
+			\includegraphics[width=0.45\textwidth]{delta_kappa_LLr-14TeV.png}
+		}
+		\subfloat[]{
+			\includegraphics[width=0.45\textwidth]{delta_kappa_CLs-14TeV.png}
+		}
+		\caption{The $\Delta \kappa_\lambda$ for different luminosities.}
+		\label{fig:delta_kappa_luminosity_14TeV}
+	\end{figure}
+
+	Use mixing $\kappa$ SPANet2	classifier to set $\kappa_\lambda$ constraints, then evaluate the equivalent luminosity for $\text{min-}\Delta R$ + DNN classifier. The results are shown in Table \ref{tab:kappa_constraint_equivalent_luminosity}.
+
+	\begin{table}[htpb]
+		\centering
+		\caption{Use mixing $\kappa$ SPANet2 classifier to set $\kappa_\lambda$ constraints. The equivalent luminosity for $\text{min-}\Delta R + \text{DNN}$ are presented. Where the $\Delta \kappa_\lambda$ are used to evaluate the equivalent luminosity.}
+		\label{tab:kappa_constraint_equivalent_luminosity}
+		\begin{tabular}{c|ccc|ccc|c|c}
+															 & \multicolumn{6}{c}{Expected Constraints}                                                &                              &              \\
+															 & \multicolumn{3}{c}{Profile likelihood}     & \multicolumn{3}{c}{CLs}                    & Profile likelihood           & CLs          \\ \hline
+		$\mathcal{L} \text{ (fb$^{-1}$)}$ & Lower   & Upper  & $\Delta \kappa_\lambda$ & Lower   & Upper  & $\Delta \kappa_\lambda$ & \multicolumn{2}{c}{Equivalent $\mathcal{L}$ for $\text{min-}\Delta R + \text{DNN}$} \\ \hline
+		300                                                  & $-1.59$ & $7.60$ & $9.19$                  & $-1.57$ & $7.49$ & $9.06$                  & $405$                          & $425$         
+		\end{tabular}
+	\end{table}
+% section kappa_constraints_with_different_cross_section_and_luminosity (end)		
 \end{document} 
 
