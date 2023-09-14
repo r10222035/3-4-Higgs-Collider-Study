@@ -983,5 +983,81 @@
 		\end{tabular}
 	\end{table}
 % section kappa_constraints_with_different_cross_section_and_luminosity (end)		
+\section{Resonant samples with various mass}% (fold)
+\label{sec:resonant_samples_with_various_mass}
+	
+	
+	This section trains a SPANet by mixing $m_H$ samples, then using it on the analysis. The various $m_H$ value samples are generated, then mix it for training.
+	\subsection{Training results}% (fold)
+	\label{sub:training_results_mix}
+		Set $m_H$ from 300 GeV to 1200 GeV with step size 100 GeV, for each mass point generate $100,000$ samples. The training samples are required to pass the ``Four tag cut'', i.e., there are at least four b-tagged jets with $p_{\text{T}} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The b-tagging efficiency is the same as the MV2c10 b-tagger at 70\% WP. Then mix these samples are used on training. 
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 1,000,000
+				\item 1h sample size: 139,704
+				\item 2h sample size: 848,708
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample: 
+			\begin{itemize}
+				\item Total sample size: 100,000
+				\item 1h sample size: 13,974
+				\item 2h sample size: 84,845
+			\end{itemize}
+		\end{itemize}
+		The training results are presented in Table \ref{tab:SPANet_diHiggs_4btag_pt40_mix_resonant}.
+		\begin{table}[htpb]
+			\centering
+			\caption{SPANet training results on the mixing $m_H$ samples.}
+			\label{tab:SPANet_diHiggs_4btag_pt40_mix_resonant}
+			\begin{tabular}{c|cc}
+				$N_\text{Jet}$ & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &      0.979              &    0.979             \\
+				$=5$	  &      0.930              &    0.952             \\
+				$\ge 6$	  &      0.859              &    0.912             \\
+				\hline
+				Total	  &      0.928              &    0.951             \\
+			\end{tabular}
+		\end{table}
+	% subsection training_results_mix (end)
+		
+	\subsection{Pairing performance}% (fold)
+	\label{sub:pairing_performance}
+		
+		Figure \ref{fig:pairing_performance_mass} shows the pairing efficiency of different methods.
+
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.65\textwidth]{pairing_efficiency_resonant-DHH-mindR-SPANet2.png}
+			\caption{The pairing performance for different $m_H$ samples.}
+			\label{fig:pairing_performance_mass}
+		\end{figure}
+
+	% subsection pairing_performance (end)
+	\subsection{Sensitivity}% (fold)
+	\label{sub:sensitivity}
+		Figure \ref{fig:sensitivity_mass} shows the sensitivity of different methods.
+
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.65\textwidth]{sensitivity_mass-DHH_mindR-SPANet.png}
+			\caption{The sensitivity for different $m_H$ samples.}
+			\label{fig:sensitivity_mass}
+		\end{figure}
+
+		Figure \ref{fig:Higgs_mass_new_mix_SPANET} shows the Higgs mass distribution for SPANet pairing. For signal, the results are similar to before, but the shape is sculpted for the background.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_res_mix_SPANET_s.png}
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_res_mix_SPANET_4b.png}
+			\caption{The mass plane and distribution of Higgs candidates for the SPANet pairing. SPANet is trained on mixing mass samples. The above figure is for the $m_H = \text{1000 GeV}$ signal sample and the below one is for the background sample.}
+			\label{fig:Higgs_mass_new_mix_SPANET}
+		\end{figure}
+
+	% subsection sensitivity (end)	
+
+% section resonant_samples_with_various_mass (end)	
 \end{document} 
 
