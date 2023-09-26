@@ -264,9 +264,9 @@
 	% subsection mixing_kappa_spanet (end)
 	\subsection{Summary}% (fold)
 	\label{sub:summary}
-		In most cases, the performance of SPANet2 is worse than the old one. Some default options are different between the two versions. But even if the options are set as identical, the training results also cannot be better.
+		In most cases, the performance of SPANet2 is worse than the old one. Some default options are different between the two versions. But even if the options are identical, the training results cannot be better.
 
-		The training results of old and new versions SPANet have been summarized in Table \ref{tab:training_results_of_SPANET_12}.
+		The training results of old and new versions of SPANet have been summarized in Table \ref{tab:training_results_of_SPANET_12}.
 		\begin{table}[htpb]
 			\centering
 			\caption{SPA-NET2 training results on the resonant di-Higgs samples.}
@@ -417,7 +417,7 @@
 	\label{sub:spanet2_classification}
 		Use the SPANet2 to do the signal background classification task. 
 
-		When an event is put in SPANet2, SPANet2 will return a signal score $p_\text{signal}$ which represents the confidence of this event is a signal event. The requirement of $p_\text{signal} > p_\text{th}$ is imposed for event selection, where $p_\text{th} = 0.90$. Where we do not choose the value that can maximize the $S / \sqrt{B}$. Because the value is too close to $1$, then very few events can pass this selection. Thus we can not do further analysis.  
+		When an event is put in SPANet2, SPANet2 will return a signal score $p_\text{signal}$ which represents the confidence that this event is a signal event. The requirement of $p_\text{signal} > p_\text{th}$ is imposed for event selection, where $p_\text{th} = 0.90$. Where we do not choose the value that can maximize the $S / \sqrt{B}$. Because the value is too close to $1$, very few events can pass this selection. Thus we can not do further analysis.  
 
 		Set the $\kappa_\lambda$ limits by the profile likelihood method and CLs method. Table \ref{tab:kappa_constraint_SPANet} results from $\kappa_\lambda$ constraints.
 		\begin{table}[htpb]
@@ -751,7 +751,7 @@
 	% subsection optimization_range (end)
 	\subsection{Hyperparameter optimization results}% (fold)
 	\label{sub:hyperparameter_optimization_results}
-		The hyperparameters optimization results are listed the below
+		The hyperparameter optimization results are listed below
 		\begin{itemize}
 			\item \verb+learning_rate+: $0.00659$ 
 			\item \verb+dropout+: $0.0059$ 
@@ -904,7 +904,7 @@
 	This section plots the $p_\text{T}$, $\eta$, and invariant mass distribution with different energy.
 	\subsection{Signal plots}% (fold)
 	\label{sub:signal_plots}
-		Generate the di-Higgs samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of di-Higgs $m_{hh}$ and the $p_{\text{T}}$ of Higgs. The results are presented in Figure \ref{fig:di-Higgs-SM-kappa-13-14TeV}. The distribution of different energy is similar and the ratio is close to 1.
+		Generate the di-Higgs samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of di-Higgs $m_{hh}$ and the $p_{\text{T}}$ of Higgs. The results are presented in Figure \ref{fig:di-Higgs-SM-kappa-13-14TeV}. Different energy distributions are similar and the ratio is close to 1.
 
 		\begin{figure}[htpb]
 			\centering
@@ -912,13 +912,13 @@
 			\includegraphics[width=0.45\textwidth]{di-Higgs-SM-kappa1-pt-13-14TeV.png}
 			\includegraphics[width=0.45\textwidth]{di-Higgs-SM-kappa2-mhh-13-14TeV.png}
 			\includegraphics[width=0.45\textwidth]{di-Higgs-SM-kappa2-pt-13-14TeV.png}
-			\caption{The total invariant mass $m_{hh}$ distribution of di-Higgs system and the $p_{\text{T}}^{h}$ distribution of Higgs. The ratio is obtained by dividing the 14 TeV samples by the 13 TeV samples. The distribution of different energy look similar.}
+			\caption{The total invariant mass $m_{hh}$ distribution of di-Higgs system and the $p_{\text{T}}^{h}$ distribution of Higgs. The ratio is obtained by dividing the 14 TeV samples by the 13 TeV samples. The distribution of different energy looks similar.}
 			\label{fig:di-Higgs-SM-kappa-13-14TeV}
 		\end{figure}
 	% subsection signal_plots (end)
 	\subsection{Background plots}% (fold)
 	\label{sub:background_plots}
-	Generate the pp4b samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of 4b quarks and the $p_{\text{T}}$, $\eta$ of b quarks. The results are presented in Figure \ref{fig:pp4b-m4b-13-14TeV} and Figure \ref{fig:pp4b-pt-eta-13-14TeV}. The distribution of different energy is similar and the ratio is close to 1.
+	Generate the pp4b samples with $\sqrt{s} = \text{13 TeV and 14 TeV}$, then plot the total invariant mass of 4b quarks and the $p_{\text{T}}$, $\eta$ of b quarks. The results are presented in Figure \ref{fig:pp4b-m4b-13-14TeV} and Figure \ref{fig:pp4b-pt-eta-13-14TeV}. Different energy distribution is similar and the ratio is close to 1.
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.6\textwidth]{pp4b-m4b-13-14TeV.png}
@@ -930,7 +930,7 @@
 			\centering
 			\includegraphics[width=0.9\textwidth]{pp4b-pt-eta-13-14TeV-1.png}
 			\includegraphics[width=0.9\textwidth]{pp4b-pt-eta-13-14TeV-2.png}
-			\caption{The $p_{\text{T}}$ and $\eta$ distribution of b quarks, the first row is for leading b quarks and the second row is for sub-leading b quarks. The ratio is the 14 TeV samples divided by the 13 TeV samples. The distribution of different energy look similar.}
+			\caption{The $p_{\text{T}}$ and $\eta$ distribution of b quarks, the first row is for leading b quarks and the second row is for sub-leading b quarks. The ratio is the 14 TeV samples divided by the 13 TeV samples. The distribution of different energy looks similar.}
 			\label{fig:pp4b-pt-eta-13-14TeV}
 		\end{figure}
 	% subsection background_plots (end)	
@@ -987,7 +987,7 @@
 \label{sec:resonant_samples_with_various_mass}
 	
 	
-	This section trains a SPANet by mixing $m_H$ samples, then using it on the analysis. The various $m_H$ value samples are generated, then mix it for training.
+	This section trains a SPANet by mixing $m_H$ samples, and then using it on the analysis. The various $m_H$ value samples are generated, and then mix it for training.
 	\subsection{Training results}% (fold)
 	\label{sub:training_results_mix}
 		Set $m_H$ from 300 GeV to 1200 GeV with step size 100 GeV, for each mass point generate $100,000$ samples. The training samples are required to pass the ``Four tag cut'', i.e., there are at least four b-tagged jets with $p_{\text{T}} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The b-tagging efficiency is the same as the MV2c10 b-tagger at 70\% WP. Then mix these samples are used on training. 
@@ -1027,7 +1027,6 @@
 	\label{sub:pairing_performance}
 		
 		Figure \ref{fig:pairing_performance_mass} shows the pairing efficiency of different methods.
-
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.65\textwidth]{pairing_efficiency_resonant-DHH-mindR-SPANet2.png}
@@ -1035,6 +1034,21 @@
 			\label{fig:pairing_performance_mass}
 		\end{figure}
 
+		Figure \ref{fig:pairing_performance_mass_mindr} shows the pairing efficiency of the $\text{min-}\Delta R$ method. The 330 GeV and 360 GeV samples are added to make sure that pairing efficiency quickly decreases as the mass decreases in range from 300 GeV to 400 GeV.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.65\textwidth]{pairing_efficiency_resonant-mindR.png}
+			\caption{The pairing performance for different $m_H$ samples.}
+			\label{fig:pairing_performance_mass_mindr}
+		\end{figure}
+
+		Figure \ref{fig:pairing_performance_mass_Njet} shows the pairing efficiency for different numbers of jets.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.95\textwidth]{pairing_efficiency_Njet_resonant-DHH-mindR-SPANet.png}
+			\caption{The pairing performance for different $m_H$ samples.}
+			\label{fig:pairing_performance_mass_Njet}
+		\end{figure}
 	% subsection pairing_performance (end)
 	\subsection{Sensitivity}% (fold)
 	\label{sub:sensitivity}
@@ -1057,6 +1071,112 @@
 		\end{figure}
 
 	% subsection sensitivity (end)	
+	\subsection{Event classification}% (fold)
+	\label{sub:event_classification}
+		To reduce the sculpting effect, SPANet is trained on jet pairing and event classification tasks simultaneously. 
+
+		The signal sample is the same as Section~\ref{sub:training_results_mix}. The background sample is required to pass the Four-tag cut.
+
+		For the jet assignment part,
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 500,000
+				\item 1h sample size: 69,736
+				\item 2h sample size: 424,493
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample:
+			\begin{itemize}
+				\item Total sample size: 50,000
+				\item 1h sample size: 6,851
+				\item 2h sample size: 42,556
+			\end{itemize}
+		\end{itemize}
+
+		For event classification,
+		\begin{itemize}
+			\item Training sample:
+			\begin{itemize}
+				\item Total sample size: 1,000,000
+				\item Signal sample size: 500,000
+				\item Background sample size: 500,000
+				\item 5\% used on validation
+			\end{itemize}
+			\item Testing sample:
+			\begin{itemize}
+				\item Total sample size: 100,000
+				\item Signal sample size: 50,000
+				\item Background sample size: 50,000
+			\end{itemize}
+		\end{itemize}
+
+		The training results are presented in Table \ref{tab:SPANet_diHiggs_4btag_pt40_mix_resonant_cls}. The training result is close to the previous one (Table \ref{tab:SPANet_diHiggs_4btag_pt40_mix_resonant}).
+		\begin{table}[htpb]
+			\centering
+			\caption{SPANet training results on the mixing $m_H$ samples. The SPANet is trained on jet pairing and event classification tasks at the same time.}
+			\label{tab:SPANet_diHiggs_4btag_pt40_mix_resonant_cls}
+			\begin{tabular}{c|cc}
+				$N_\text{Jet}$ & Event Efficiency & Higgs Efficiency \\
+				\hline
+				$=4$	  &      0.978              &    0.978             \\
+				$=5$	  &      0.922              &    0.945             \\
+				$\ge 6$	  &      0.847              &    0.904             \\
+				\hline
+				Total	  &      0.922              &    0.946             \\
+			\end{tabular}
+		\end{table}
+
+		Table \ref{tab:res_SPANET_cls_results} presents the classification training results.
+		\begin{table}[htpb]
+			\centering
+			\caption{The SPANet classification training results with mixing $m_H$ sample.}
+			\label{tab:res_SPANET_cls_results}
+			\begin{tabular}{c|cc}
+			& ACC     & AUC   \\ \hline
+			 SPANet & $0.897$ & $0.963$
+			\end{tabular}      
+		\end{table}
+
+
+		Figure~\ref{fig:pairing_performance_mass_cls} shows the pairing efficiency of different methods. The pairing performance of SPANet is similar to the previous one. In this section, the SPANet is trained on jet pairing and event classification tasks at the same time, but in Section~\ref{sub:training_results_mix} the SPANet is only trained on the jet pairing task.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.65\textwidth]{pairing_efficiency_resonant-DHH-mindR-SPANet2-cls.png}
+			\caption{The pairing performance for different $m_H$ samples. ``SPANet w/o classification'' is the SPANet only trained on jet pairing task. ``SPANet w/classification'' is the SPANet trained on jet pairing and event classification tasks at the same time.}
+			\label{fig:pairing_performance_mass_cls}
+		\end{figure}
+
+		Figure \ref{fig:sensitivity_mass_cls} shows the sensitivity of different methods. The sensitivity of ``SPANet with classification'' is similar to the previous one.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.65\textwidth]{sensitivity_mass-DHH_mindR-SPANet-cls.png}
+			\caption{The sensitivity for different $m_H$ samples.}
+			\label{fig:sensitivity_mass_cls}
+		\end{figure}
+
+		Figure \ref{fig:Higgs_mass_new_mix_SPANET_cls} shows the Higgs mass distribution for SPANet pairing. The shape is still sculpted for the background sample.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_res_mix_cls_SPANET_s.png}
+			\includegraphics[width=0.97\textwidth]{Higgs_mass_res_mix_cls_SPANET_4b.png}
+			\caption{The mass plane and distribution of Higgs candidates for the SPANet pairing. SPANet is trained on mixing mass samples. The above figure is for the $m_H = \text{1000 GeV}$ signal sample and the below one is for the background sample.}
+			\label{fig:Higgs_mass_new_mix_SPANET_cls}
+		\end{figure}
+	% subsection event_classification (end)
+	\subsection{SPANet classifier}% (fold)
+	\label{sub:spanet_classifier}
+		In this section, SPANet is used for event selection. For each event, SPANet will give a signal score $p_\text{signal}$, representing the confidence that this event is a signal event. The requirement of $p_\text{signal} > p_\text{th}$ is imposed for event selection, where $p_\text{th} = 0.90$.
+
+		Figure \ref{fig:sensitivity_mass_SPANET_classifier} shows the sensitivity of different methods. The sensitivity of ``SPANet classifier'' has the best performance.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.65\textwidth]{sensitivity_mass-DHH_mindR-SPANet-classifier.png}
+			\caption{The sensitivity for different $m_H$ samples.}
+			\label{fig:sensitivity_mass_SPANET_classifier}
+		\end{figure}
+
+	% subsection spanet_classifier (end)	
 
 % section resonant_samples_with_various_mass (end)	
 \end{document} 
