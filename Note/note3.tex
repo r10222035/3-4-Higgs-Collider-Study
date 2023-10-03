@@ -990,7 +990,7 @@
 	This section trains a SPANet by mixing $m_H$ samples, and then using it on the analysis. The various $m_H$ value samples are generated, and then mix it for training.
 	\subsection{Training results}% (fold)
 	\label{sub:training_results_mix}
-		Set $m_H$ from 300 GeV to 1200 GeV with step size 100 GeV, for each mass point generate $100,000$ samples. The training samples are required to pass the ``Four tag cut'', i.e., there are at least four b-tagged jets with $p_{\text{T}} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The b-tagging efficiency is the same as the MV2c10 b-tagger at 70\% WP. Then mix these samples are used on training. 
+		Set $m_H$ from 300 GeV to 1200 GeV with step size 100 GeV, for each mass point generate $100,000$ samples. The training samples are required to pass the ``Four tag cut'', i.e., there are at least four b-tagged jets with $p_{\text{T}} > \text{40 GeV}$ and $\abs{\eta} < 2.5$. The b-tagging efficiency is the same as the MV2c10 b-tagger at 70\% WP. Then mix these samples for training. 
 		\begin{itemize}
 			\item Training sample:
 			\begin{itemize}
@@ -1138,7 +1138,6 @@
 			\end{tabular}      
 		\end{table}
 
-
 		Figure~\ref{fig:pairing_performance_mass_cls} shows the pairing efficiency of different methods. The pairing performance of SPANet is similar to the previous one. In this section, the SPANet is trained on jet pairing and event classification tasks at the same time, but in Section~\ref{sub:training_results_mix} the SPANet is only trained on the jet pairing task.
 		\begin{figure}[htpb]
 			\centering
@@ -1172,12 +1171,89 @@
 		\begin{figure}[htpb]
 			\centering
 			\includegraphics[width=0.65\textwidth]{sensitivity_mass-DHH_mindR-SPANet-classifier.png}
-			\caption{The sensitivity for different $m_H$ samples.}
+			\caption{The sensitivity for different $m_H$ samples. ``SPANet classifier'' uses SPANet signal score for event selection.}
 			\label{fig:sensitivity_mass_SPANET_classifier}
 		\end{figure}
 
 	% subsection spanet_classifier (end)	
+	\subsection{Hyperparameter optimization}% (fold)
+	\label{sub:hyperparameter_optimization}
+		The optimization range of different hyperparameters is listed in the below
+		\begin{itemize}
+			\item \verb+learning_rate+: $[10^{-5}, 10^{-2}]$ 
+			\item \verb+dropout+: $[0, 0.5]$ 
+			\item \verb+gradient_clip+: $[0, 0.5]$ 
+			\item \verb+l2_penalty+: $[0, 0.0005]$ 
+			\item \verb+hidden_dim+: $[16,32,64,128,256]$ 
+			\item \verb+num_encoder_layers+: $[2,8]$ 
+			\item \verb+num_branch_encoder_layers+: $[2,8]$ 
+			\item \verb+num_classification_layers+: $[1,5]$ 
+		\end{itemize}
+		Each parameter set was trained for 10 epochs. Test 100 trials.
 
+		The hyperparameter optimization results are listed below
+		\begin{itemize}
+			\item \verb+learning_rate+: $0.00049$ 
+			\item \verb+dropout+: $0.061$ 
+			\item \verb+gradient_clip+: $0.445$ 
+			\item \verb+l2_penalty+: $0.000382$ 
+			\item \verb+hidden_dim+: $256$ 
+			\item \verb+num_encoder_layers+: $8$ 
+			\item \verb+num_branch_encoder_layers+: $4$ 
+			\item \verb+num_classification_layers+: $1$ 
+		\end{itemize}
+
+		Use this parameter set for full training. Table \ref{tab:SPANET_best_hp_cls_results} presents the classification training results. This result is similar to Table \ref{tab:res_SPANET_cls_results}.
+	\begin{table}[htpb]
+		\centering
+		\caption{The SPANet classification training results with mixing $m_H$ sample. Use the Optuna hyperparameter optimization results.}
+		\label{tab:SPANET_best_hp_cls_results}
+		\begin{tabular}{c|cc}
+		& ACC     & AUC   \\ \hline
+		Best HP & $0.893 $ & $0.958 $
+		\end{tabular}      
+	\end{table}
+
+	% subsection hyperparameter_optimization (end)	
+	\subsection{Optimize threshold}% (fold)
+	\label{sub:optimize_threshold}
+		This section scans the threshold $p_{\text{th}}$ from $0$ to $1$ with step size $0.01$.	Choose the $p_{\text{th}}$ which can maximize the sensitivity $S / \sqrt{B}$. The results are summarized in Table \ref{tab:SPANet_mix_resonant_threshold_scan}. For $m_H = \text{300 GeV}$, the $p_{\text{th}}$ is much lower than other mass points.
+		\begin{table}[htpb]
+			\centering
+			\caption{The threshold $p_{\text{th}}$ optimization results. The number of signal events $S$ and background events $B$ are computed at luminocity $\mathcal{L} = 139 \text{ fb}^{-1}$. The $p_{\text{th}}$ is optimized at each mass point.}
+			\label{tab:SPANet_mix_resonant_threshold_scan}
+			\begin{tabular}{r|r|rr|r}
+				$m_H \text{ (GeV)}$ & $p_{\text{th}}$ & $S$ & $B$   & $S / \sqrt{B}$ \\ \hline
+				300   & 0.57            & 257 & 87112 & 0.872          \\
+				400   & 0.88            & 183 & 25426 & 1.148          \\
+				500   & 0.89            & 127 & 23678 & 0.828          \\
+				600   & 0.97            & 56  & 8301  & 0.616          \\
+				700   & 0.99            & 26  & 2621  & 0.504          \\
+				800   & 0.99            & 19  & 2621  & 0.376          \\
+				900   & 0.99            & 13  & 2621  & 0.246          \\
+				1000  & 0.99            & 8   & 2621  & 0.154          \\
+				1100  & 0.99            & 4   & 2621  & 0.086          \\
+				1200  & 0.99            & 2   & 2621  & 0.046         
+			\end{tabular}
+		\end{table}
+
+		Figure \ref{fig:signal_score} shows the signal score distributions. When $m_H$ is set to 300 GeV, the signal score distribution appears to be more evenly spread compared to other cases. As the resonant mass increases, a larger number of events tend to achieve higher signal scores, resulting in higher threshold values.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.95\textwidth]{signal_score.png}
+			\caption{The signal score $p_{\text{sig}}$ distribution for signal and background samples.}
+			\label{fig:signal_score}
+		\end{figure}
+
+		Figure \ref{fig:sensitivity_mass_SPANET_classifier_best_th} shows the sensitivity of different methods. We add the sensitivity of the ``SPANet classifier'' with optimize $p_\text{th}$.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.65\textwidth]{sensitivity_mass-DHH_mindR-SPANet-classifier-best-th.png}
+			\caption{The sensitivity for different $m_H$ samples. ``SPANet classifier Best $p_{\text{th}}$'' uses SPANet signal score for event selection with the optimized  thresholds $p_{\text{th}}$.}
+			\label{fig:sensitivity_mass_SPANET_classifier_best_th}
+		\end{figure}
+
+	% subsection optimize_threshold (end)
 % section resonant_samples_with_various_mass (end)	
 \end{document} 
 
