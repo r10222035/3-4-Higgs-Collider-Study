@@ -1254,6 +1254,61 @@
 		\end{figure}
 
 	% subsection optimize_threshold (end)
+	\subsection{Cross section upper limit}% (fold)
+	\label{sub:cross_section_upper_limit}
+		
+		This section utilizes the $m_{hh}$ distribution to set the upper limit of the cross section. The $\text{CL}_{\text{s}}$ method is used. The signal strength is chosen as the parameter of interest. The POI is excluded at the 95\% confidence level when the $\text{CL}_{\text{s}}$ is less than $0.05$. Where the package \verb+pyhf+ is used to calculate the upper limit. 
+
+		Parameter setting:
+		\begin{itemize}
+			\item Number of bins: $11$
+			\item Range: $[200,1300]$
+			\item Luminosity: $\mathcal{L} = 139 \text{ fb}^{-1}$
+		\end{itemize}
+		
+		Figure \ref{fig:CL_limit_resonant} is the upper limits scans for $m_H$ with different selection methods. In the low mass range, SPANet selection provides the most stringent constraints, while in the high mass range, all methods give similar results.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.6\textwidth]{CLs_upper_limit_resonant.png}
+			\caption{The upper limit of the cross-section with different $m_H$. The ``SPANet classifier'' utilizes SPANet's outputs for event selection, while other methods utilize cut-based selection with various pairing methods.}
+			\label{fig:CL_limit_resonant}
+		\end{figure}
+
+		The invariant mass $m_{hh}$ distribution is shown in Figure \ref{fig:mhh_distribution}.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.95\textwidth]{mhh_distribution.png}
+			\caption{The invariant mass $m_{hh}$ distribution with different selection methods.}
+			\label{fig:mhh_distribution}
+		\end{figure}
+	% subsection cross_section_upper_limit (end)		
+	\subsection{SPANet Fine-tuning}% (fold)
+	\label{sub:spanet_fine_tuning}
+	
+		To implement ``SPANet Fine-tuning'', first, we need to train a SPANet on pairing and classification tasks at the same time. We can obtain the embedding vector for each event from this SPANet. Then utilize this embedding as the input to train a signal background classifier.
+
+		The SPANet trained in Section \ref{sub:event_classification} is used to generate the embedding vectors. For the signal background classifier, a dense neural network (DNN) is used. The DNN has two internal layers each with 256 nodes.
+
+		Table \ref{tab:res_SPANET_fine-tuning_results} presents the classification training results. The results are similar to SPANet pretraining (Table \ref{tab:res_SPANET_cls_results}).
+		\begin{table}[htpb]
+			\centering
+			\caption{The SPANet fine-tuning classification training results with mixing $m_H$ sample.}
+			\label{tab:res_SPANET_fine-tuning_results}
+			\begin{tabular}{c|cc}
+			& ACC     & AUC   \\ \hline
+			 SPANet fine-tuning & $0.897$ & $0.963$
+			\end{tabular}      
+		\end{table}
+
+		Use the same selection method as in Section \ref{sub:spanet_classifier} with the optimized thresholds. Then, utilize the $m_{hh}$ distribution to set the upper limit of the cross section. The results are shown in Figure \ref{fig:CL_limit_SPANET_fine_tuning}. The upper limits of ``SPANet fine-tuning'' are similar to the results of ``SPANet classifier''.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.6\textwidth]{CLs_upper_limit_SPANET_fine_tuning.png}
+			\caption{The upper limit of the cross-section with different $m_H$. ``SPANet classifier'' and ``SPANet fine-tuning'' utilize the SPANet's outputs for event selection, while other methods utilize cut-based selection with various pairing methods.}
+			\label{fig:CL_limit_SPANET_fine_tuning}
+		\end{figure}
+
+	% subsection spanet_fine_tuning (end)
 % section resonant_samples_with_various_mass (end)	
 \end{document} 
 
