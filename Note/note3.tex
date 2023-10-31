@@ -679,7 +679,7 @@
 		\end{tabular}      
 	\end{table}
 
-	Set $p_\text{th} = 0.93$ and use the profile likelihood method and CLs method for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_SPANet_no_pair} is the results of $\kappa_\lambda$ constraints. These results are worse than simultaneously training on jet assignment and classification tasks.
+	Set $p_\text{th} = 0.93$ and use the profile likelihood and CLs methods for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_SPANet_no_pair} is the results of $\kappa_\lambda$ constraints. These results are worse than simultaneously training on jet assignment and classification tasks.
 	\begin{table}[htpb]
 		\centering
 		\caption{The $\kappa_\lambda$ constraints of SPANet2.}
@@ -774,7 +774,7 @@
 		\end{tabular}      
 	\end{table}
 
-	Set $p_\text{th} = 0.95$ and use the profile likelihood method and CLs method for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_SPANet_best_hp} is the results of $\kappa_\lambda$ constraints. These results are similar to the previous one (Table \ref{tab:kappa_constraint_summary2}).
+	Set $p_\text{th} = 0.95$ and use the profile likelihood and CLs methods for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_SPANet_best_hp} is the results of $\kappa_\lambda$ constraints. These results are similar to the previous one (Table \ref{tab:kappa_constraint_summary2}).
 	\begin{table}[htpb]
 		\centering
 		\caption{The $\kappa_\lambda$ constraints of SPANet2.}
@@ -826,7 +826,7 @@
 			\end{tabular}      
 		\end{table}
 
-		Set $p_\text{th} = 0.95$ and use the profile likelihood method and CLs method for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_DNN_best_hp} is the results of $\kappa_\lambda$ constraints. These results are similar to the previous one (Table \ref{tab:kappa_constraint_summary2}).
+		Set $p_\text{th} = 0.95$ and use the profile likelihood and CLs methods for the $\kappa_\lambda$ setting. Table \ref{tab:kappa_constraint_DNN_best_hp} is the results of $\kappa_\lambda$ constraints. These results are similar to the previous one (Table \ref{tab:kappa_constraint_summary2}).
 		\begin{table}[htpb]
 			\centering
 			\caption{The $\kappa_\lambda$ constraints of DNN with best hyperparameters.}
@@ -1134,7 +1134,7 @@
 			\label{tab:res_SPANET_cls_results}
 			\begin{tabular}{c|cc}
 			& ACC     & AUC   \\ \hline
-			 SPANet & $0.897$ & $0.963$
+			 SPANet & $0.894 \pm 0.002$ & $0.961 \pm 0.001$
 			\end{tabular}      
 		\end{table}
 
@@ -1257,7 +1257,7 @@
 	\subsection{Cross section upper limit}% (fold)
 	\label{sub:cross_section_upper_limit}
 		
-		This section utilizes the $m_{hh}$ distribution to set the upper limit of the cross section. The $\text{CL}_{\text{s}}$ method is used. The signal strength is chosen as the parameter of interest. The POI is excluded at the 95\% confidence level when the $\text{CL}_{\text{s}}$ is less than $0.05$. Where the package \verb+pyhf+ is used to calculate the upper limit. 
+		This section utilizes the $m_{hh}$ distribution to set the upper limit of the cross section. The $\text{CL}_{\text{s}}$ method is used. The signal strength is chosen as the parameter of interest. The POI is excluded at the 95\% confidence level when the $\text{CL}_{\text{s}}$ is less than $0.05$, where the package \verb+pyhf+ is used to calculate the upper limit. 
 
 		Parameter setting:
 		\begin{itemize}
@@ -1309,6 +1309,84 @@
 		\end{figure}
 
 	% subsection spanet_fine_tuning (end)
+	\subsection{DNN classifier}% (fold)
+	\label{sub:dnn_classifier}
+		This section utilizes the dense neural network to construct a signal background classifier.
+
+		The input features are summarised in Table \ref{tab:DNN_variables}. There are 16 variables.
+		\begin{table}[htpb]
+			\centering
+			\caption{Input variables used to train the neural network.}
+			\label{tab:DNN_variables}
+			\begin{tabular}{l|c|c}
+				Reconstructed objects       & Variables used for training   & \# \\ \hline
+				Higgs candidate             & $(p_\text{T}, \eta, \phi, m)$ & 8  \\
+				Subjets                     & $\Delta R(j_1,j_2)$                    & 2  \\
+				b-tagging                   & Boolean for $j_i \in h_{1,2}^{\text{cand}}$       & 4  \\
+				Di-Higgs system             & $p_\text{T}^{hh}, m_{hh}$        & 2 
+			\end{tabular}		
+		\end{table}
+
+		The hyperparameters are chosen by \verb|optuna|. The optimization range of different hyperparameters is listed in the below
+		\begin{itemize}
+			\item \verb+learning_rate+: $[10^{-5}, 10^{-1}]$ 
+			\item \verb+hidden_dim+: $[16,32,64,128,256]$ 
+			\item \verb+n_layers+: $[1,5]$ 
+		\end{itemize}
+		Test 100 trials. The set of hyperparameters that produce the best classification accuracy is utilized on full training.
+
+		The DNN training results are summarized in Table \ref{tab:DNN_results}. These results are worse than the SPANet classifier (Table \ref{tab:res_SPANET_cls_results}).
+		\begin{table}[htpb]
+			\centering
+			\caption{The DNN training results with different pairing methods. The average and standard deviation of 10 training are presented.}
+			\label{tab:DNN_results}
+			\begin{tabular}{c|cc}
+			Pairing method        & ACC     & AUC   \\ \hline
+			$\text{min-}\Delta R$ & $0.865 \pm 0.001$ & $0.938 \pm 0.001$ \\
+			SPANet                & $0.876 \pm 0.001$ & $0.946 \pm 0.001$ \\
+			\end{tabular}      
+		\end{table}
+
+		Utilize the $m_{hh}$ distribution to set the upper limit of the cross section. The results are shown in Figure \ref{fig:CL_limit_DNN}.
+		\begin{figure}[htpb]
+			\centering
+			\includegraphics[width=0.6\textwidth]{CLs_upper_limit_DNN.png}
+			\caption{The upper limit of the cross-section with different $m_H$. ``SPANet classifier'' utilizes the SPANet's outputs for event selection.}
+			\label{fig:CL_limit_DNN}
+		\end{figure}
+	% subsection dnn_classifier (end)	
 % section resonant_samples_with_various_mass (end)	
+\section{DNN input features}% (fold)
+\label{sec:dnn_input_features}
+	In reference, the input features contain the missing energy $E_{\text{T}}^{\text{miss}}, \phi(\vec{p}_{\text{T}}^{\text{miss}})$ and number of leptons $N_e, N_\mu$, because they consider the multi-jets and $t\overline{t}$ background.
+
+	This section removes $E_{\text{T}}^{\text{miss}}, \phi(\vec{p}_{\text{T}}^{\text{miss}}), N_e, N_\mu$ from input features. Use other input features to train DNN models and compare the training results to previous ones.
+
+	Table \ref{tab:DNN_no_missing_energy_cls_results} presents the DNN classification training results. These results are worse than Table \ref{tab:classification_results_summary2} by $1\sim 2\%$.
+	\begin{table}[htpb]
+		\centering
+		\caption{The DNN classification training results. The missing energy and number of leptons are removed from input features. The average and standard deviation of 10 training are presented.}
+		\label{tab:DNN_no_missing_energy_cls_results}
+		\begin{tabular}{c|cc}
+			& ACC     & AUC   \\ \hline
+			$\text{min-}\Delta R$   & $0.781 \pm 0.004$ & $0.862 \pm 0.004$ \\
+			SPANet2                 & $0.795 \pm 0.002$ & $0.877 \pm 0.002$
+		\end{tabular}      
+	\end{table}
+
+	Compute the $\kappa_\lambda$ constraints with 14 TeV cross section and luminosity $\mathcal{L} = \text{300 fb}^{-1}$. Table \ref{tab:kappa_constraint_DNN_no_missing_energy} is the result. These results are worse than Table \ref{tab:kappa_constraint_summary4}.
+	\begin{table}[htpb]
+		\centering
+		\caption{The $\kappa_\lambda$ constraints of different selection methods. Where the 14 TeV cross sections are used.}
+		\label{tab:kappa_constraint_DNN_no_missing_energy}
+		\begin{tabular}{l|c|rrr|rrr}
+									  &                                   & \multicolumn{6}{c}{Expected Constraints}                                          \\
+									  &                                   & \multicolumn{3}{c}{Profile likelihood}  & \multicolumn{3}{c}{CLs}                 \\ \hline
+		S/B classifier                & $\mathcal{L} \text{ (fb$^{-1}$)}$ & Lower & Upper & $\Delta \kappa_\lambda$ & Lower & Upper & $\Delta \kappa_\lambda$ \\ \hline
+		$\text{min-}\Delta R$ + DNN   & 300  & $-2.41 $ & $10.48$& $12.89$ & $-2.37$ & $10.36$ & $12.73$ \\
+		SPANet2 + DNN                 & 300  & $-2.05 $ & $9.46$ & $11.51$ & $-2.03$ & $9.36$  & $11.39$ \\
+		\end{tabular}
+	\end{table}
+% section dnn_input_features (end)		
 \end{document} 
 
