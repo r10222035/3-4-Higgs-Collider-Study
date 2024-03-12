@@ -1,0 +1,21 @@
+generate p p > b b b~ b~
+output MG5/resonant/pp4b_randomseed
+launch MG5/resonant/pp4b_randomseed
+
+shower=Pythia8
+detector=Delphes
+analysis=OFF
+madspin=OFF
+done
+
+Cards/delphes_card-MV2C10.dat
+
+set run_card nevents 1000000
+set run_card ebeam1 6500.0
+set run_card ebeam2 6500.0
+
+set run_card ptb 25
+set run_card etab 2.5
+set run_card iseed randomseed
+
+done
