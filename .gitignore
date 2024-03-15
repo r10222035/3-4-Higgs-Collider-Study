@@ -6,3 +6,6 @@
 *.fdb_latexmk
 *.synctex.gz
 .ipynb_checkpoints
+*.h5
+Sample/
+DNN/
