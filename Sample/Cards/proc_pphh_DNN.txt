@@ -1,0 +1,23 @@
+import model my_loop_sm
+generate p p > h h [QCD] QED^2<=99 QCD^2<=99
+output MG5/pphh_DNN_kappavalue
+launch MG5/pphh_DNN_kappavalue
+
+shower=Pythia8
+detector=Delphes
+analysis=OFF
+madspin=ON
+done
+
+Cards/delphes_card.dat
+
+set param_card khhh kappavalue
+
+set run_card nevents 1000000
+set run_card ebeam1 6500.0
+set run_card ebeam2 6500.0
+
+set spinmode none
+decay h > b b~
+
+done
